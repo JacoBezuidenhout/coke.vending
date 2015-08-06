@@ -1,0 +1,36 @@
+<script type="text/javascript">
+    angular.module('bcfoodHomepage', [])
+        .controller('LoginController', function($scope,$http) 
+        {
+                var t = this;
+
+                t.login = function(user)
+                {
+                    
+                    //***ADD VALIDATION
+
+                    $http.post('/login', user)
+                        .then(function(response) 
+                        {
+
+                        }, function(response) 
+                        {
+
+                        });
+                }
+        });
+</script>
+<div class="container" ng-app="bcfoodHomepage">
+
+    <div ng-controller="LoginController as l">
+        <h1 style="text-align: center">Login</h1>
+        <form class="form">
+            <label>Username</label>
+            <input class="form-control" type="text" ng-model="user.username" placeholder="john@dough.com"><br/>
+            <label>Password</label>
+            <input class="form-control" type="password" ng-model="user.password" placeholder="12345678"><br/>
+            <input class="btn btn-primary form-control" type="button" ng-click="l.login(user)" value="Login"><br/>
+        </form>
+    </div>
+    
+</div>
