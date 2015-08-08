@@ -66,10 +66,10 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input class="form-control" placeholder="CompanyABC" ng-model="newEmployer.name" type="text"></td>
-                        <td><input class="form-control" placeholder="company@example.com" ng-model="newEmployer.email" type="email"></td>
-                        <td><input class="form-control" placeholder="0121234568" ng-model="newEmployer.tel" type="text"></td>
-                        <td><input class="btn btn-primary form-control" value="Add" ng-click="e.create(newEmployer)" type="button"></td>
+                        <td><input class="form-control" placeholder="CompanyABC" ng-model="e.newEmployer.name" type="text"></td>
+                        <td><input class="form-control" placeholder="company@example.com" ng-model="e.newEmployer.email" type="email"></td>
+                        <td><input class="form-control" placeholder="0121234568" ng-model="e.newEmployer.tel" type="text"></td>
+                        <td><input class="btn btn-primary form-control" value="Add" ng-click="e.create(e.newEmployer)" type="button"></td>
                     </tr>
                 </table>
             </div>
@@ -81,57 +81,57 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label style="padding-top:4px; margin-bottom: 1px">Full Business Name</label>
-                        <input class="form-control" type="text" ng-model="e.employer.name" placeholder="CompanyABC">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.name" placeholder="CompanyABC">
                     </div>
                 </div><br/>
                 <div class="row">
                     <div class="col-md-6">
                         <label style="padding-top:4px; margin-bottom: 1px">Street Address</label>
-                        <input class="form-control" type="text" ng-model="e.employer.streetAddress.a" placeholder="Address Line 1">
-                        <input class="form-control" type="text" ng-model="e.employer.streetAddress.b" placeholder="Address Line 2">
-                        <input class="form-control" type="text" ng-model="e.employer.streetAddress.c" placeholder="Address Line 3">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.streetAddress.a" placeholder="Address Line 1">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.streetAddress.b" placeholder="Address Line 2">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.streetAddress.c" placeholder="Address Line 3">
                     </div>                    
                     <div class="col-md-6">
                         <label style="padding-top:4px; margin-bottom: 1px">Postal Address</label>
-                        <input class="form-control" type="text" ng-model="e.employer.postalAddress.a" placeholder="Address Line 1">
-                        <input class="form-control" type="text" ng-model="e.employer.postalAddress.b" placeholder="Address Line 2">
-                        <input class="form-control" type="text" ng-model="e.employer.postalAddress.c" placeholder="Address Line 3">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.postalAddress.a" placeholder="Address Line 1">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.postalAddress.b" placeholder="Address Line 2">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.postalAddress.c" placeholder="Address Line 3">
                     </div>                    
                 </div><br/>
                 <div class="row">
                     <div class="col-md-6">
                         <label style="padding-top:4px; margin-bottom: 1px">Tel</label>
-                        <input class="form-control" type="text" ng-model="e.employer.tel" placeholder="0125487877">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.tel" placeholder="0125487877">
 
                         <label style="padding-top:4px; margin-bottom: 1px">Fax</label>
-                        <input class="form-control" type="text" ng-model="e.employer.fax" placeholder="0125874588">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.fax" placeholder="0125874588">
 
                         <label style="padding-top:4px; margin-bottom: 1px">Email</label>
-                        <input class="form-control" type="text" ng-model="e.employer.email" placeholder="company@example.com">
+                        <input class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.email" placeholder="company@example.com">
                         
                         <hr/>
                         
                         <label style="padding-top:4px; margin-bottom: 1px">No. of employees</label>
-                        <input class="form-control" type="number" ng-model="e.employer.employeeNum">
+                        <input class="form-control" type="number" ng-blur='e.update()' ng-model="e.employer.employeeNum">
 
                         <label style="padding-top:4px; margin-bottom: 1px">Date of commencement of business</label>
-                        <input class="form-control" type="date" ng-model="e.employer.commencementDate">
+                        <input class="form-control" type="date" ng-blur='e.update()' ng-model="e.employer.commencementDate">
                     </div>
                 
                     <div class="col-md-6">
                         <label style="padding-top:4px; margin-bottom: 1px">Employer Type</label>
-                        <select class="form-control" type="text" ng-model="e.employer.type">
+                        <select class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.type">
                             <option value="company">Company</option>
                             <option value="soleOwner">Sole Owner</option>
                             <option value="partnership">Partnership</option>
                         </select>
                         <label style="padding-top:4px; margin-bottom: 1px" ng-show="e.employer.type == 'company'">Registered Name</label>
-                        <input class="form-control" type="text" ng-show="e.employer.type == 'company'" ng-model="e.employer.registeredName" placeholder="Company International Pty Ltd">
+                        <input class="form-control" type="text" ng-show="e.employer.type == 'company'" ng-blur='e.update()' ng-model="e.employer.registeredName" placeholder="Company International Pty Ltd">
                         <label style="padding-top:4px; margin-bottom: 1px" ng-show="e.employer.type == 'company'">Address of head office</label>
-                        <input class="form-control" type="text" ng-show="e.employer.type == 'company'" ng-model="e.employer.addressHeadOffice" placeholder="123 First Street, Pretoria">
+                        <input class="form-control" type="text" ng-show="e.employer.type == 'company'" ng-blur='e.update()' ng-model="e.employer.addressHeadOffice" placeholder="123 First Street, Pretoria">
 
                         <label style="padding-top:4px; margin-bottom: 1px">Business Type</label>
-                        <select class="form-control" type="text" ng-model="e.employer.businessType">
+                        <select class="form-control" type="text" ng-blur='e.update()' ng-model="e.employer.businessType">
                             <option value="restaurant">Restaurant</option>
                             <option value="steakhouse">Steakhouse</option>
                             <option value="roadhouse">Roadhouse</option>
@@ -142,11 +142,11 @@
                             <option value="other">Other</option>
                         </select>
                         <label style="padding-top:4px; margin-bottom: 1px" ng-show="e.employer.businessType == 'other'">Other</label>
-                        <input class="form-control" type="text" ng-show="e.employer.businessType == 'other'" ng-model="e.employer.businessType" placeholder="Other">
+                        <input class="form-control" type="text" ng-show="e.employer.businessType == 'other'" ng-blur='e.update()' ng-model="e.employer.businessType" placeholder="Other">
                     
                         <label style="padding-top:4px; margin-bottom: 1px">Employers organisation</label>
                         <div class="input-group">
-                            <select class="form-control" ng-model="e.employer.employersOrganisation">
+                            <select class="form-control" ng-blur='e.update()' ng-model="e.employer.employersOrganisation">
                                 <option ng-repeat="eO in e.employersOrganisations" value="{{eO.name}}">{{eO.name}}</option>
                             </select>
                             <span class="input-group-btn">
@@ -157,7 +157,7 @@
 
                         <label style="padding-top:4px; margin-bottom: 1px">Union</label>
                         <div class="input-group">
-                            <select class="form-control" ng-model="e.employer.union">
+                            <select class="form-control" ng-blur='e.update()' ng-model="e.employer.union">
                                 <option ng-repeat="union in e.unions" value="{{union.name}}">{{union.name}}</option>
                             </select>
                             <span class="input-group-btn">

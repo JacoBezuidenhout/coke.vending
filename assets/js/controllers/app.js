@@ -33,6 +33,7 @@ angular.module('bcfoodEmployers', [])
                 {
                     $scope.$applyAsync(function(){
                         t.employer = response.data;
+                        t.newEmployer = {};
                         t.refresh();
                     });
                     t.hideLoading();
@@ -43,7 +44,7 @@ angular.module('bcfoodEmployers', [])
                 });
         }
 
-        t.update = function()
+        t.update = function(cb)
         {
             t.showLoading();
             $http.post('/employer/update/' + t.employer.id, t.employer)
@@ -54,10 +55,12 @@ angular.module('bcfoodEmployers', [])
                         t.refresh();
                     });
                     t.hideLoading();
+                    cb();
                 }, function(response) 
                 {
                     t.alert(response);
                     t.hideLoading();
+                    cb();
                 });
         }
 
@@ -191,10 +194,11 @@ angular.module('bcfoodEmployers', [])
                     .then(function(response) 
                     {
                         if (response.data[0])
-                        {
+                        {   
                             $scope.$applyAsync(function(){
                                 t.newOwner = response.data[0];
                                 console.log(response);
+                                t.addOwner(t.newOwner);    
                             });
                         }
                         t.hideLoading();
@@ -208,37 +212,43 @@ angular.module('bcfoodEmployers', [])
 
         t.addOwner = function(o)
         {
-             $http.post('/employer/' + t.employer.id + '/owners/add/', o)
-                .then(function(response) 
-                {
-                    $scope.$applyAsync(function(){
-                        t.employer = response.data;
-                        t.refresh();
-                        t.newOwner = {};
+             t.update(function()
+             {
+                 $http.post('/employer/' + t.employer.id + '/owners/add/', o)
+                    .then(function(response) 
+                    {
+                        $scope.$applyAsync(function(){
+                            t.employer = response.data;
+                            t.refresh();
+                            t.newOwner = {};
+                        });
+                        t.hideLoading();
+                    }, function(response) 
+                    {
+                        t.alert(response);
+                        t.hideLoading();
                     });
-                    t.hideLoading();
-                }, function(response) 
-                {
-                    t.alert(response);
-                    t.hideLoading();
-                });
+             });
         }
 
         t.rmOwner = function(o)
         {
-             $http.get('/employer/' + t.employer.id + '/owners/remove/' + o.id)
-                .then(function(response) 
-                {
-                    $scope.$applyAsync(function(){
-                        t.employer = response.data;
-                        t.refresh();
+            t.update(function()
+            {
+                $http.get('/employer/' + t.employer.id + '/owners/remove/' + o.id)
+                    .then(function(response) 
+                    {
+                        $scope.$applyAsync(function(){
+                            t.employer = response.data;
+                            t.refresh();
+                        });
+                        t.hideLoading();
+                    }, function(response) 
+                    {
+                        t.alert(response);
+                        t.hideLoading();
                     });
-                    t.hideLoading();
-                }, function(response) 
-                {
-                    t.alert(response);
-                    t.hideLoading();
-                });
+           });
         }
 
         t.lookupEmployee = function(e)
@@ -254,6 +264,7 @@ angular.module('bcfoodEmployers', [])
                             $scope.$applyAsync(function(){
                                 t.newEmployee = response.data[0];
                                 console.log(response);
+                                t.addEmployee(t.newEmployee);
                             });
                         }
                         t.hideLoading();
@@ -267,48 +278,55 @@ angular.module('bcfoodEmployers', [])
 
         t.addEmployee = function(e)
         {
-             $http.post('/employer/' + t.employer.id + '/employees/add/', e)
-                .then(function(response) 
-                {
-                    $scope.$applyAsync(function(){
-                        t.employer = response.data;
-                        t.refresh();
-                        t.newEmployee = {};
+         
+            t.update(function()
+            {
+                 $http.post('/employer/' + t.employer.id + '/employees/add/', e)
+                    .then(function(response) 
+                    {
+                        $scope.$applyAsync(function(){
+                            t.employer = response.data;
+                            t.refresh();
+                            t.newEmployee = {};
+                        });
+                        t.hideLoading();
+                    }, function(response) 
+                    {
+                        t.alert(response);
+                        t.hideLoading();
                     });
-                    t.hideLoading();
-                }, function(response) 
-                {
-                    t.alert(response);
-                    t.hideLoading();
-                });
+           });
         }
 
         t.rmEmployee = function(e)
         {
-             $http.get('/employer/' + t.employer.id + '/employees/remove/' + e.id)
-                .then(function(response) 
-                {
-                
-                    $scope.$applyAsync(function(){
-                        t.employer = response.data;
-                        t.refresh();
-                    });
-                
-                     $http.post('/employer/' + t.employer.id + '/pemployees/add/', e)
-                        .then(function(response) 
-                        {
-                            t.hideLoading();
-                        }, function(response) 
-                        {
-                            t.alert(response);
-                            t.hideLoading();
+            t.update(function()
+            {
+                 $http.get('/employer/' + t.employer.id + '/employees/remove/' + e.id)
+                    .then(function(response) 
+                    {
+                    
+                        $scope.$applyAsync(function(){
+                            t.employer = response.data;
+                            t.refresh();
                         });
+                    
+                         $http.post('/employer/' + t.employer.id + '/pemployees/add/', e)
+                            .then(function(response) 
+                            {
+                                t.hideLoading();
+                            }, function(response) 
+                            {
+                                t.alert(response);
+                                t.hideLoading();
+                            });
 
-                }, function(response) 
-                {
-                    t.alert(response);
-                    t.hideLoading();
-                });
+                    }, function(response) 
+                    {
+                        t.alert(response);
+                        t.hideLoading();
+                    });
+            });
         }
 
         t.refresh();
