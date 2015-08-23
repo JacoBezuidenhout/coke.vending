@@ -90,6 +90,7 @@ angular.module('bcfoodEmployers', [])
                     $scope.$applyAsync(function(){
                         t.employer = response.data;
                         t.refresh();
+                        t.changed = false;
                     });
                     t.hideLoading();
                     cb();
