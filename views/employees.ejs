@@ -1,0 +1,111 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="employers">BCFood Admin</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/employers">Employers</a></li>
+          <li class="active"><a href="/employees">Employees</a></li>
+<!--           <li><a href="/cases">Case Management</a></li>
+          <li><a href="/logout">Logout</a></li> -->
+
+<!--               <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li> -->
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container-fluid" ng-app="bcfoodEmployers">
+	<div class="row" ng-controller="EmployeeController as e">
+		<div class="col-md-6">
+	        <h1 style="text-align: center">Employers</h1>
+	        <label>Search</label> <input class="form-control" type="text" ng-model="searchText" placeholder="ID or Name or Email ...">
+			<table class="table">
+				<tr class="info">
+		            <td><strong>ID Number</strong></td>
+		            <td><strong>Name</strong></td>
+		            <td><strong>Surname</strong></td>
+		            <td><strong>Contact</strong></td>
+		            <td><strong>Address</strong></td>
+				</tr>	
+				<tr ng-click="e.select(employee)" ng-repeat="employee in e.employees | filter:searchText" style="cursor: pointer;">
+	                <td>{{employee.idNumber}}</td>
+	                <td>{{employee.name}}</td>
+	                <td>{{employee.surname}}</td>
+	                <td>{{employee.contact}}</td>
+	                <td>{{employee.address}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<div class="row" ng-show="e.emp">
+				<h1>Details</h1>
+				<label style="padding-top:5px;">ID Number</label>
+					<input ng-change="e.changed=true" class="form-control" type="text" ng-model="e.emp.idNumber" >
+	            <label style="padding-top:5px;">Name</label>
+	            	<input ng-change="e.changed=true" class="form-control" type="text" ng-model="e.emp.name" >
+	            <label style="padding-top:5px;">Surname</label>
+	            	<input ng-change="e.changed=true" class="form-control" type="text" ng-model="e.emp.surname" >
+	            <label style="padding-top:5px;">Contact</label>
+	            	<input ng-change="e.changed=true" class="form-control" type="text" ng-model="e.emp.contact" >
+	            <label style="padding-top:5px;">Address</label>
+	            	<input ng-change="e.changed=true" class="form-control" type="text" ng-model="e.emp.address" >
+	            <input ng-show="e.changed" type="button" class="btn btn-success form-control" ng-click="e.save()" value="Save">
+			</div>
+			<div class="row" ng-show="e.emp.employers.length">
+				<h2>Current Employer</h2>
+					
+					<table class="table">
+						<tr class="info">
+	                        <td><strong>ID</strong></td>
+	                        <td><strong>Business Name</strong></td>
+	                        <td><strong>Email</strong></td>
+	                        <td><strong>Tel</strong></td>
+						</tr>
+						<tr ng-repeat="employer in e.emp.employers">
+	                        <td>{{employer.id}}</td>   
+	                        <td>{{employer.name}}</td>   
+	                        <td>{{employer.email}}</td>   
+	                        <td>{{employer.tel}}</td>   						
+                        </tr>
+					</table>
+			</div>
+			<div class="row" ng-show="e.emp.pemployers.length">
+				<h2>Previous Employers</h2>
+
+					<table class="table">
+						<tr class="info">
+	                        <td><strong>ID</strong></td>
+	                        <td><strong>Business Name</strong></td>
+	                        <td><strong>Email</strong></td>
+	                        <td><strong>Tel</strong></td>
+						</tr>
+						<tr ng-repeat="employer in e.emp.pemployers">
+	                        <td>{{employer.id}}</td>   
+	                        <td>{{employer.name}}</td>   
+	                        <td>{{employer.email}}</td>   
+	                        <td>{{employer.tel}}</td>   						
+                        </tr>
+					</table>
+			</div>
+		</div>
+	</div>
+</div>

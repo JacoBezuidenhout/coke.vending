@@ -1,4 +1,41 @@
 angular.module('bcfoodEmployers', [])
+    .controller('EmployeeController', function($scope,$http) 
+    {
+        var t = this;
+        t.employees = [];
+        t.refresh = function()
+        {
+            $http.get("/employee")
+                .then(function(response){
+                    $scope.$applyAsync(function(){
+                        t.employees = response.data;
+                    });
+                }, function(response){
+
+                });
+        }
+        t.select = function(e)
+        {
+            $scope.$applyAsync(function(){
+                t.emp = e;
+            });
+        }
+        t.save = function()
+        {
+            $http.post("/employee/update/" + t.emp.id, t.emp)
+                .then(function(response){
+                    $scope.$applyAsync(function(){
+                        t.emp = response.data;
+                        t.changed = false;
+                        t.refresh();
+                    });
+                }, function(response){
+                    console.log("ERROR",response)
+                });
+        }
+
+        t.refresh();
+    })
     .controller('EmployerController', function($scope,$http) 
     {
         var t = this;
@@ -108,6 +145,8 @@ angular.module('bcfoodEmployers', [])
                 });
             t.refreshUnion(function(){});
             t.refreshEO(function(){});
+
+
         }
         
         t.refreshEO = function(cb)
