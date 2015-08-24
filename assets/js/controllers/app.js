@@ -124,14 +124,14 @@ angular.module('bcfoodEmployers', [])
         {
             $scope.$applyAsync(function(){
                 t.employer = e;
-                t.employer.owners = t.employer.owners || [];
+                // t.employer.owners = t.employer.owners || [];
             });
         }
 
         t.refresh = function()
         {
             t.showLoading();
-            $http.get('/employer')
+            $http.get('/employer?limit=5000')
                 .then(function(response) 
                 {
                     $scope.$applyAsync(function(){

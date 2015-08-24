@@ -1,3 +1,14 @@
+    <style type="text/css">
+      input[type="text"]
+      {
+        color:green;
+      }
+      input[type="email"]
+      {
+        color:green;
+      }
+    </style>
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -81,35 +92,39 @@
 
         <img ng-show="e.loading" style="position: fixed; top:10px; right:10px;" src="images/loading.gif">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 well">
                 <h1 style="text-align: center">Employers</h1>
                 <label>Search</label> <input class="form-control" type="text" ng-model="searchText" placeholder="ID or Name or Email ...">
-                <table class="table">
-                    <tr class="info">
-                        <td><strong>ID</strong></td>
-                        <td><strong>Business Name</strong></td>
-                        <td><strong>Email</strong></td>
-                        <td><strong>Tel</strong></td>
-                        <td><strong>Actions</strong></td>
-                    </tr>
-                    <tr ng-repeat="employer in e.employers | filter:searchText" ng-click="e.getEmployer(employer)" style="cursor: pointer;">
-                        <td>{{employer.id}}</td>   
-                        <td>{{employer.name}}</td>   
-                        <td>{{employer.email}}</td>   
-                        <td>{{employer.tel}}</td>   
-                        <td><input type="button" value="Delete" class="btn btn-danger" ng-click="e.delete(employer)"></td>   
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input class="form-control" placeholder="CompanyABC" ng-model="e.newEmployer.name" type="text"></td>
-                        <td><input class="form-control" placeholder="company@example.com" ng-model="e.newEmployer.email" type="email"></td>
-                        <td><input class="form-control" placeholder="0121234568" ng-model="e.newEmployer.tel" type="text"></td>
-                        <td><input class="btn btn-primary form-control" value="Add" ng-click="e.create(e.newEmployer)" type="button"></td>
-                    </tr>
+                    <table class="table">
+                        <tr class="info">
+                            <td><strong>ID</strong></td>
+                            <td><strong>Business Name</strong></td>
+                            <td><strong>Email</strong></td>
+                            <td><strong>Tel</strong></td>
+                            <td><strong>Actions</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input class="form-control" placeholder="CompanyABC" ng-model="e.newEmployer.name" type="text"></td>
+                            <td><input class="form-control" placeholder="company@example.com" ng-model="e.newEmployer.email" type="email"></td>
+                            <td><input class="form-control" placeholder="Telephone Number" ng-model="e.newEmployer.tel" type="text"></td>
+                            <td><input class="btn btn-primary form-control" value="Add" ng-click="e.create(e.newEmployer)" type="button"></td>
+                        </tr>
                 </table>
+                <div style="height:500px; overflow:scroll;">
+                    <table class="table">
+                        <tr ng-repeat="employer in e.employers | filter:searchText | limitTo:100" ng-click="e.getEmployer(employer)" style="cursor: pointer;">
+                            <td>{{employer.id}}</td>   
+                            <td>{{employer.name}}</td>   
+                            <td>{{employer.email}}</td>   
+                            <td>{{employer.tel}}</td>   
+                            <td><input type="button" value="Delete" class="btn btn-danger" ng-click="e.delete(employer)"></td>   
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div ng-show="e.employer" class="col-md-6">
-                <h1 style="text-align: center">Employer details</h1>
+                <h1 style="text-align: center">{{e.employer.name}}</h1>
                 <div class="row">
                     
                 </div><br/>
@@ -136,10 +151,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label style="padding-top:4px; margin-bottom: 1px">Tel</label>
-                        <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.tel" placeholder="0125487877">
+                        <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.tel" placeholder="Telephone Number">
 
                         <label style="padding-top:4px; margin-bottom: 1px">Fax</label>
-                        <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.fax" placeholder="0125874588">
+                        <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.fax" placeholder="Fax Number">
 
                         <label style="padding-top:4px; margin-bottom: 1px">Email</label>
                         <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.email" placeholder="company@example.com">
