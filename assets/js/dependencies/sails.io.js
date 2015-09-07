@@ -363,7 +363,7 @@ var parts=["source","protocol","authority","userInfo","user","password","host","
       self.transports = self.transports || io.sails.transports;
 
       // Ensure URL has no trailing slash
-      self.url = self.url ? self.url.replace(/(\/)$/, '') : undefined;
+      self.url = "http://localhost:1337";//self.url ? self.url.replace(/(\/)$/, '') : undefined;
 
       // Mix the current SDK version into the query string in
       // the connection request to the server:

@@ -36,20 +36,7 @@ module.exports.routes = {
   //   view: 'homepage'
   // },
   
-  '/': {
-    view: 'employers'
-  },
-
-  '/employers': {
-    view: 'employers'
-  },
-  '/employees': {
-    view: 'employees'
-  },
-  '/cases': {
-    view: 'employers'
-  },
-  'get /employer/employer.xlsx': 'EmployerController.tocsv'
+  //'get /employer/employer.xlsx': 'EmployerController.tocsv'
 
   /***************************************************************************
   *                                                                          *
