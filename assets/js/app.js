@@ -7,8 +7,8 @@
 //     nwin.maximize();
 // }
 
-var url = "http://bcfood.peoplesoft.co.za";
-// var url = "http://localhost:1337";
+// var url = "http://bcfood.peoplesoft.co.za";
+var url = "http://localhost:1337";
 
 var startSpin = function(){};
 var stopSpin = function(){};
