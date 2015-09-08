@@ -11,57 +11,57 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label style="padding-top:4px; margin-bottom: 1px">Full Business Name</label>
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.name" placeholder="CompanyABC">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.name" placeholder="CompanyABC">
                         </div>
                     </div><br/>
                     <div class="row">
                         <div class="col-md-6">
                             <label style="padding-top:4px; margin-bottom: 1px">Street Address</label>
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.streetAddress.a" placeholder="Address Line 1">
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.streetAddress.b" placeholder="Address Line 2">
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.streetAddress.c" placeholder="Address Line 3">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.streetAddress.a" placeholder="Address Line 1">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.streetAddress.b" placeholder="Address Line 2">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.streetAddress.c" placeholder="Address Line 3">
                         </div>                    
                         <div class="col-md-6">
                             <label style="padding-top:4px; margin-bottom: 1px">Postal Address</label>
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.postalAddress.a" placeholder="Address Line 1">
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.postalAddress.b" placeholder="Address Line 2">
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.postalAddress.c" placeholder="Address Line 3">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.postalAddress.a" placeholder="Address Line 1">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.postalAddress.b" placeholder="Address Line 2">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.postalAddress.c" placeholder="Address Line 3">
                         </div>                    
                     </div><br/>
                     <div class="row">
                         <div class="col-md-6">
                             <label style="padding-top:4px; margin-bottom: 1px">Tel</label>
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.tel" placeholder="Telephone Number">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.tel" placeholder="Telephone Number">
 
                             <label style="padding-top:4px; margin-bottom: 1px">Fax</label>
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.fax" placeholder="Fax Number">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.fax" placeholder="Fax Number">
 
                             <label style="padding-top:4px; margin-bottom: 1px">Email</label>
-                            <input class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.email" placeholder="company@example.com">
+                            <input class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.email" placeholder="company@example.com">
                             
                             <hr/>
                             
                             <label style="padding-top:4px; margin-bottom: 1px">No. of employees</label>
-                            <input class="form-control" type="number" ng-change='e.changed=true' ng-model="e.employer.employeeNum">
+                            <input class="form-control myInput" type="number" ng-change='e.changed=true' ng-model="e.employer.employeeNum">
 
                             <label style="padding-top:4px; margin-bottom: 1px">Date of commencement of business</label>
-                            <input class="form-control" type="date" ng-change='e.changed=true' ng-model="e.employer.commencementDate">
+                            <input class="form-control myInput" type="date" ng-change='e.changed=true' ng-model="e.employer.commencementDate">
                         </div>
                     
                         <div class="col-md-6">
                             <label style="padding-top:4px; margin-bottom: 1px">Employer Type</label>
-                            <select class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.type">
+                            <select class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.type">
                                 <option value="company">Company</option>
                                 <option value="soleOwner">Sole Owner</option>
                                 <option value="partnership">Partnership</option>
                             </select>
                             <label style="padding-top:4px; margin-bottom: 1px" ng-show="e.employer.type == 'company'">Registered Name</label>
-                            <input class="form-control" type="text" ng-show="e.employer.type == 'company'" ng-change='e.changed=true' ng-model="e.employer.registeredName" placeholder="Company International Pty Ltd">
+                            <input class="form-control myInput" type="text" ng-show="e.employer.type == 'company'" ng-change='e.changed=true' ng-model="e.employer.registeredName" placeholder="Company International Pty Ltd">
                             <label style="padding-top:4px; margin-bottom: 1px" ng-show="e.employer.type == 'company'">Address of head office</label>
-                            <input class="form-control" type="text" ng-show="e.employer.type == 'company'" ng-change='e.changed=true' ng-model="e.employer.addressHeadOffice" placeholder="123 First Street, Pretoria">
+                            <input class="form-control myInput" type="text" ng-show="e.employer.type == 'company'" ng-change='e.changed=true' ng-model="e.employer.addressHeadOffice" placeholder="123 First Street, Pretoria">
 
                             <label style="padding-top:4px; margin-bottom: 1px">Business Type</label>
-                            <select class="form-control" type="text" ng-change='e.changed=true' ng-model="e.employer.businessType">
+                            <select class="form-control myInput" type="text" ng-change='e.changed=true' ng-model="e.employer.businessType">
                                 <option value="restaurant">Restaurant</option>
                                 <option value="steakhouse">Steakhouse</option>
                                 <option value="roadhouse">Roadhouse</option>
@@ -72,10 +72,10 @@
                                 <option value="other">Other</option>
                             </select>
                             <label style="padding-top:4px; margin-bottom: 1px" ng-show="e.employer.businessType == 'other'">Other</label>
-                            <input class="form-control" type="text" ng-show="e.employer.businessType == 'other'" ng-change='e.changed=true' ng-model="e.employer.businessType" placeholder="Other">
+                            <input class="form-control myInput" type="text" ng-show="e.employer.businessType == 'other'" ng-change='e.changed=true' ng-model="e.employer.businessType" placeholder="Other">
                         
                             <label style="padding-top:4px; margin-bottom: 1px">Employers organisation</label>
-                            <select class="form-control" ng-change='e.changed=true' ng-model="e.employer.employersOrganisation">
+                            <select class="form-control myInput" ng-change='e.changed=true' ng-model="e.employer.employersOrganisation">
                                 <option ng-repeat="eO in e.employersOrganisations" value="{{eO.name}}">{{eO.name}}</option>
                             </select>
                                 <!-- <span class="input-group-btn">
@@ -84,7 +84,7 @@
                             <p><b>Selected:</b> {{e.employer.employersOrganisation}}</p>
 
                             <label style="padding-top:4px; margin-bottom: 1px">Union</label>
-                            <select class="form-control" ng-change='e.changed=true' ng-model="e.employer.union">
+                            <select class="form-control myInput" ng-change='e.changed=true' ng-model="e.employer.union">
                                 <option ng-repeat="union in e.unions" value="{{union.name}}">{{union.name}}</option>
                             </select>
                                 <!-- <span class="input-group-btn">
@@ -117,6 +117,13 @@
                                     <td>Address</td>
                                     <td>Actions</td>
                                 </tr>
+                                <tr>
+                                    <td><input class="form-control myInput" placeholder="company@example.com" ng-model="e.newOwner.email" type="email"></td>
+                                    <td><input class="form-control myInput" placeholder="John Dough" ng-focus="e.lookupOwner(e.newOwner)" ng-model="e.newOwner.name" type="text"></td>
+                                    <td><input class="form-control myInput" placeholder="0125487785" ng-model="e.newOwner.contact" type="text"></td>
+                                    <td><input class="form-control myInput" placeholder="1 1st Street" ng-model="e.newOwner.address" type="text"></td>
+                                    <td><input type="button" class="btn btn-success form-control" value="+" ng-click="e.addOwner(e.newOwner)"></td>
+                                </tr>    
                                 <tr ng-repeat="owner in e.employer.owners">
                                     <td>{{owner.email}}</td>
                                     <td>{{owner.name}}</td>
@@ -124,13 +131,6 @@
                                     <td>{{owner.address}}</td>
                                     <td><input type="button" class="btn btn-danger form-control" value="X" ng-click="e.rmOwner(owner.email)"></td>
                                 </tr>
-                                <tr>
-                                    <td><input class="form-control" placeholder="company@example.com" ng-model="e.newOwner.email" type="email"></td>
-                                    <td><input class="form-control" placeholder="John Dough" ng-focus="e.lookupOwner(e.newOwner)" ng-model="e.newOwner.name" type="text"></td>
-                                    <td><input class="form-control" placeholder="0125487785" ng-model="e.newOwner.contact" type="text"></td>
-                                    <td><input class="form-control" placeholder="1 1st Street" ng-model="e.newOwner.address" type="text"></td>
-                                    <td><input type="button" class="btn btn-success form-control" value="+" ng-click="e.addOwner(e.newOwner)"></td>
-                                </tr>    
                             </table>
                         </div>
                     </div>
@@ -148,6 +148,14 @@
                                     <td>Address</td>
                                     <td>Actions</td>
                                 </tr>
+                                <tr>
+                                    <td><input class="form-control myInput" placeholder="9202014778587" ng-model="e.newEmployee.idNumber" type="text"></td>
+                                    <td><input class="form-control myInput" placeholder="John" ng-focus="e.lookupEmployee(e.newEmployee)" ng-model="e.newEmployee.name" type="text"></td>
+                                    <td><input class="form-control myInput" placeholder="Dough" ng-model="e.newEmployee.surname" type="text"></td>
+                                    <td><input class="form-control myInput" placeholder="0125487785" ng-model="e.newEmployee.contact" type="text"></td>
+                                    <td><input class="form-control myInput" placeholder="1 1st Street" ng-model="e.newEmployee.address" type="text"></td>
+                                    <td><input type="button" class="btn btn-success form-control" value="+" ng-click="e.addEmployee(e.newEmployee)"></td>
+                                </tr>    
                                 <tr ng-repeat="employee in e.employer.employees">
                                     <td>{{employee.idNumber}}</td>
                                     <td>{{employee.name}}</td>
@@ -156,14 +164,6 @@
                                     <td>{{employee.address}}</td>
                                     <td><input type="button" class="btn btn-danger form-control" value="X" ng-click="e.rmEmployee(employee.idNumber)"></td>
                                 </tr>
-                                <tr>
-                                    <td><input class="form-control" placeholder="9202014778587" ng-model="e.newEmployee.idNumber" type="text"></td>
-                                    <td><input class="form-control" placeholder="John" ng-focus="e.lookupEmployee(e.newEmployee)" ng-model="e.newEmployee.name" type="text"></td>
-                                    <td><input class="form-control" placeholder="Dough" ng-model="e.newEmployee.surname" type="text"></td>
-                                    <td><input class="form-control" placeholder="0125487785" ng-model="e.newEmployee.contact" type="text"></td>
-                                    <td><input class="form-control" placeholder="1 1st Street" ng-model="e.newEmployee.address" type="text"></td>
-                                    <td><input type="button" class="btn btn-success form-control" value="+" ng-click="e.addEmployee(e.newEmployee)"></td>
-                                </tr>    
                             </table>
                         </div>
                     </div>

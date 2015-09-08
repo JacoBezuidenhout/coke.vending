@@ -5,7 +5,7 @@
   "window": {
     "title": "BCFood Admin",
     "icon": "icon.png",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "position": "center",
     "width": 800,

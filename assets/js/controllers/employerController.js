@@ -14,13 +14,14 @@ app.controller('employerController', function($scope,$http,$routeParams)
 
         t.update = function()
         {
+            startSpin();
             $http.post(url + '/employer/update/' + t.employer.id, t.employer)
                 .then(function(response) 
                 {
                     $scope.$applyAsync(function(){
                         t.employer = response.data;
-                        // t.refresh();
                         t.changed = false;
+                        stopSpin();
                     });
                 }, function(response) 
                 {
@@ -30,13 +31,16 @@ app.controller('employerController', function($scope,$http,$routeParams)
 
         t.refresh = function()
         {
+            startSpin();
             $http.get(url + '/employer/' + id)
                 .then(function(response) 
                 {
                     $scope.$applyAsync(function(){
                         t.employer = response.data;
                         console.log(response);
+                        stopSpin();
                     });
+
                 }, function(response) 
                 {
                     t.alert(response);
@@ -91,6 +95,7 @@ app.controller('employerController', function($scope,$http,$routeParams)
                                 t.addOwner(t.newOwner);    
                             });
                         }
+                        stopSpin();
                     }, function(response) 
                     {
                         t.alert(response);
@@ -99,7 +104,8 @@ app.controller('employerController', function($scope,$http,$routeParams)
         }
 
         t.addOwner = function(o)
-        {         
+        {   
+            startSpin();      
             $http.get(url + '/owner?email=' + o.email)
             .then(function(response) 
             {
@@ -107,8 +113,10 @@ app.controller('employerController', function($scope,$http,$routeParams)
                 {   
                     $scope.$applyAsync(function(){
                         t.employer.owners.push(response.data[0]);
+                        t.newOwner = {};
                         console.log(response);
                         t.changed = true;
+                        stopSpin();
                     });
                 }
                 else
@@ -118,8 +126,10 @@ app.controller('employerController', function($scope,$http,$routeParams)
                     {
                         $scope.$applyAsync(function(){
                             t.employer.owners.push(response.data);
+                            t.newOwner = {};
                             console.log(response);
                             t.changed = true;
+                            stopSpin();
                         });
                     }, function(response) 
                     {
@@ -169,7 +179,8 @@ app.controller('employerController', function($scope,$http,$routeParams)
         }
 
         t.addEmployee = function(e)
-        {         
+        {   
+            startSpin();      
             $http.get(url + '/employee?idNumber=' + e.idNumber)
             .then(function(response) 
             {
@@ -180,6 +191,7 @@ app.controller('employerController', function($scope,$http,$routeParams)
                         t.newEmployee = {};
                         console.log(response);
                         t.changed = true;
+                        stopSpin();
                     });
                 }
                 else
@@ -192,6 +204,7 @@ app.controller('employerController', function($scope,$http,$routeParams)
                             t.newEmployee = {};
                             console.log(response);
                             t.changed = true;
+                            stopSpin();
                         });
                     }, function(response) 
                     {

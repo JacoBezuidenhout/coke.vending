@@ -37,6 +37,8 @@
     "datatables-responsive": "~1.0.3",
     "bootstrap-social": "~4.8.0",
     "flot.tooltip": "~0.8.4",
-    "angular-route": "~1.4.4"
+    "angular-route": "~1.4.4",
+    "spin": "~1.1.6",
+    "angular-spinner": "~0.6.2"
   }
 }
