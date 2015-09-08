@@ -137,24 +137,27 @@ app.controller('employersController', function($scope,$http,$routeParams)
 
     var t = this;
     t.employer = {};
-    t.searchText = $routeParams.searchText;
+    t.searchText = $routeParams.searchText || "";
 
-    t.refresh = function(limit)
+    t.refresh = function()
     {
         startSpin();
-        $http.get( url + "/employer?limit=50").
-          then(function(response) {
-            t.employers = response.data;
-              $http.get( url + "/employer?skip=50&limit=0").
-                then(function(response) {
-                  $scope.$applyAsync(function(){
-                    for (var i = 0; i < response.data.length; i++) {
-                      t.employers.push(response.data[i]);
-                    };
-                    stopSpin();
-                  });
-                }, function(response) {});
-          }, function(response) {});
+        if (t.searchText.length == 0)
+        {
+          $http.get( url + '/employer?where={"name":{"contains":"' + t.searchText + '"}}&limit=50').
+            then(function(response) {
+              t.employers = response.data;
+              stopSpin();
+            }, function(response) {});
+        }
+        else
+        {
+          $http.get( url + '/employer?where={"name":{"contains":"' + t.searchText + '"}}&limit=0').
+            then(function(response) {
+              t.employers = response.data;
+              stopSpin();
+            }, function(response) {});
+        }
     }
 
     t.setEmployer = function(e)
