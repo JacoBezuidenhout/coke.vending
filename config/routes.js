@@ -34,9 +34,7 @@ module.exports.routes = {
 
   // '/': {
   //   view: 'homepage'
-  // },
-  
-  //'get /employer/employer.xlsx': 'EmployerController.tocsv'
+  // }
 
   /***************************************************************************
   *                                                                          *

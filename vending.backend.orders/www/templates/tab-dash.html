@@ -1,0 +1,25 @@
+<ion-view view-title="Orders">
+  <ion-content class="padding">
+
+    <div class="list card" ng-hide="orders.length">
+      <div class="item item-divider">No Orders Yet</div>
+      <div class="item item-body">
+        <div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="list card" ng-repeat="o in orders" on-swipe-left="done($index,o)">
+      <div class="item item-divider">{{o.teamName}}</div>
+      <div class="item item-body">
+        <div>
+          <div class="row"> 
+            <div class="col"><b>{{getProductName(o.stickerOne)}}</b></div>|
+            <div class="col" style="text-align:right"><b>{{getProductName(o.stickerTwo)}}</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </ion-content>
+</ion-view>
