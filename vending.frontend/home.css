@@ -1,0 +1,42 @@
+.bgMain
+{
+  background-image: url("main.png");
+}
+
+.bgVideo
+{
+  background-image: url("videobackground.png");
+}
+
+#vidDiv
+{
+  position:fixed;
+  z-index: 1000;
+}
+
+#vidDivTwo
+{
+  position:fixed;
+  z-index: -1;
+}
+
+#divImg
+{
+  position:fixed;
+  z-index: 1000;
+}
+
+body
+{
+  background-color:#ababab;
+}
+
+.bgMain
+{
+  background-image: url(".//assets/images/main.png");
+}
+
+.bgVideo
+{
+  background-image: url(".//assets/images/videobackground.png");
+}

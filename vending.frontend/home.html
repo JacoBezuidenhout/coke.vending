@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Coke Vending Frontend</title>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="./bower_components/socket.io-client/socket.io.js"></script>
+	<script type="text/javascript" src="peer.min.js"></script>
+	<script type="text/javascript" src="home.js"></script>
+	<link rel="stylesheet" href="home.css">
+
+</head>
+<body id="page_body" >
+<!--	<video id="video" width="1920" height="1080" autoplay></video> -->
+<div id="vidDiv" width="1920" height="1080">
+	<img id="divImg" src=".//assets/images/main.png" alt="Mountain View" >
+	<div id="vidDivTwo">
+		<video id="video" width="1920" height="1080" autoplay></video>
+	<div>
+</div>
+
+<script>
+//changeBGImage("Main");
+
+var ngui = require('nw.gui');
+	 var nwin = ngui.Window.get();
+	 nwin.enterFullscreen();
+
+changeImage();
+
+	var peer = new Peer('sender', {host: 'localhost', port: 9000, path: '/'});
+	peer.on('connection', function(conn) {
+	  conn.on('data', function(data){
+	    // Will print 'hi!'
+	    console.log(data);
+	  });
+	});
+
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+		navigator.getUserMedia({video: true}, function(stream) {
+			var video = document.querySelector('video');
+			video.src = window.URL.createObjectURL(stream);
+		  	var call = peer.call('rec', stream);
+		}, function(err) {
+		  console.log('Failed to get local stream' ,err);
+		});
+
+	// Not showing vendor prefixes.
+	// navigator.webkitGetUserMedia(vgaConstraints, function(localMediaStream) {
+	// 	console.log(video.src);
+	// 	video.onloadedmetadata = function(e) {
+	// 		//
+	// 	};
+	// }, errorCallback);
+
+
+</script>
+</body>
+</html>
