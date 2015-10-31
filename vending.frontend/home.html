@@ -10,22 +10,36 @@
 
 </head>
 <body id="page_body" >
-<!--	<video id="video" width="1920" height="1080" autoplay></video> -->
 <div id="vidDiv" width="1920" height="1080">
-	<img id="divImg" src=".//assets/images/main.png" alt="Mountain View" >
-	<div id="vidDivTwo">
+	<img id="vidDivImg" alt="">
+
+	<img id="smileyOne" alt="">
+	<img id="smileyTwo" alt="">
+
+	<p id="teamName"></p>
+	<p id="phraseOne"></p>
+	<p id="phraseTwo"></p>
+
+
+	<div id="vidDivContainer">
 		<video id="video" width="1920" height="1080" autoplay></video>
 	<div>
 </div>
 
 <script>
-//changeBGImage("Main");
+	var ngui = require('nw.gui');
+	var nwin = ngui.Window.get();
+	nwin.enterFullscreen();
 
-var ngui = require('nw.gui');
-	 var nwin = ngui.Window.get();
-	 nwin.enterFullscreen();
+	startScreen("Summer", "emoji1", "emoji2", "Love", "Together");
+	videoScreen();
+	takeImage();
 
-changeImage();
+ 	/*changeBackgroundImg("videobackground");
+	changeSmileyOne("emoji1");
+	changeSmileyTwo("emoji2");
+	changePhraseOne("Summer");
+	changePhraseTwo("Fun");*/
 
 	var peer = new Peer('sender', {host: 'localhost', port: 9000, path: '/'});
 	peer.on('connection', function(conn) {
