@@ -85,7 +85,7 @@ function videoScreen()
   changeTeamName("");
 }
 
-function takeImage()
+function takeImage(cb)
 {
   changeBackgroundImg("awesome");
 
@@ -112,13 +112,14 @@ function takeImage()
                   console.log("Photo was taken");
                   clearScreen();
                   changeBackgroundImg("done");
+                  cb();
                 }, 500);
               }, 1000);
             }, 500);
           }, 1000);
         }, 500);
       }, 1000);
-  }, 3000);
+  }, 5000);
 }
 
 

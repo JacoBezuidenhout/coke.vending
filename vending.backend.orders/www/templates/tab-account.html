@@ -4,6 +4,7 @@
     	  <a ng-repeat="p in products" class="item item-icon-left" ng-click="addStock(p)">
 		    <i class="icon {{p.type ? 'ion-closed-captioning' : 'ion-happy-outline'}}"></i>
 		    {{getProductName(p)}}
+		    <img ng-hide="p.type" style="position: absolute; top:-10px; left:100px; padding:0px; margin: 0px; width:75px" src="img/emoji{{p.id}}.png">
 		    <span class="badge {{p.qty>100 ? 'badge-balanced' : 'badge-assertive'}}">{{p.qty}}</span>
 		  </a>
     </ion-list>

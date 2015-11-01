@@ -22,7 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleLightContent();
     }
 
-    var productDesc = {"0":"Smiley1","1":"Smiley2","2":"Smiley3","3":"Smiley4","4":"Smiley5","5":"Smiley6","6":"Smiley7","7":"Love","8":"Summer","9":"Joy","10":"Sun","11":"Beach","12":"Cool"};
+    var productDesc = {"1":"emoji1","2":"emoji2","3":"emoji3","4":"emoji4","5":"emoji5","6":"emoji6","7":"Love","8":"Summer","9":"Joy","10":"Sun","11":"Beach","12":"Cool"};
 
     $rootScope.getProductName = function(prod)
     {

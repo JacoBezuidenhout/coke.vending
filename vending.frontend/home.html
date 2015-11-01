@@ -5,7 +5,9 @@
 	<meta charset="UTF-8">
 	<script type="text/javascript" src="peer.min.js"></script>
 	<script type="text/javascript" src="home.js"></script>
+	<script type="text/javascript" src="home.js"></script>
 	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="sails.io.js"></script>
 	<link rel="stylesheet" href="home.css">
 
 </head>
@@ -36,6 +38,9 @@
 </div>
  
 <script>
+	io.sails.url = 'http://192.168.0.2:80';
+	var productDesc = {"1":"emoji1","2":"emoji2","3":"emoji3","4":"emoji4","5":"emoji5","6":"emoji6","7":"Love","8":"Summer","9":"Joy","10":"Sun","11":"Beach","12":"Cool"};
+
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
 	nwin.enterFullscreen();
@@ -60,6 +65,17 @@
 	    videoScreen();
 	  }
 
+	  function map(id) {
+	  	return productDesc[id];
+	  }
+
+	  function loadNext(){
+	  	io.socket.get('/order?picture=false&limit=1', function serverResponded (body, JWR) {
+	  		console.log(body);
+  			startScreen(body[0].teamName, map(body[0].smileyOne.id), map(body[0].smileyTwo.id), map(body[0].stickerOne.id), map(body[0].smileyTwo.id));
+	  	});
+	  }
+
 	  function done(){
 	    $("#leftStatic").fadeOut(500);
 	    $("#rightStatic").fadeOut(500);
@@ -67,7 +83,7 @@
 	    $("#rightLoad").fadeOut(500);
 	  	takeImage(function(){
 	  		setTimeout(function(){
-
+	  			loadNext();
 	  		},4000);
 	  	});
 	  }
@@ -100,17 +116,22 @@
 		var peer = new Peer('sender', {host: '192.168.0.2', port: 9000, path: '/', key: 'peerjs'});
 		peer.on('open', function(conn) {
 			console.log("OPEN");
-			startScreen("Summer", "emoji1", "emoji2", "Love", "Together");
 		});	
+
 		peer.on('connection', function(conn) {
 			console.log("Another Connected");
 			conn.on('data', function(data){
 			    // Will print 'hi!'
 				console.log(data);
-				if (data == "hi!") peer.call('rec', videoStream);
+				if (data == "hi!") 
+				{
+					loadNext();
+					peer.call('rec', videoStream);
+				}
 				if (data == "start") start();
 				if (data == "done") done();
 				if (data[0] == "L") startL(parseInt(data[1]));
+				if (data[0] == "R") startR(parseInt(data[1]));
 			});
 		});
 	}
