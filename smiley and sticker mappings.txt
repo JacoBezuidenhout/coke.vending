@@ -1,0 +1,21 @@
+Type 1 => Stickers
++++++++++++++++++++
+
+id: 1 => Fun
+id: 2 => Together
+id: 3 => Holiday
+id: 4 => Summer
+id: 5 => Forever
+id: 6 => Love
+
+
+Type 0 => Smiley
++++++++++++++++++
+
+id: 7 => first_emoji
+id: 8 => second_emoji
+id: 9 => third_emoji
+id: 10 => fourth_emoji
+id: 11 => fifth_emoji
+id: 12 => sixth_emoji
+
