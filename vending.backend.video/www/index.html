@@ -14,23 +14,81 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script> 
-    <script src="lib/socket.io-client/socket.io.js"></script>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="peer.min.js"></script>
     <script type="text/javascript">
-      var peer = new Peer('rec', {host: 'localhost', port: 9000, path: '/'});
-      var conn = peer.connect('sender');
-      conn.on('open', function(){
-        conn.send('hi!');
-        peer.on('call', function(call) {
-            console.log("CALLING");
-            call.answer();
-            call.on('stream', function(remoteStream) {
-              var video = document.querySelector('video');
-              video.src = window.URL.createObjectURL(remoteStream);
-              console.log("GOT STREAM");
-            });
+      var peer = new Peer('rec', {host: '192.168.0.2', port: 9000, path: '/'});
+      var conn = peer.connect('sender'); 
+      
+      function start(){
+        conn.send('start');
+        $("#btnStart").hide();
+        $("#btnDone").show();
+        $("#leftStatic").show();
+        $("#rightStatic").show();
+
+      }
+
+      function done(){
+        conn.send('done');
+        $("#btnDone").hide();
+        $("#btnStart").show();
+        $("#leftStatic").fadeOut(500);
+        $("#rightStatic").fadeOut(500);
+        $("#leftLoad").fadeOut(500);
+        $("#rightLoad").fadeOut(500);
+
+      }
+
+      function startL(time){
+        conn.send('L' + time.toString());
+        if (time > 0)
+          $("#leftLoad").fadeIn(500);
+        else
+          $("#leftLoad").fadeOut(500);
+      }
+
+      function startR(time){
+        conn.send('R' + time.toString());
+        if (time > 0)
+          $("#rightLoad").fadeIn(500);
+        else
+          $("#rightLoad").fadeOut(500);
+      }
+      
+      $(document).ready(function(){
+        $("#leftLoad").hide();
+        $("#rightLoad").hide();
+        
+        $("#leftStatic").hide();
+        $("#rightStatic").hide();
+
+        $("#btnDone").hide();
+        
+        peer.on('data', function(data) {
+          if (data == "started")
+          {
+            console.log("hide button");
+          }
+          if (data == "done")
+          {
+            console.log("show button");
+          }
         });
-      });
+
+        conn.on('open', function(){
+          conn.send('hi!');
+          peer.on('call', function(call) {
+              console.log("CALLING");
+              call.answer();
+              call.on('stream', function(remoteStream) {
+                var video = document.querySelector('video');
+                video.src = window.URL.createObjectURL(remoteStream);
+                console.log("GOT STREAM");
+              });
+          });
+        });
+      })
 
     </script>
     <!-- cordova script (this will be a 404 during development) -->
@@ -54,7 +112,35 @@
       Templates are in the /templates folder (but you could also
       have templates inline in this html file if you'd like).
     -->
-    <video id="video" style="width:100%" autoplay></video>
+    <div style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index:0;">
+      <video id="video" style="position: absolute; top: 0; left: 0; width:100%; height:100%;" autoplay></video>
+    </div>
+
+    <div style="position: absolute; bottom: 0; left: 0; width:100%; height:100%; z-index:2;">
+      <button style="position: absolute;bottom:100px;left:10%; width:100px;height:50px;" onclick="startL(0)">CANCEL</button>
+      <button style="position: absolute;bottom:200px;left:10%; width:100px;height:50px;" onclick="startL(1)">5 s</button>
+      <button style="position: absolute;bottom:300px;left:10%; width:100px;height:50px;" onclick="startL(2)">10 s</button>
+      <button style="position: absolute;bottom:400px;left:10%; width:100px;height:50px;" onclick="startL(3)">15 s</button>
+      <button style="position: absolute;bottom:500px;left:10%; width:100px;height:50px;" onclick="startL(4)">20 s</button>
+
+      <button id="btnStart" style="position: absolute;bottom:100px;left:50%; width:100px;height:50px;" onclick="start()">START</button>
+      <button id="btnDone" style="position: absolute;bottom:100px;left:50%; width:100px;height:50px;" onclick="done()">DONE</button>
+
+      <button style="position: absolute;bottom:100px;right:10%; width:100px;height:50px;" onclick="startR(0)">CANCEL</button>
+      <button style="position: absolute;bottom:200px;right:10%; width:100px;height:50px;" onclick="startR(1)">5 s</button>
+      <button style="position: absolute;bottom:300px;right:10%; width:100px;height:50px;" onclick="startR(2)">10 s</button>
+      <button style="position: absolute;bottom:400px;right:10%; width:100px;height:50px;" onclick="startR(3)">15 s</button>
+      <button style="position: absolute;bottom:500px;right:10%; width:100px;height:50px;" onclick="startR(4)">20 s</button>
+    </div>
     <!-- <ion-nav-view></ion-nav-view> -->
+    <div style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index:1;">
+      <div style="position: absolute;bottom:370px;right:25%; width:400px;height:400px;" id="rightLoad"><div class="circle"></div></div>
+      <div style="position: absolute;bottom:300px;right:25%; width:400px;height:400px;" id="rightStatic"><div class="circle1"></div></div>
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index:1;">
+      <div style="position: absolute;bottom:370px;left:25%; width:400px;height:400px;" id="leftLoad"><div class="circle"></div></div>
+      <div style="position: absolute;bottom:300px;left:25%; width:400px;height:400px;" id="leftStatic"><div class="circle1"></div></div>
+    </div>
+
   </body>
 </html>

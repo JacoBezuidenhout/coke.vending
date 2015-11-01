@@ -18,6 +18,11 @@ module.exports.bootstrap = function(cb) {
  //        template: process.cwd() + '/node_modules/sails-apidocs/views/template.jade',
  //        targetDir: process.cwd() + '/assets/docs/api'
 	// });
-
+	var PeerServer = require('peer').PeerServer;
+	var peerServer = PeerServer({port: 9000, path: '/'});
+  	peerServer.on('connection', function(id) { 
+  		console.log(id,"connected");
+  	});
+  	
   	cb();
 };

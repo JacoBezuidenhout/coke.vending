@@ -3,9 +3,9 @@
 <head>
 	<title>Coke Vending Frontend</title>
 	<meta charset="UTF-8">
-	<script type="text/javascript" src="./bower_components/socket.io-client/socket.io.js"></script>
 	<script type="text/javascript" src="peer.min.js"></script>
 	<script type="text/javascript" src="home.js"></script>
+	<script type="text/javascript" src="jquery.min.js"></script>
 	<link rel="stylesheet" href="home.css">
 
 </head>
@@ -24,39 +24,107 @@
 	<div id="vidDivContainer">
 		<video id="video" width="1920" height="1080" autoplay></video>
 	<div>
-</div>
 
+	<div style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index:1;">
+      <div style="position: absolute;bottom:370px;right:25%; width:400px;height:400px;" id="rightLoad"><div class="circle"></div></div>
+      <div style="position: absolute;bottom:300px;right:25%; width:400px;height:400px;" id="rightStatic"><div class="circle1"></div></div>
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index:1;">
+      <div style="position: absolute;bottom:370px;left:25%; width:400px;height:400px;" id="leftLoad"><div class="circle"></div></div>
+      <div style="position: absolute;bottom:300px;left:25%; width:400px;height:400px;" id="leftStatic"><div class="circle1"></div></div>
+    </div>
+</div>
+ 
 <script>
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
 	nwin.enterFullscreen();
 
-	startScreen("Summer", "emoji1", "emoji2", "Love", "Together");
-	videoScreen();
-	takeImage();
+	// setTimeout(function(){
+	// 	videoScreen();
+	// },2000);
+
+	// setTimeout(function(){
+	// 	takeImage();
+	// },4000);
 
  	/*changeBackgroundImg("videobackground");
 	changeSmileyOne("emoji1");
 	changeSmileyTwo("emoji2");
 	changePhraseOne("Summer");
 	changePhraseTwo("Fun");*/
+	
+	  function start(){
+	    $("#leftStatic").show();
+	    $("#rightStatic").show();
+	    videoScreen();
+	  }
 
-	var peer = new Peer('sender', {host: 'localhost', port: 9000, path: '/'});
-	peer.on('connection', function(conn) {
-	  conn.on('data', function(data){
-	    // Will print 'hi!'
-	    console.log(data);
-	  });
-	});
+	  function done(){
+	    $("#leftStatic").fadeOut(500);
+	    $("#rightStatic").fadeOut(500);
+	    $("#leftLoad").fadeOut(500);
+	    $("#rightLoad").fadeOut(500);
+	  	takeImage(function(){
+	  		setTimeout(function(){
 
-		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-		navigator.getUserMedia({video: true}, function(stream) {
-			var video = document.querySelector('video');
-			video.src = window.URL.createObjectURL(stream);
-		  	var call = peer.call('rec', stream);
-		}, function(err) {
-		  console.log('Failed to get local stream' ,err);
+	  		},4000);
+	  	});
+	  }
+
+	  function startL(time){
+	    if (time > 0)
+	      $("#leftLoad").fadeIn(500);
+	    else
+	      $("#leftLoad").fadeOut(500);
+	  }
+
+	  function startR(time){
+	    if (time > 0)
+	      $("#rightLoad").fadeIn(500);
+	    else
+	      $("#rightLoad").fadeOut(500);
+	  }
+	  
+	  $(document).ready(function(){
+	    $("#leftLoad").hide();
+	    $("#rightLoad").hide();
+	    
+	    $("#leftStatic").hide();
+	    $("#rightStatic").hide();
+	   });
+
+	var initPeer = function(videoStream)
+	{
+		console.log("InitStarted");
+		var peer = new Peer('sender', {host: '192.168.0.2', port: 9000, path: '/', key: 'peerjs'});
+		peer.on('open', function(conn) {
+			console.log("OPEN");
+			startScreen("Summer", "emoji1", "emoji2", "Love", "Together");
+		});	
+		peer.on('connection', function(conn) {
+			console.log("Another Connected");
+			conn.on('data', function(data){
+			    // Will print 'hi!'
+				console.log(data);
+				if (data == "hi!") peer.call('rec', videoStream);
+				if (data == "start") start();
+				if (data == "done") done();
+				if (data[0] == "L") startL(parseInt(data[1]));
+			});
 		});
+	}
+
+
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+	navigator.getUserMedia({video: true}, function(stream) {
+		var video = document.querySelector('video');
+		video.src = window.URL.createObjectURL(stream);
+		videoStream = stream;
+		initPeer(stream);
+	}, function(err) {
+	  console.log('Failed to get local stream' ,err);
+	});
 
 	// Not showing vendor prefixes.
 	// navigator.webkitGetUserMedia(vgaConstraints, function(localMediaStream) {
