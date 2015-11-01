@@ -9,6 +9,7 @@
 
 module.exports = {
 
+  connection: "local",
   attributes: {
   	type: {type:"integer",required: true},
   	qty: {type:"integer",required: true}
