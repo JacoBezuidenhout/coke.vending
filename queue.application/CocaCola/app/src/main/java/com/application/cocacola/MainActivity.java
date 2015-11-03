@@ -13,12 +13,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button nextButton;
     ValueContainer app;
     Typeface yourfont;
     TextView textViewTeam;
+
+    public ArrayList<Integer> inStockEmoji;
+    public ArrayList<Integer> inStockEmojiId;
 
     public int[] mResources = {
             R.drawable.first_emoji,
@@ -46,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
         textViewTeam = (TextView)findViewById(R.id.teamName);
         textViewTeam.setTypeface(yourfont);
 
+        inStockEmoji = new ArrayList<Integer>();
+        inStockEmojiId = new ArrayList<Integer>();
+
         if(app.getcheckedQty() == false) {
-            app.getQuantities();
+            checkQuantities();
             message("Quantities Updated");
             app.setcheckedQty(true);
         }
@@ -56,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        app.getQuantities();
+        checkQuantities();
         message("Quantities Updated");
     }
 
@@ -83,5 +92,50 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP|Gravity.CENTER,0,0);
         toast.show();
+    }
+
+    public void checkQuantities()
+    {
+        app.getQuantities();
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            //Handle exception
+        }
+
+        if(app.smileyOneQty > 1)
+        {
+            inStockEmoji.add(R.drawable.first_emoji);
+            inStockEmojiId.add(7);
+        }
+        if(app.smileyTwoQty > 1)
+        {
+            inStockEmoji.add(R.drawable.second_emoji);
+            inStockEmojiId.add(8);
+        }
+        if(app.smileyThreeQty > 1)
+        {
+            inStockEmoji.add(R.drawable.third_emoji);
+            inStockEmojiId.add(9);
+        }
+        if(app.smileyFourQty > 1)
+        {
+            inStockEmoji.add(R.drawable.fourth_emoji);
+            inStockEmojiId.add(10);
+        }
+        if(app.smileyFiveQty > 1)
+        {
+            inStockEmoji.add(R.drawable.fifth_emoji);
+            inStockEmojiId.add(11);
+        }
+        if(app.smileySixQty > 1)
+        {
+            inStockEmoji.add(R.drawable.sixth_emoji);
+            inStockEmojiId.add(12);
+        }
+
+        app.setInStockEmoji(inStockEmoji);
+        app.setInStockEmojiId(inStockEmojiId);
     }
 }

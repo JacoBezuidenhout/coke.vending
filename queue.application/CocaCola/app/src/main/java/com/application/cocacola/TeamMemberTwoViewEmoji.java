@@ -23,7 +23,7 @@ public class TeamMemberTwoViewEmoji extends MainActivity{
         submitButton.setOnClickListener(submitButtonListener);
         submitButton.setTypeface(yourfont);
 
-        mCustomPagerAdapter = new CustomPagerAdapter(this, mResources);
+        mCustomPagerAdapter = new CustomPagerAdapter(this, app.inStockEmoji);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setClipToPadding(false);
@@ -34,14 +34,14 @@ public class TeamMemberTwoViewEmoji extends MainActivity{
         mViewPager.setPadding(120, 0, 120, 0);
         mViewPager.setPageMargin(0);
         mViewPager.setAdapter(mCustomPagerAdapter);
-        mViewPager.setCurrentItem(3);
+       // mViewPager.setCurrentItem(3);
     }
 
     private final View.OnClickListener submitButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View arg0) {
 
-            if(mViewPager.getCurrentItem() == 0 && app.smileyOneQty < 1)
+            /*if(mViewPager.getCurrentItem() == 0 && app.smileyOneQty < 1)
             {
                 message("Current Item Out Of Stock");
             }
@@ -66,13 +66,13 @@ public class TeamMemberTwoViewEmoji extends MainActivity{
                 message("Current Item Out Of Stock");
             }
             else
-            {
+            {*/
                 app.setSmileyTwo(mViewPager.getCurrentItem());
 
                 Intent intent = new Intent(TeamMemberTwoViewEmoji.this, TeamMemberTwoPhrase.class);
                 startActivity(intent);
                 finish();
-            }
+            //}
         }
     };
 

@@ -8,21 +8,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 public class CustomPagerAdapter extends PagerAdapter
 {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private int[] mResources;
+ //   private int[] mResources;
 
-    public CustomPagerAdapter(Context context, int [] mresources) {
+    private ArrayList<Integer> mResources;
+
+    public CustomPagerAdapter(Context context, ArrayList in) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mResources = mresources;
+        mResources = in;
     }
 
     @Override
     public int getCount() {
-        return mResources.length;
+        return mResources.size();
     }
 
     @Override
@@ -35,7 +39,7 @@ public class CustomPagerAdapter extends PagerAdapter
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        imageView.setImageResource(mResources[position]);
+        imageView.setImageResource(mResources.get(position));
 
         container.addView(itemView);
 

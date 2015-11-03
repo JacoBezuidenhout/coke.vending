@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class ValueContainer extends Application{
 
@@ -38,6 +39,9 @@ public class ValueContainer extends Application{
     public boolean checkedQty;
     public boolean successfulOrder;
 
+    ArrayList<Integer> inStockEmoji;
+    ArrayList<Integer> inStockEmojiId;
+
     public ValueContainer()
     {
         teamName = "";
@@ -64,6 +68,19 @@ public class ValueContainer extends Application{
 
         checkedQty = false;
         successfulOrder = false;
+
+        inStockEmoji = null;
+        inStockEmojiId = null;
+    }
+
+    public void setInStockEmoji(ArrayList<Integer> in)
+    {
+        inStockEmoji = in;
+    }
+
+    public void setInStockEmojiId(ArrayList<Integer> in)
+    {
+        inStockEmojiId = in;
     }
 
     public boolean getcheckedQty()
@@ -84,7 +101,7 @@ public class ValueContainer extends Application{
 
     public void setSmileyOne(int smiley)
     {
-        if(smiley == 0)
+        /*if(smiley == 0)
         {
             smileyOne = 7;
         }
@@ -107,14 +124,23 @@ public class ValueContainer extends Application{
         else if(smiley == 5)
         {
             smileyOne = 12;
-        }
+        }*/
 
-        smileyOneArrVal = smiley;
+        /*for(int i = 0; i < inStockEmoji.size(); i++)
+        {
+
+        }*/
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+        System.out.println("smilet:  "+ smiley + "    " + inStockEmojiId.get(smiley));
+
+        smileyOneArrVal = inStockEmojiId.get(smiley);
+
+       // smileyOneArrVal = smiley;
     }
 
     public void setSmileyTwo(int smiley)
     {
-        if(smiley == 0)
+        /*if(smiley == 0)
         {
             smileyTwo = 7;
         }
@@ -137,9 +163,9 @@ public class ValueContainer extends Application{
         else if(smiley == 5)
         {
             smileyTwo = 12;
-        }
+        }*/
 
-        smileyTwoArrVal = smiley;
+        smileyTwoArrVal = inStockEmojiId.get(smiley);
     }
 
     public void setStickerOne(int sticker)
@@ -331,7 +357,7 @@ public class ValueContainer extends Application{
 
             String paramaters = "?id=" + id;
             //String url = "http://coke.peoplesoft.co.za/product" + paramaters;
-            String url = "192.168.0.2:8080/product" + paramaters;
+            String url = "http://192.168.0.2:8080/product" + paramaters;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -371,7 +397,7 @@ public class ValueContainer extends Application{
         public void sendPost(String order) throws Exception {
 
             //String url = "http://coke.peoplesoft.co.za/order/create";
-            String url = "192.168.0.2:8080/order/create";
+            String url = "http://192.168.0.2:8080/order/create";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
