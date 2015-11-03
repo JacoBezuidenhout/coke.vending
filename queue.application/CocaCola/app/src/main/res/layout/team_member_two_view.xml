@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/second_emoji_screen"
+    tools:context=".TeamMemberTwoView"
+    android:weightSum="1">
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="232dp"
+        android:layout_marginTop="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </android.support.v4.view.ViewPager>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/submitButton"
+        android:background="@drawable/navbutton"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/pager"
+        android:layout_alignEnd="@+id/pager"
+        android:layout_alignLeft="@+id/pager"
+        android:layout_alignStart="@+id/pager"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp" />
+
+</RelativeLayout>
