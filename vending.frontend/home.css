@@ -9,6 +9,11 @@ body
     src: url(".//assets/fonts/coke.otf");
 }
 
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 #vidDivImg
 {
   position:fixed;
