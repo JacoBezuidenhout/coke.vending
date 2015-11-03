@@ -110,6 +110,7 @@
 	    $("#rightStatic").hide();
 	   });
 
+
 	var initPeer = function(videoStream)
 	{
 		console.log("InitStarted");
@@ -135,10 +136,19 @@
 			});
 		});
 	}
-
+	var vgaConstraints = {
+	 "audio": false,
+	 "video": {
+	  "mandatory": {
+	   "minWidth": 1920,
+	   "minHeight": 1080
+	   // "minFrameRate": 30
+	  }
+	 }
+	}
 
 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-	navigator.getUserMedia({video: true}, function(stream) {
+	navigator.getUserMedia(vgaConstraints, function(stream) {
 		var video = document.querySelector('video');
 		video.src = window.URL.createObjectURL(stream);
 		videoStream = stream;
