@@ -132,3 +132,10 @@ function clearScreen()
   changePhraseTwo("")
   changeTeamName("")
 }
+
+function playSound(soundFile)
+{
+  var audio = new Audio(".//assets/audio/" + soundFiles[soundFile]);
+  audio.play();
+  console.log("Played sound");
+}

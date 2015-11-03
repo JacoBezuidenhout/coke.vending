@@ -22,7 +22,6 @@
 	<p id="phraseOne"></p>
 	<p id="phraseTwo"></p>
 
-
 	<div id="vidDivContainer">
 		<video id="video" width="1920" height="1080" autoplay></video>
 	<div>
@@ -36,10 +35,11 @@
       <div style="position: absolute;bottom:300px;left:25%; width:400px;height:400px;" id="leftStatic"><div class="circle1"></div></div>
     </div>
 </div>
- 
+
 <script>
 	io.sails.url = 'http://127.0.0.1:8080';
 	var productDesc = {"1":"emoji1","2":"emoji2","3":"emoji3","4":"emoji4","5":"emoji5","6":"emoji6","7":"Love","8":"Summer","9":"Joy","10":"Sun","11":"Beach","12":"Cool"};
+	var soundFiles = ["Aweh.m4a" , "FacialRecognitionComplete.m4a" , "GetReadyToMimic.m4a" , "ImNotFeelingYouTryOneMoreTime.m4a" , "LetsTryThatOneMoreTime.m4a" , "SoManyFeelingsSoLittleTime.m4a" , "ThankYouForSharingYourFeelings.m4a" , "WellArentYouTwoGoodLooking.m4a" , "WhatBeautifulFaces.m4a" , "YouGuysMadeMeBlush.m4a" , "YouTwoWereAmazing.m4a"];
 
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
@@ -58,7 +58,7 @@
 	changeSmileyTwo("emoji2");
 	changePhraseOne("Summer");
 	changePhraseTwo("Fun");*/
-	
+
 	  function start(){
 	    $("#leftStatic").show();
 	    $("#rightStatic").show();
@@ -101,11 +101,11 @@
 	    else
 	      $("#rightLoad").fadeOut(500);
 	  }
-	  
+
 	  $(document).ready(function(){
 	    $("#leftLoad").hide();
 	    $("#rightLoad").hide();
-	    
+
 	    $("#leftStatic").hide();
 	    $("#rightStatic").hide();
 	   });
@@ -114,18 +114,18 @@
 	var initPeer = function(videoStream)
 	{
 		console.log("InitStarted");
-		var peer = new Peer('sender', {host: '127.0.0.1', port: 
+		var peer = new Peer('sender', {host: '127.0.0.1', port:
 9000, path: '/', key: 'peerjs'});
 		peer.on('open', function(conn) {
 			console.log("OPEN");
-		});	
+		});
 
 		peer.on('connection', function(conn) {
 			console.log("Another Connected");
 			conn.on('data', function(data){
 			    // Will print 'hi!'
 				console.log(data);
-				if (data == "hi!") 
+				if (data == "hi!")
 				{
 					loadNext();
 					peer.call('rec', videoStream);
