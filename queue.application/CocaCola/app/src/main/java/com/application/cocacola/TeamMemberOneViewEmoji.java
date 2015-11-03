@@ -1,15 +1,14 @@
 package com.application.cocacola;
 
 
+
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class TeamMemberOneViewEmoji extends MainActivity  {
 
@@ -30,6 +29,9 @@ public class TeamMemberOneViewEmoji extends MainActivity  {
         mCustomPagerAdapter = new CustomPagerAdapter(this, mResources);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setClipToPadding(false);
+
+        mViewPager.addOnPageChangeListener(pageList);
+
         // setPadding (int left, int top, int right, int bottom)
         mViewPager.setPadding(120, 0, 120, 0);
         mViewPager.setPageMargin(0);
@@ -74,6 +76,26 @@ public class TeamMemberOneViewEmoji extends MainActivity  {
                 startActivity(intent);
                 finish();
             }
+        }
+    };
+
+    public ViewPager.OnPageChangeListener pageList = new ViewPager.OnPageChangeListener()
+    {
+        @Override
+        public void onPageSelected(int arg1)
+        {
+            mViewPager.playSoundEffect(SoundEffectConstants.CLICK);
+           // mViewPager.playSoundEffect(AudioManager.FX_KEY_CLICK);
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2)
+        {
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0)
+        {
         }
     };
 
