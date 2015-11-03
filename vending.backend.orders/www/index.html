@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -16,7 +17,7 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/sails.io.js/dist/sails.io.js"></script>
     <script type="text/javascript">
-      io.sails.url = 'http://192.168.0.2:80';
+      io.sails.url = 'http://192.168.0.2:8080';
     </script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -26,19 +27,63 @@
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="starter" style="background-color:#d90202">
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
-    <ion-nav-bar ng-style="{'background-color': navColor}">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-    </ion-nav-bar>
+
+    <div class="bar bar-header bar-assertive">
+      <h1 class="title">Coke Vending Orders</h1>
+    </div>
     <!--
       The views will be rendered in the <ion-nav-view> directive below
       Templates are in the /templates folder (but you could also
       have templates inline in this html file if you'd like).
     -->
-    <ion-nav-view></ion-nav-view>
+    <!-- <ion-nav-view></ion-nav-view> -->
+    <ion-content class="padding">
+    <br>
+    <br>
+    <div class="row">
+      <div class="col col-75" ng-controller="DashCtrl">
+            <div class="list card" ng-hide="orders.length">
+              <div class="item item-divider">No Orders Yet</div>
+              <div class="item item-body">
+                <div>
+                </div>
+              </div>
+            </div>
+          
+            <div class="list card" ng-repeat="o in orders" on-swipe-left="done($index,o)">
+              <div class="item item-divider">{{o.teamName}}</div>
+              <div class="item item-body" style="padding:0px;">
+                <div>
+                  <div class="row"> 
+                    <div class="col" style="text-align:center"><br/><b>{{getProductName(o.stickerOne)}}</b></div>
+                    <div class="col" style="text-align:center"><img style="position: absolute; top:-10px; left:150px; padding:0px; margin: 0px; width:75px" src="img/emoji{{o.smileyOne.id}}.png"></div>|
+                    <div class="col" style="text-align:center"><img style="position: absolute; top:-10px; right:150px; padding:0px; margin: 0px; width:75px" src="img/emoji{{o.smileyTwo.id}}.png"></div>
+                    <div class="col" style="text-align:center"><br/><b>{{getProductName(o.stickerTwo)}}</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="col" ng-controller="AccountCtrl">
+            <div class="list card">
+              <div class="item item-divider" ng-style="{'background-color': navColor}">Stock QTY</div>
+              <div class="item item-body" style="padding:0px;">
+                <ion-list>
+                    <a ng-repeat="p in products" class="item item-icon-left" ng-click="addStock(p)">
+                    <i class="icon {{p.type ? 'ion-closed-captioning' : 'ion-happy-outline'}}"></i>
+                    {{getProductName(p)}}
+                    <img ng-hide="p.type" style="position: absolute; top:-10px; left:100px; padding:0px; margin: 0px; width:75px" src="img/emoji{{p.id}}.png">
+                    <span class="badge {{p.qty>100 ? 'badge-balanced' : 'badge-assertive'}}">{{p.qty}}</span>
+                  </a>
+                </ion-list>
+              </div>
+            </div>
+      </div>
+    </div>
+    </ion-content>
   </body>
 </html>

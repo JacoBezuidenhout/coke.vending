@@ -5,9 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+var URL = "http://192.168.0.2:8080";
+
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform,$rootScope) {
+.run(function($ionicPlatform,$rootScope,$http) {
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -31,14 +33,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     $rootScope.updateStock = function()
     {
-      io.socket.get('/product', function serverResponded (body, JWR) {
-        if (JWR.statusCode == 200)
+      $http.get(URL + '/product')
+      .then(function(data) {
+        // console.log(data);
+        if (data.data)
         {
-          console.log('Sails responded with: ', body);
-          $rootScope.products = body;
+          console.log('Sails responded with: ', $rootScope.products);
+          $rootScope.products = data.data;
           $rootScope.warning = false;
-          for (var i = 0; i < body.length; i++) {
-            if (body[i].qty < 100)
+          for (var i = 0; i < $rootScope.products.length; i++) {
+            if ($rootScope.products[i].qty < 100)
             {
               $rootScope.warning = true;
             }
@@ -48,6 +52,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         {
           console.log('ERR');
         }
+      },function(err){
+        console.log(JSON.stringify(err));
       });
     }
 
@@ -70,10 +76,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'index.html'
   })
 
   // Each tab has its own nav history stack:
@@ -84,6 +90,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
         controller: 'DashCtrl'
+      },
+      'tab-account': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
       }
     }
   })

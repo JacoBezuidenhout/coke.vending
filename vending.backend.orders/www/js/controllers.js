@@ -1,18 +1,26 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope,$rootScope) {
+.controller('DashCtrl', function($scope,$rootScope,$http) {
+  $scope.orders = [];
 
-  io.socket.get('/order?done=false', function serverResponded (body, JWR) {
-    if (JWR.statusCode == 200)
-    {
-      console.log('Sails responded with: ', body);
-      $scope.orders = body;
-    }
-    else
-    {
-      console.log('ERR');
-    }
-  });
+  var updateOrders = function()
+  {
+    $http.get(URL+'/order?done=false')
+    .then(function(body) {
+      if (body.data)
+      {
+        console.log('Sails responded with: ', body);
+        $scope.orders = body.data;
+      }
+      else
+      {
+        console.log('ERR');
+      }
+    },function(err){
+      console.log(err);
+    });
+  }
+  updateOrders();
   
   setInterval(function(){
     if ($rootScope.warning)
@@ -34,38 +42,28 @@ angular.module('starter.controllers', [])
     {
       $rootScope.navColor = 'grey';
     }
-
+    updateOrders();
   },1000);
-
-  io.socket.on('order', function serverResponded (body, JWR) {
-      console.log('Sails responded with: ', body);
-      if (body.verb == "created")
-      {
-        body.data.smileyOne = {id:body.data.smileyOne};
-        body.data.smileyTwo = {id:body.data.smileyTwo};
-        body.data.stickerOne = {id:body.data.stickerOne};
-        body.data.stickerTwo = {id:body.data.stickerTwo};
-        $scope.$applyAsync(function(){
-          $scope.orders.push(body.data);
-        })
-      }
-  });
 
   $scope.done = function(index,o)
   {
     console.log(index,o);
-    io.socket.post("/order/update/" + o.id, {done:true}, function serverResponded (body, JWR) {
-      console.log('UPDATE: ', body);
-      if (body)
+    $http.post(URL + "/order/update/" + o.id, {done:true})
+    .then(function(body) {
+      console.log('UPDATE: ', body.data);
+      if (body.data)
       {
-        if (body.done)
+        if (body.data.done)
         {
-          $scope.$applyAsync(function(){
-            $scope.orders.splice(index, 1);
-          });
+          // $scope.$applyAsync(function(){
+          //   $scope.orders.splice(index, 1);
+          // });
+          updateOrders();
         }
       }
       // return $scope.data.wifi;
+    },function(err){
+      console.log(err);
     });
   }
 
@@ -77,7 +75,7 @@ angular.module('starter.controllers', [])
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //
-  //$scope.$on('$ionicView.enter', function(e) {
+  //$scope.$on('$ionicView.enter', function(e) { 
   //});
 
   $scope.chats = Chats.all();
@@ -110,10 +108,13 @@ angular.module('starter.controllers', [])
               e.preventDefault();
             } else {
               console.log({qty:p.qty+$scope.stock.qty});
-              io.socket.post("/product/update/" + p.id, {qty:p.qty+$scope.stock.qty}, function serverResponded (body, JWR) {
-                console.log('UPDATE: ', body);
+              $http.post(URL+"/product/update/" + p.id, {qty:p.qty+$scope.stock.qty})
+              .then(function serverResponded (body) {
+                console.log('UPDATE: ', body.data);
                 $rootScope.updateStock();
                 // return $scope.data.wifi;
+              },function(err){
+                console.log(err);
               });
             }
           }

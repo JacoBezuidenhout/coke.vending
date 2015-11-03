@@ -1,14 +1,14 @@
 /* Empty. Add your own CSS if you like */
 .circle {
     background-color: rgba(0,0,0,0);
-    border: 20px solid rgba(217,2,2,0.9);
+    border: 10px solid rgba(217,2,2,0.9);
     opacity: .9;
-    border-right: 20px solid rgba(0,0,0,0);
-    border-left: 20px solid rgba(0,0,0,0);
+    border-right: 10px solid rgba(0,0,0,0);
+    border-left: 10px solid rgba(0,0,0,0);
     border-radius: 320px;
     box-shadow: 0 0 35px #d90202;
-    width: 320px;
-    height: 320px;
+    width: 100px;
+    height: 100px;
     margin: 0 auto;
     -moz-animation: spinPulse 1s infinite ease-in-out;
     -webkit-animation: spinPulse 1s infinite linear;
@@ -16,14 +16,14 @@
 
 .circle1 {
     background-color: rgba(0,0,0,0);
-    border: 20px solid rgba(217,2,2,0.9);
+    border: 10px solid rgba(217,2,2,0.9);
     opacity: .9;
-    border-left: 20px solid rgba(0,0,0,0);
-    border-right: 20px solid rgba(0,0,0,0);
+    border-left: 10px solid rgba(0,0,0,0);
+    border-right: 10px solid rgba(0,0,0,0);
     border-radius: 280px;
     box-shadow: 0 0 15px #d90202;
-    width: 280px;
-    height: 280px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto;
     position: relative;
     top: -50px;
