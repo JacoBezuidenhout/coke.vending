@@ -94,12 +94,18 @@ public class TeamMemberOnePhrase extends MainActivity {
         }
 
         ImageView imageView = (ImageView) findViewById(R.id.imageViewOne);
-        imageView.setImageResource(mResources[app.getSmileyOneArrVal()]);
+
+        for(int i=0 ; i< app.inStockEmojiId.size(); i++)
+        {
+            if(app.inStockEmojiId.get(i) == app.getSmileyOneArrVal())
+            {
+                imageView.setImageResource(app.inStockEmoji.get(i));
+            }
+        }
+
 
         textViewRadio = (TextView)findViewById(R.id.textViewRadio);
         textViewRadio.setTypeface(yourfont);
-        setHeadingText(textViewRadio, "Together");
-        app.setStickerOne(2);
     }
 
     private final View.OnClickListener nextButtonListener = new View.OnClickListener() {

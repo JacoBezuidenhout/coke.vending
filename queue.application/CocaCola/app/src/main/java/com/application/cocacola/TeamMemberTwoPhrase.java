@@ -93,12 +93,57 @@ public class TeamMemberTwoPhrase extends MainActivity {
         }
 
         ImageView imageView = (ImageView) findViewById(R.id.imageViewTwo);
-        imageView.setImageResource(mResources[app.getSmileyTwoArrVal()]);
+
+        for(int i=0 ; i< app.inStockEmojiId.size(); i++)
+        {
+            if(app.inStockEmojiId.get(i) == app.getSmileyTwoArrVal())
+            {
+                imageView.setImageResource(app.inStockEmoji.get(i));
+            }
+        }
 
         textViewRadio = (TextView)findViewById(R.id.textViewRadio);
         textViewRadio.setTypeface(yourfont);
-        setHeadingText(textViewRadio, "Together");
-        app.setStickerTwo(2);
+
+        removeUsedPhrase();
+    }
+
+
+    public void removeUsedPhrase()
+    {
+        app.getStickerOne();
+
+        if(app.getStickerOne() == 1)
+        {
+            radioFun.setEnabled(false);
+            radioFun.setVisibility(View.INVISIBLE);
+        }
+        else if(app.getStickerOne() == 2)
+        {
+            radioTogether.setEnabled(false);
+            radioTogether.setVisibility(View.INVISIBLE);
+        }
+        else if(app.getStickerOne() == 3)
+        {
+            radioHoliday.setEnabled(false);
+            radioHoliday.setVisibility(View.INVISIBLE);
+        }
+        else if(app.getStickerOne() == 4)
+        {
+            radioSummer.setEnabled(false);
+            radioSummer.setVisibility(View.INVISIBLE);
+        }
+        else if(app.getStickerOne() == 5)
+        {
+            radioForever.setEnabled(false);
+            radioForever.setVisibility(View.INVISIBLE);
+        }
+        else if(app.getStickerOne() == 6)
+        {
+            radioLove.setEnabled(false);
+            radioLove.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private final View.OnClickListener submitButtonListener = new View.OnClickListener() {
