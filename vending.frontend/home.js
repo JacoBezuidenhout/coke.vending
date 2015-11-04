@@ -110,7 +110,7 @@ function takeImage(cb)
                 setTimeout(function()
                 {
                   console.log("Photo was taken");
-                  changeBackgroundImg("");
+                  changeBackgroundImg("videobackground");
                   setTimeout(function(){
                     takeSnapshot();
                     setTimeout(function(){
