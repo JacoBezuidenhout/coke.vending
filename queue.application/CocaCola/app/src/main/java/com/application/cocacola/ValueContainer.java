@@ -398,7 +398,7 @@ public class ValueContainer extends Application{
         // HTTP POST request
         public void sendPost(String order) throws Exception {
 
-           // String url = "http://coke.peoplesoft.co.za/order/create";
+            //String url = "http://coke.peoplesoft.co.za/order/create";
             String url = "http://192.168.0.2:8080/order/create";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
