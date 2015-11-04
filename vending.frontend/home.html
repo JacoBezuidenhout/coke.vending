@@ -46,6 +46,13 @@ id: 6 => Love -->
 	var productDesc = {"7":"emoji1","8":"emoji2","9":"emoji3","10":"emoji4","11":"emoji5","12":"emoji6","1":"Fun","2":"Together","3":"Holiday","4":"Summer","5":"Forever","6":"Love"};
 
 	var soundFiles = ["Aweh.m4a" , "FacialRecognitionComplete.m4a" , "GetReadyToMimic.m4a" , "ImNotFeelingYouTryOneMoreTime.m4a" , "LetsTryThatOneMoreTime.m4a" , "SoManyFeelingsSoLittleTime.m4a" , "ThankYouForSharingYourFeelings.m4a" , "WellArentYouTwoGoodLooking.m4a" , "WhatBeautifulFaces.m4a" , "YouGuysMadeMeBlush.m4a" , "YouTwoWereAmazing.m4a"];
+	
+	var soundFilesGetReady = ["GetReadyToMimic.m4a","SoManyFeelingsSoLittleTime.m4a"];
+	var soundFilesSuccess = ["Aweh.m4a","FacialRecognitionComplete.m4a"];
+	var soundFilesError = ["ImNotFeelingYouTryOneMoreTime.m4a","LetsTryThatOneMoreTime.m4a"];
+	var soundFilesPicture = ["ThankYouForSharingYourFeelings.m4a","WhatBeautifulFaces.m4a","YouGuysMadeMeBlush.m4a","YouTwoWereAmazing.m4a","WellArentYouTwoGoodLooking.m4a"];
+
+
 	var next = true;
 
 	var ngui = require('nw.gui');
@@ -71,6 +78,7 @@ id: 6 => Love -->
 	    $("#leftStatic").show();
 	    $("#rightStatic").show();
 	    videoScreen();
+	    playSound(soundFilesGetReady);
 	  }
 
 	  function map(id) {
@@ -111,11 +119,13 @@ id: 6 => Love -->
 	    $("#rightStatic").fadeOut(500);
 	    $("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
+	    playSound(soundFilesSuccess);
 	    changeBackgroundImg("awesome");
 	  }
 
 	  function takePicture(){
 	  	takeImage(function(){
+	  		playSound(soundFilesPicture);
 	  		io.socket.get('/order/update/' + currentId + '?done=true', function serverResponded (body, JWR) {
 		  		setTimeout(function(){
 		  			loadNext();
@@ -126,6 +136,7 @@ id: 6 => Love -->
 	
 	  function cancel()
 	  {
+	  	playSound(soundFilesError);
 	  	$("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
 	  }

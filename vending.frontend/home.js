@@ -139,9 +139,10 @@ function clearScreen()
   changeTeamName("")
 }
 
-function playSound(soundFile)
+function playSound(soundFileArr)
 {
-  var audio = new Audio(".//assets/audio/" + soundFiles[soundFile]);
+  var soundFile = soundFileArr[Math.floor(Math.random()*soundFileArr.length)];
+  var audio = new Audio(".//assets/audio/" + soundFile);
   audio.play();
   console.log("Played sound");
 }
