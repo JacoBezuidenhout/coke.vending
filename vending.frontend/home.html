@@ -116,9 +116,11 @@ id: 6 => Love -->
 
 	  function takePicture(){
 	  	takeImage(function(){
-	  		setTimeout(function(){
-	  			loadNext();
-	  		},4000);
+	  		io.socket.get('/order/update/' + currentId + '?done=true', function serverResponded (body, JWR) {
+		  		setTimeout(function(){
+		  			loadNext();
+		  		},4000);
+	  		});
 	  	});
 	  };
 	
