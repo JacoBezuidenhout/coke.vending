@@ -5,7 +5,7 @@
   "window": {
     "title": "Coke Vending",
     "icon": "icon.png",
-    "toolbar": true,
+    "toolbar": false,
     "frame": false,
     "position": "center",
     "width": 800,
