@@ -62,9 +62,9 @@ id: 6 => Love -->
 	var next = true;
 	var connGlobal = {};
 
-	// var ngui = require('nw.gui');
-	// var nwin = ngui.Window.get();
-	// nwin.enterFullscreen();
+	var ngui = require('nw.gui');
+	var nwin = ngui.Window.get();
+	nwin.enterFullscreen();
 
 	var leftStatic = document.getElementById("leftStatic");
 	var rightStatic = document.getElementById("rightStatic");
@@ -192,12 +192,12 @@ id: 6 => Love -->
 	  }
 
 	  $(document).ready(function(){
-	    // $("#leftLoad").hide();
-	    // $("#rightLoad").hide();
-	    // $("#leftStatic").hide();
-	    // $("#rightStatic").hide();
-	   //  changeBackgroundImg("main");
-  		// changeTeamName("Not Connected...");
+	    $("#leftLoad").hide();
+	    $("#rightLoad").hide();
+	    $("#leftStatic").hide();
+	    $("#rightStatic").hide();
+	    changeBackgroundImg("main");
+  		changeTeamName("Not Connected...");
     	
     	TweenMax.to(leftStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
     	TweenMax.to(rightStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
