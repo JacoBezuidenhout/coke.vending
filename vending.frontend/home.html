@@ -66,6 +66,11 @@ id: 6 => Love -->
 	// var nwin = ngui.Window.get();
 	// nwin.enterFullscreen();
 
+	var leftStatic = document.getElementById("leftStatic");
+	var rightStatic = document.getElementById("rightStatic");
+	var leftLoad = document.getElementById("leftLoad");
+	var rightLoad = document.getElementById("rightLoad");
+
 	var currentId = 'noId'; 
 	// setTimeout(function(){
 	// 	videoScreen();
@@ -193,11 +198,14 @@ id: 6 => Love -->
 	    // $("#rightStatic").hide();
 	   //  changeBackgroundImg("main");
   		// changeTeamName("Not Connected...");
-  		var leftStatic = document.getElementById("leftStatic");
-  		var rightStatic = document.getElementById("rightStatic");
     	
     	TweenMax.to(leftStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
     	TweenMax.to(rightStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
+
+    	TweenMax.to(leftLoad, 1, {rotation:"360", transformOrigin:"200px 180px", repeat:-1, yoyo: true});
+    	TweenMax.to(rightLoad, 1, {rotation:"360", transformOrigin:"200px 180px", repeat:-1, yoyo: true});
+
+
     	console.log("COOL");
 	   });
 
