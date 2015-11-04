@@ -88,7 +88,9 @@
 
         conn.on('open', function(){
           conn.send('hi!');
-          
+          conn.on('data', function(data){
+            document.getElementById("info").innerHTML = data;
+          });
           setInterval(function(){
             if (!onCall) conn.send('hi!');
           },1000);
@@ -131,6 +133,8 @@
     <div style="position: absolute; bottom: 0; left: 0; width:100%; height:100%; z-index:2;">
       <button style="position: absolute;bottom:50px;left:10%; width:200px;height:150px;" onclick="startL(0)"><b>CANCEL</b></button>
       <button style="position: absolute;top:100px;left:10%; width:200px;height:150px;" onclick="startL(1)"><b>START</b></button>
+
+      <p id="info" style="position: absolute;top:150px;left:40%; width:20%;height:100px; color:#ffffff;" ></p>
 
       <button id="btnStart" style="position: absolute;bottom:50px;left:40%; width:20%;height:100px;" onclick="start()"><b>START INTERACTION</b></button>
       <button id="btnPicture" style="position: absolute;bottom:50px;left:40%; width:20%;height:100px;" onclick="takePicture()"><b>TAKE PICTURE</b></button>

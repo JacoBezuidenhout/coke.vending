@@ -54,6 +54,7 @@ id: 6 => Love -->
 
 
 	var next = true;
+	var connGlobal = {};
 
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
@@ -111,9 +112,15 @@ id: 6 => Love -->
 	  		{
 	  			currentId = body[0].id;
   				startScreen(body[0].teamName, map(body[0].smileyOne.id), map(body[0].smileyTwo.id), map(body[0].stickerOne.id), map(body[0].stickerTwo.id));
+  				if (connGlobal.send)
+  					connGlobal.send(body[0].teamName);
 	  		}
   			else
   			{
+  				changeBackgroundImg("main");
+  				changeTeamName("No Orders...");
+  				if (connGlobal.send)
+  					connGlobal.send("No Orders...");
   				setTimeout(function(){
   					loadNext();
   				},1000);
@@ -134,6 +141,7 @@ id: 6 => Love -->
 	  	takeImage(function(){
 	  		playSound(soundFilesPicture);
 	  		io.socket.get('/order/update/' + currentId + '?done=true', function serverResponded (body, JWR) {
+		  		currentId = 'noId'; 
 		  		setTimeout(function(){
 		  			loadNext();
 		  		},4000);
@@ -181,6 +189,7 @@ id: 6 => Love -->
 		});
 
 		peer.on('connection', function(conn) {
+			connGlobal = conn;
 			console.log("Another Connected");
 			conn.on('data', function(data){
 				console.log(data);
@@ -190,7 +199,11 @@ id: 6 => Love -->
 				}
 
 				if (data == "ready") ready();
-				if (data == "start") start();
+				if (data == "start") 
+				{
+					if (currentId != 'noId')	
+						start();
+				}
 				if (data == "takeImage") takePicture();
 				if (data == "done") done();
 				if (data[0] == "L") startL(parseInt(data[1]));
