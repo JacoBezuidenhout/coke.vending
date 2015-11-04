@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
         textViewTeam = (TextView)findViewById(R.id.teamName);
         textViewTeam.setTypeface(yourfont);
 
-        inStockEmoji = new ArrayList<Integer>();
-        inStockEmojiId = new ArrayList<Integer>();
 
         if(app.getcheckedQty() == false) {
             checkQuantities();
@@ -96,10 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkQuantities()
     {
+        inStockEmoji = new ArrayList<Integer>();
+        inStockEmojiId = new ArrayList<Integer>();
+
         app.getQuantities();
 
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             //Handle exception
         }
