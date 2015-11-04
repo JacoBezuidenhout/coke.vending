@@ -142,7 +142,7 @@ function clearScreen()
 function playSound(soundFileArr)
 {
   var soundFile = soundFileArr[Math.floor(Math.random()*soundFileArr.length)];
-  var audio = new Audio(".//assets/audio/" + soundFile);
+  var audio = new Audio(".//assets/audio/" + soundFile); 
   audio.play();
   console.log("Played sound");
 }
