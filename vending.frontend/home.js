@@ -113,10 +113,12 @@ function takeImage(cb)
                   changeBackgroundImg("");
                   setTimeout(function(){
                     takeSnapshot();
-                    clearScreen();
-                    changeBackgroundImg("done");
-                    cb();
-                  },1000);
+                    setTimeout(function(){
+                      clearScreen();
+                      changeBackgroundImg("done");
+                      cb();
+                    },1000);
+                  },500);
                 }, 500);
               }, 1000);
             }, 500);
