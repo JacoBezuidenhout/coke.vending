@@ -15,9 +15,9 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/sails.io.js/dist/sails.io.js"></script>
+    <!--<script src="lib/sails.io.js/dist/sails.io.js"></script>-->
     <script type="text/javascript">
-      io.sails.url = 'http://192.168.0.2:8080';
+      // io.sails.url = 'http://192.168.0.2:8080';
     </script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -27,13 +27,13 @@
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
   </head>
-  <body ng-app="starter" style="background-color:#d90202">
+  <body ng-app="starter" style="background-color:#ffffff">
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
 
-    <div class="bar bar-header bar-assertive">
-      <h1 class="title">Coke Vending Orders</h1>
+    <div class="bar bar-header bar-assertive" ng-style="{'background-color': navColor}">
+      <h1 class="title" style="color:#d90202">Coke Vending Orders</h1>
     </div>
     <!--
       The views will be rendered in the <ion-nav-view> directive below
@@ -45,7 +45,7 @@
     <br>
     <br>
     <div class="row">
-      <div class="col col-75" ng-controller="DashCtrl">
+      <div class="col" ng-controller="DashCtrl" style="padding-top:0px;margin:0px;">
             <div class="list card" ng-hide="orders.length">
               <div class="item item-divider">No Orders Yet</div>
               <div class="item item-body">
@@ -55,31 +55,29 @@
             </div>
           
             <div class="list card" ng-repeat="o in orders" on-swipe-left="done($index,o)">
-              <div class="item item-divider">{{o.teamName}}</div>
-              <div class="item item-body" style="padding:0px;">
-                <div>
-                  <div class="row"> 
-                    <div class="col" style="text-align:center"><br/><b>{{getProductName(o.stickerOne)}}</b></div>
-                    <div class="col" style="text-align:center"><img style="position: absolute; top:-10px; left:150px; padding:0px; margin: 0px; width:75px" src="img/emoji{{o.smileyOne.id}}.png"></div>|
-                    <div class="col" style="text-align:center"><img style="position: absolute; top:-10px; right:150px; padding:0px; margin: 0px; width:75px" src="img/emoji{{o.smileyTwo.id}}.png"></div>
-                    <div class="col" style="text-align:center"><br/><b>{{getProductName(o.stickerTwo)}}</b></div>
+              <div class="item item-body" style="padding:0px;margin:0px;">
+                <div class="padding:0px;margin:0px;text-align:center">
+<!--                   |<b>{{o.teamName}}</b>| -->
+                  <div class="row" class="padding:0px;margin:0px;text-align:center;"> 
+                    <div class="col" style="padding:0px;margin:0px;text-align:center;border-style:solid; border-right: thick double #d90202;"><h1 style="padding:0px;margin:0px;{{$index==0 ? 'font-size: 40px;' : ''}}"><small>emoji</small><b style="color:#d90202">{{o.smileyOne.id}}</b><br ng-hide="$index"> <b>{{getProductName(o.stickerOne)}}</b></h1></div>
+                    <div class="col" style="padding:0px;margin:0px;text-align:center"><h1 style="padding:0px;margin:0px;{{$index==0 ? 'font-size: 40px;' : ''}}"><small>emoji</small><b style="color:#d90202">{{o.smileyTwo.id}}</b><br ng-hide="$index"> <b>{{getProductName(o.stickerTwo)}}</b></h1></div>
                   </div>
                 </div>
               </div>
             </div>
       </div>
-      <div class="col" ng-controller="AccountCtrl">
+      <div class="col-15" ng-controller="AccountCtrl">
             <div class="list card">
-              <div class="item item-divider" ng-style="{'background-color': navColor}">Stock QTY</div>
+              <div class="item item-divider">QTY</div>
               <div class="item item-body" style="padding:0px;">
-                <ion-list>
-                    <a ng-repeat="p in products" class="item item-icon-left" ng-click="addStock(p)">
-                    <i class="icon {{p.type ? 'ion-closed-captioning' : 'ion-happy-outline'}}"></i>
-                    {{getProductName(p)}}
-                    <img ng-hide="p.type" style="position: absolute; top:-10px; left:100px; padding:0px; margin: 0px; width:75px" src="img/emoji{{p.id}}.png">
-                    <span class="badge {{p.qty>100 ? 'badge-balanced' : 'badge-assertive'}}">{{p.qty}}</span>
+                  <a ng-repeat="p in products" ng-click="addStock(p)">
+                    <div style="height:45px; text-align:center; margin-top:10px;">
+                      <b>{{getProductName(p)}}</b>
+                      <!-- <img ng-hide="p.type" style="position: absolute; top:-10px; left:100px; padding:0px; margin: 0px; width:75px" src="img/emoji{{p.id}}.png"> -->
+                      <span style="position: relative; top:0px; left:10px; width:50px;" class="badge {{p.qty>100 ? 'badge-balanced' : 'badge-assertive'}}" >{{p.qty}}</span>
+                    </div>
+                    <hr/>
                   </a>
-                </ion-list>
               </div>
             </div>
       </div>

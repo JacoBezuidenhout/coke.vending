@@ -2,3 +2,9 @@
 .nav-bar-block, .bar {
   background-color: inherit !important;
 }
+
+h1
+{
+	font-size: 30px;
+	text-align:center;
+}
