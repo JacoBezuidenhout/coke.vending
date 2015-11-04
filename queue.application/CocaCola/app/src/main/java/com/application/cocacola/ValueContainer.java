@@ -134,6 +134,7 @@ public class ValueContainer extends Application{
         System.out.println("smilet:  "+ smiley + "    " + inStockEmojiId.get(smiley));
 
         smileyOneArrVal = inStockEmojiId.get(smiley);
+        smileyOne = inStockEmojiId.get(smiley);
 
        // smileyOneArrVal = smiley;
     }
@@ -166,6 +167,7 @@ public class ValueContainer extends Application{
         }*/
 
         smileyTwoArrVal = inStockEmojiId.get(smiley);
+        smileyTwo = inStockEmojiId.get(smiley);
     }
 
     public void setStickerOne(int sticker)
@@ -356,7 +358,7 @@ public class ValueContainer extends Application{
         public int sendGet(String id) throws Exception	{
 
             String paramaters = "?id=" + id;
-            //String url = "http://coke.peoplesoft.co.za/product" + paramaters;
+           // String url = "http://coke.peoplesoft.co.za/product" + paramaters;
             String url = "http://192.168.0.2:8080/product" + paramaters;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -396,7 +398,7 @@ public class ValueContainer extends Application{
         // HTTP POST request
         public void sendPost(String order) throws Exception {
 
-            //String url = "http://coke.peoplesoft.co.za/order/create";
+           // String url = "http://coke.peoplesoft.co.za/order/create";
             String url = "http://192.168.0.2:8080/order/create";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
