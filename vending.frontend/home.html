@@ -94,7 +94,7 @@ id: 6 => Love -->
 	  	io.socket.get('/order?done=false&limit=1', function serverResponded (body, JWR) {
 	  		console.log(body);
 	  		if (body.length)
-  				startScreen(body[0].teamName, map(body[0].smileyOne.id), map(body[0].smileyTwo.id), map(body[0].stickerOne.id), map(body[0].smileyTwo.id));
+  				startScreen(body[0].teamName, map(body[0].smileyOne.id), map(body[0].smileyTwo.id), map(body[0].stickerOne.id), map(body[0].stickerTwo.id));
   			else
   			{
   				next = false;

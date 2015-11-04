@@ -95,7 +95,7 @@ video {
     border-right: 20px solid rgba(0,0,0,0);
     border-left: 20px solid rgba(0,0,0,0);
     border-radius: 320px;
-/*    box-shadow: 0 0 35px #d90202;*/
+    box-shadow: 0 0 35px #d90202;
     width: 320px;
     height: 320px;
     margin: 0 auto;
@@ -110,7 +110,7 @@ video {
     border-left: 20px solid rgba(0,0,0,0);
     border-right: 20px solid rgba(0,0,0,0);
     border-radius: 280px;
-   /* box-shadow: 0 0 15px #d90202;*/
+    box-shadow: 0 0 15px #ffffff;
     width: 280px;
     height: 280px;
     margin: 0 auto;

@@ -110,6 +110,7 @@ function takeImage(cb)
                 setTimeout(function()
                 {
                   console.log("Photo was taken");
+                  changeBackgroundImg("");
                   takeSnapshot();
                   clearScreen();
                   changeBackgroundImg("done");
