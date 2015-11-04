@@ -101,6 +101,7 @@
                 var video = document.querySelector('video');
                 video.src = window.URL.createObjectURL(remoteStream);
                 console.log("GOT STREAM");
+                conn.send('ready');
               });
           });
         });

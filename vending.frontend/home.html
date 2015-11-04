@@ -81,6 +81,11 @@ id: 6 => Love -->
 	    playSound(soundFilesGetReady);
 	  }
 
+	  function ready(){
+	  	changeTeamName("Connected...");
+	  	loadNext();
+	  }
+
 	  function map(id) {
 	  	return productDesc[id];
 	  }
@@ -109,7 +114,9 @@ id: 6 => Love -->
 	  		}
   			else
   			{
-  				next = false;
+  				setTimeout(function(){
+  					loadNext();
+  				},1000);
   			}
 	  	});
 	  }
@@ -136,7 +143,7 @@ id: 6 => Love -->
 	
 	  function cancel()
 	  {
-	  	playSound(soundFilesErrorz);
+	  	playSound(soundFilesError);
 	  	$("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
 	  }
@@ -158,17 +165,10 @@ id: 6 => Love -->
 	  $(document).ready(function(){
 	    $("#leftLoad").hide();
 	    $("#rightLoad").hide();
-
 	    $("#leftStatic").hide();
 	    $("#rightStatic").hide();
-	    io.socket.get('/order', function serverResponded (body, JWR) {
-			io.socket.on('order', function serverResponded (body, JWR) {
-				if (!next)
-				{
-					loadNext();
-				}
-			});
-	    });
+	    changeBackgroundImg("main");
+  		changeTeamName("Not Connected...");
 	   });
 
 
@@ -186,9 +186,10 @@ id: 6 => Love -->
 				console.log(data);
 				if (data == "hi!")
 				{
-					loadNext();
 					peer.call('rec', videoStream);
 				}
+
+				if (data == "ready") ready();
 				if (data == "start") start();
 				if (data == "takeImage") takePicture();
 				if (data == "done") done();
