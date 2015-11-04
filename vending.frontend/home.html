@@ -3,11 +3,16 @@
 <head>
 	<title>Coke Vending Frontend</title>
 	<meta charset="UTF-8">
+	
 	<script type="text/javascript" src="peer.min.js"></script>
-	<script type="text/javascript" src="home.js"></script>
 	<script type="text/javascript" src="home.js"></script>
 	<script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript" src="sails.io.js"></script>
+	<script type="text/javascript" src="gsap/plugins/CSSPlugin.min.js"></script>
+	<script type="text/javascript" src="gsap/easing/EasePack.min.js"></script>
+	<script type="text/javascript" src="gsap/TweenLite.min.js"></script>
+	<script type="text/javascript" src="gsap/TweenMax.min.js"></script>
+
 	<link rel="stylesheet" href="home.css">
 
 </head>
@@ -57,9 +62,9 @@ id: 6 => Love -->
 	var next = true;
 	var connGlobal = {};
 
-	var ngui = require('nw.gui');
-	var nwin = ngui.Window.get();
-	nwin.enterFullscreen();
+	// var ngui = require('nw.gui');
+	// var nwin = ngui.Window.get();
+	// nwin.enterFullscreen();
 
 	var currentId = 'noId'; 
 	// setTimeout(function(){
@@ -79,8 +84,7 @@ id: 6 => Love -->
 	  function start(){
 	    $("#leftStatic").show();
 	    $("#rightStatic").show();
-	    $("#leftStatic").css("-webkit-animation-play-state", "running");
-	    $("#rightStatic").css("-webkit-animation-play-state", "running");
+
 	    videoScreen();
 	    playSound(soundFilesGetReady);
 	  }
@@ -136,10 +140,7 @@ id: 6 => Love -->
 	    $("#rightStatic").fadeOut(500);
 	    $("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
-	    $("#leftStatic").css("-webkit-animation-play-state", "paused");
-	    $("#rightStatic").css("-webkit-animation-play-state", "paused");
-	    $("#leftLoad").css("-webkit-animation-play-state", "paused");
-	    $("#rightLoad").css("-webkit-animation-play-state", "paused");
+
 	    changeBackgroundImg("awesome");
 	    playSound(soundFilesSuccess);
 	  }
@@ -162,14 +163,13 @@ id: 6 => Love -->
 	  	playSound(soundFilesError);
 	  	$("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
-	    $("#leftLoad").css("-webkit-animation-play-state", "paused");
-	    $("#rightLoad").css("-webkit-animation-play-state", "paused");
+
 	  }
 
 	  function startL(time){
 	    if (time > 0)
 	    {
-	      $("#leftLoad").css("-webkit-animation-play-state", "running");
+
 	      $("#leftLoad").fadeIn(500);
 	    }
 	    else
@@ -179,7 +179,7 @@ id: 6 => Love -->
 	  function startR(time){
 	    if (time > 0)
 	    {
-	      $("#rightLoad").css("-webkit-animation-play-state", "running");
+
 	      $("#rightLoad").fadeIn(500);
 	    }
 	    else
@@ -187,12 +187,18 @@ id: 6 => Love -->
 	  }
 
 	  $(document).ready(function(){
-	    $("#leftLoad").hide();
-	    $("#rightLoad").hide();
-	    $("#leftStatic").hide();
-	    $("#rightStatic").hide();
-	    changeBackgroundImg("main");
-  		changeTeamName("Not Connected...");
+	    // $("#leftLoad").hide();
+	    // $("#rightLoad").hide();
+	    // $("#leftStatic").hide();
+	    // $("#rightStatic").hide();
+	   //  changeBackgroundImg("main");
+  		// changeTeamName("Not Connected...");
+  		var leftStatic = document.getElementById("leftStatic");
+  		var rightStatic = document.getElementById("rightStatic");
+    	
+    	TweenMax.to(leftStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
+    	TweenMax.to(rightStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
+    	console.log("COOL");
 	   });
 
 
