@@ -45,12 +45,13 @@ id: 6 => Love -->
 	io.sails.url = 'http://127.0.0.1:8080';
 	var productDesc = {"7":"emoji1","8":"emoji2","9":"emoji3","10":"emoji4","11":"emoji5","12":"emoji6","1":"Fun","2":"Together","3":"Holiday","4":"Summer","5":"Forever","6":"Love"};
 
-	var soundFiles = ["Aweh.ogg" , "FacialRecognitionComplete.ogg" , "GetReadyToMimic.ogg" , "ImNotFeelingYouTryOneMoreTime.ogg" , "LetsTryThatOneMoreTime.ogg" , "SoManyFeelingsSoLittleTime.ogg" , "ThankYouForSharingYourFeelings.ogg" , "WellArentYouTwoGoodLooking.ogg" , "WhatBeautifulFaces.ogg" , "YouGuysMadeMeBlush.ogg" , "YouTwoWereAmazing.ogg"];
+	var soundFiles = ["AhWhatBeautifulFaces.ogg","AwehWelcome.ogg","FacialRecognComplete.ogg","GetALittleCloser.ogg","GetReadyShareEmoji.ogg","ImNotFeelingYouLets.ogg","LetsTryThatOneMoreTime.ogg","MadeMeBlush.ogg","ThankYouForSharngYrFeelns.ogg","ThanksFunGoShareCoke.ogg","ThanksFunGoShareCoke2.ogg","ThatWasSoMuchFun.ogg","WellArentYou2GoodLkng.ogg","WhoaSoMany.ogg","You2WereSoMuchFun.ogg"];
 	
-	var soundFilesGetReady = ["GetReadyToMimic.ogg","SoManyFeelingsSoLittleTime.ogg"];
-	var soundFilesSuccess = ["Aweh.ogg","FacialRecognitionComplete.ogg"];
-	var soundFilesError = ["ImNotFeelingYouTryOneMoreTime.ogg","LetsTryThatOneMoreTime.ogg"];
-	var soundFilesPicture = ["ThankYouForSharingYourFeelings.ogg","WhatBeautifulFaces.ogg","YouGuysMadeMeBlush.ogg","YouTwoWereAmazing.ogg","WellArentYouTwoGoodLooking.ogg"];
+	var soundFilesGetReady = ["AwehWelcome.ogg","GetReadyShareEmoji.ogg",];
+	var soundFilesSuccess = ["FacialRecognComplete.ogg","WhoaSoMany.ogg"];
+	var soundFilesError = ["ImNotFeelingYouLets.ogg","LetsTryThatOneMoreTime.ogg"];
+	var soundFilesPictureStart = ["GetALittleCloser.ogg","WellArentYou2GoodLkng.ogg"];
+	var soundFilesPicture = ["AhWhatBeautifulFaces.ogg","MadeMeBlush.ogg","ThankYouForSharngYrFeelns.ogg","ThanksFunGoShareCoke.ogg","ThanksFunGoShareCoke2.ogg","ThatWasSoMuchFun.ogg","You2WereSoMuchFun.ogg"];
 
 
 	var next = true;
@@ -78,6 +79,8 @@ id: 6 => Love -->
 	  function start(){
 	    $("#leftStatic").show();
 	    $("#rightStatic").show();
+	    $("#leftStatic").css("-webkit-animation-play-state", "running");
+	    $("#rightStatic").css("-webkit-animation-play-state", "running");
 	    videoScreen();
 	    playSound(soundFilesGetReady);
 	  }
@@ -133,11 +136,16 @@ id: 6 => Love -->
 	    $("#rightStatic").fadeOut(500);
 	    $("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
-	    playSound(soundFilesSuccess);
+	    $("#leftStatic").css("-webkit-animation-play-state", "paused");
+	    $("#rightStatic").css("-webkit-animation-play-state", "paused");
+	    $("#leftLoad").css("-webkit-animation-play-state", "paused");
+	    $("#rightLoad").css("-webkit-animation-play-state", "paused");
 	    changeBackgroundImg("awesome");
+	    playSound(soundFilesSuccess);
 	  }
 
 	  function takePicture(){
+	  	playSound(soundFilesPictureStart);
 	  	takeImage(function(){
 	  		playSound(soundFilesPicture);
 	  		io.socket.get('/order/update/' + currentId + '?done=true', function serverResponded (body, JWR) {
@@ -154,18 +162,26 @@ id: 6 => Love -->
 	  	playSound(soundFilesError);
 	  	$("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
+	    $("#leftLoad").css("-webkit-animation-play-state", "paused");
+	    $("#rightLoad").css("-webkit-animation-play-state", "paused");
 	  }
 
 	  function startL(time){
 	    if (time > 0)
+	    {
+	      $("#leftLoad").css("-webkit-animation-play-state", "running");
 	      $("#leftLoad").fadeIn(500);
+	    }
 	    else
 	      cancel();
 	  }
 
 	  function startR(time){
 	    if (time > 0)
+	    {
+	      $("#rightLoad").css("-webkit-animation-play-state", "running");
 	      $("#rightLoad").fadeIn(500);
+	    }
 	    else
 	      cancel();
 	  }
