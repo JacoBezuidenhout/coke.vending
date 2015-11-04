@@ -87,7 +87,7 @@ function videoScreen()
 
 function takeImage(cb)
 {
-  changeBackgroundImg("awesome");
+  // changeBackgroundImg("awesome");
 
   setTimeout(function()
   {
@@ -110,6 +110,7 @@ function takeImage(cb)
                 setTimeout(function()
                 {
                   console.log("Photo was taken");
+                  takeSnapshot();
                   clearScreen();
                   changeBackgroundImg("done");
                   cb();
@@ -119,7 +120,7 @@ function takeImage(cb)
           }, 1000);
         }, 500);
       }, 1000);
-  }, 5000);
+  }, 1000);
 }
 
 

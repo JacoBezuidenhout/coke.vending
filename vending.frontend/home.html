@@ -35,11 +35,18 @@
       <div style="position: absolute;bottom:300px;left:25%; width:400px;height:400px;" id="leftStatic"><div class="circle1"></div></div>
     </div>
 </div>
-
+<!--id: 1 => Fun 
+id: 2 => Together
+id: 3 => Holiday
+id: 4 => Summer
+id: 5 => Forever
+id: 6 => Love -->
 <script>
 	io.sails.url = 'http://127.0.0.1:8080';
-	var productDesc = {"1":"emoji1","2":"emoji2","3":"emoji3","4":"emoji4","5":"emoji5","6":"emoji6","7":"Love","8":"Summer","9":"Joy","10":"Sun","11":"Beach","12":"Cool"};
+	var productDesc = {"7":"emoji1","8":"emoji2","9":"emoji3","10":"emoji4","11":"emoji5","12":"emoji6","1":"Fun","2":"Together","3":"Holiday","4":"Summer","5":"Forever","6":"Love"};
+
 	var soundFiles = ["Aweh.m4a" , "FacialRecognitionComplete.m4a" , "GetReadyToMimic.m4a" , "ImNotFeelingYouTryOneMoreTime.m4a" , "LetsTryThatOneMoreTime.m4a" , "SoManyFeelingsSoLittleTime.m4a" , "ThankYouForSharingYourFeelings.m4a" , "WellArentYouTwoGoodLooking.m4a" , "WhatBeautifulFaces.m4a" , "YouGuysMadeMeBlush.m4a" , "YouTwoWereAmazing.m4a"];
+	var next = true;
 
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
@@ -69,10 +76,29 @@
 	  	return productDesc[id];
 	  }
 
+	  function takeSnapshot() {
+		    var gui = require('nw.gui');
+		    var win = gui.Window.get();
+
+		    win.capturePage(function(buffer)
+		    {
+		        require('fs').writeFile('../../screenshot.png', buffer, function (err) {
+		            if (err) throw err;
+		            console.log('It\'s saved!');
+		        });
+
+		    }, { format : 'png', datatype : 'buffer'} );
+		}
+			
 	  function loadNext(){
-	  	io.socket.get('/order?picture=false&limit=1', function serverResponded (body, JWR) {
+	  	io.socket.get('/order?done=false&limit=1', function serverResponded (body, JWR) {
 	  		console.log(body);
-  			startScreen(body[0].teamName, map(body[0].smileyOne.id), map(body[0].smileyTwo.id), map(body[0].stickerOne.id), map(body[0].smileyTwo.id));
+	  		if (body.length)
+  				startScreen(body[0].teamName, map(body[0].smileyOne.id), map(body[0].smileyTwo.id), map(body[0].stickerOne.id), map(body[0].smileyTwo.id));
+  			else
+  			{
+  				next = false;
+  			}
 	  	});
 	  }
 
@@ -81,25 +107,35 @@
 	    $("#rightStatic").fadeOut(500);
 	    $("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
+	    changeBackgroundImg("awesome");
+	  }
+
+	  function takePicture(){
 	  	takeImage(function(){
 	  		setTimeout(function(){
 	  			loadNext();
 	  		},4000);
 	  	});
+	  };
+	
+	  function cancel()
+	  {
+	  	$("#leftLoad").fadeOut(500);
+	    $("#rightLoad").fadeOut(500);
 	  }
 
 	  function startL(time){
 	    if (time > 0)
 	      $("#leftLoad").fadeIn(500);
 	    else
-	      $("#leftLoad").fadeOut(500);
+	      cancel();
 	  }
 
 	  function startR(time){
 	    if (time > 0)
 	      $("#rightLoad").fadeIn(500);
 	    else
-	      $("#rightLoad").fadeOut(500);
+	      cancel();
 	  }
 
 	  $(document).ready(function(){
@@ -108,14 +144,21 @@
 
 	    $("#leftStatic").hide();
 	    $("#rightStatic").hide();
+	    io.socket.get('/order', function serverResponded (body, JWR) {
+			io.socket.on('order', function serverResponded (body, JWR) {
+				if (!next)
+				{
+					loadNext();
+				}
+			});
+	    });
 	   });
 
 
 	var initPeer = function(videoStream)
 	{
 		console.log("InitStarted");
-		var peer = new Peer('sender', {host: '127.0.0.1', port:
-9000, path: '/', key: 'peerjs'});
+		var peer = new Peer('sender', {host: '127.0.0.1', port:9000, path: '/', key: 'peerjs'});
 		peer.on('open', function(conn) {
 			console.log("OPEN");
 		});
@@ -123,7 +166,6 @@
 		peer.on('connection', function(conn) {
 			console.log("Another Connected");
 			conn.on('data', function(data){
-			    // Will print 'hi!'
 				console.log(data);
 				if (data == "hi!")
 				{
@@ -131,12 +173,14 @@
 					peer.call('rec', videoStream);
 				}
 				if (data == "start") start();
+				if (data == "takeImage") takePicture();
 				if (data == "done") done();
 				if (data[0] == "L") startL(parseInt(data[1]));
 				if (data[0] == "R") startR(parseInt(data[1]));
 			});
 		});
 	}
+
 	var vgaConstraints2 = {
 	 "audio": false,
 	 "video": {

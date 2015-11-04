@@ -24,7 +24,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleLightContent();
     }
 
-    var productDesc = {"1":"emoji1","2":"emoji2","3":"emoji3","4":"emoji4","5":"emoji5","6":"emoji6","7":"Love","8":"Summer","9":"Joy","10":"Sun","11":"Beach","12":"Cool"};
+    var productDesc = {"7":"emoji1","8":"emoji2","9":"emoji3","10":"emoji4","11":"emoji5","12":"emoji6","1":"Fun","2":"Together","3":"Holiday","4":"Summer","5":"Forever","6":"Love"};
 
     $rootScope.getProductName = function(prod)
     {
