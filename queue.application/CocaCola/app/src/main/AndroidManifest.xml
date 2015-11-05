@@ -29,5 +29,7 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".TeamMemberTwoPhrase"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".Done"
+            android:screenOrientation="portrait"></activity>
     </application>
 </manifest>

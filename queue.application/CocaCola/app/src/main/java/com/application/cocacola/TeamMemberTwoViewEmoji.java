@@ -23,7 +23,7 @@ public class TeamMemberTwoViewEmoji extends MainActivity{
         submitButton.setOnClickListener(submitButtonListener);
         submitButton.setTypeface(yourfont);
 
-        mCustomPagerAdapter = new CustomPagerAdapter(this, app.inStockEmoji);
+       mCustomPagerAdapter = new CustomPagerAdapter(this, app.inStockEmoji);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setClipToPadding(false);
