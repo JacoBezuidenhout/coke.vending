@@ -358,7 +358,7 @@ public class ValueContainer extends Application{
         public int sendGet(String id) throws Exception	{
 
             String paramaters = "?id=" + id;
-           // String url = "http://coke.peoplesoft.co.za/product" + paramaters;
+            //String url = "http://coke.peoplesoft.co.za/product" + paramaters;
             String url = "http://192.168.0.2:8080/product" + paramaters;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();

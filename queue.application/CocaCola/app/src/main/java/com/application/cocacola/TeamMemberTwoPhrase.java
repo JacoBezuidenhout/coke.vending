@@ -1,5 +1,6 @@
 package com.application.cocacola;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -152,6 +153,9 @@ public class TeamMemberTwoPhrase extends MainActivity {
 
             System.out.println(app.createOrder());
             message("Order Submitted");
+
+            Intent intent = new Intent(TeamMemberTwoPhrase.this, Done.class);
+            startActivity(intent);
             finish();
         }
     };
