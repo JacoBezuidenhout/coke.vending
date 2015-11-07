@@ -14,7 +14,7 @@
 module.exports = {
 
   attributes: {
-  	teamName : {type: "string", required: true},
+  	teamName : {type: "string", defaultsTo: "Team Awesome"},
   	smileyOne : {model: "Product", required: true},
 		smileyTwo : {model: "Product", required: true},
 		stickerOne : {model: "Product", required: true},

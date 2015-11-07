@@ -21,6 +21,20 @@ function changeBackgroundImg(imgName)
   }
 }
 
+function changeCounter(imgName)
+{
+  if(imgName != "")
+  {
+    $("#vidDivCounter").show();
+    document.getElementById("vidDivCounter").src=".//assets/images/"+imgName+".png";
+    console.log("Background image changed");
+  }
+  else
+  {
+    $("#vidDivCounter").hide();
+    console.log("Background image changed");
+  }
+}
 
 function changeSmileyOne(imgName)
 {
@@ -91,26 +105,27 @@ function takeImage(cb)
 
   setTimeout(function()
   {
-    changeBackgroundImg("snapThreePlain");
+    changeBackgroundImg("videobackground");
+    changeCounter("snapThreePlain");
     setTimeout(function()
       {
-        changeBackgroundImg("snapThree");
+        changeCounter("snapThree");
         setTimeout(function()
         {
-          changeBackgroundImg("snapTwoPlain");
+          changeCounter("snapTwoPlain");
           setTimeout(function()
           {
-            changeBackgroundImg("snapTwo");
+            changeCounter("snapTwo");
             setTimeout(function()
             {
-              changeBackgroundImg("snapOnePlain");
+              changeCounter("snapOnePlain");
               setTimeout(function()
               {
-                changeBackgroundImg("snapOne");
+                changeCounter("snapOne");
                 setTimeout(function()
                 {
                   console.log("Photo was taken");
-                  changeBackgroundImg("videobackground");
+                  changeCounter("");
                   setTimeout(function(){
                     takeSnapshot();
                     setTimeout(function(){

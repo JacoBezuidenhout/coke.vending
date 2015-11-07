@@ -19,6 +19,7 @@
 <body id="page_body" style="padding:0px;margin:0px;">
 <div id="vidDiv" width="1920" height="1080">
 	<img id="vidDivImg" alt="">
+	<img id="vidDivCounter" alt="">
 
 	<img id="smileyOne" alt="">
 	<img id="smileyTwo" alt="">
@@ -202,8 +203,8 @@ id: 6 => Love -->
     	TweenMax.to(leftStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
     	TweenMax.to(rightStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
 
-    	TweenMax.to(leftLoad, 1, {rotation:"360", transformOrigin:"200px 180px", repeat:-1, yoyo: true});
-    	TweenMax.to(rightLoad, 1, {rotation:"360", transformOrigin:"200px 180px", repeat:-1, yoyo: true});
+    	TweenMax.to(leftLoad, 1, {rotation:"720", transformOrigin:"200px 180px", scale:1.2, repeat:-1, yoyo: true});
+    	TweenMax.to(rightLoad, 1, {rotation:"720", transformOrigin:"200px 180px", scale:1.2, repeat:-1, yoyo: true});
 
 
     	console.log("COOL");

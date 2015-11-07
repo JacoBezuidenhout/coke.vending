@@ -23,6 +23,7 @@ module.exports.bootstrap = function(cb) {
   	peerServer.on('connection', function(id) { 
   		console.log(id,"connected");
   	});
+	
   	
   	cb();
 };
