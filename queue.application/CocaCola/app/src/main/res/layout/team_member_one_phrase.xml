@@ -50,16 +50,16 @@
         android:layout_height="wrap_content"
         android:text="Together"
         android:id="@+id/radioTogether"
-        android:checked="true"
+        android:checked="false"
         android:textAlignment="center"
         android:gravity="center"
         android:visibility="visible"
         android:button="@null"
-        android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:background="@drawable/radiobutton"
         android:layout_alignTop="@+id/radioFun"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#FF0000" />
 
     <RadioButton
         android:layout_width="wrap_content"

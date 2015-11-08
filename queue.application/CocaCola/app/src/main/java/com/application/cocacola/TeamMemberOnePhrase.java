@@ -111,9 +111,18 @@ public class TeamMemberOnePhrase extends MainActivity {
     private final View.OnClickListener nextButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View arg0) {
-            Intent intent = new Intent(TeamMemberOnePhrase.this, TeamMemberTwoViewEmoji.class);
-            startActivity(intent);
-            finish();
+
+
+            if (app.getStickerOne() != -1)
+            {
+                Intent intent = new Intent(TeamMemberOnePhrase.this, TeamMemberTwoViewEmoji.class);
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                message("Please Select A Phrase");
+            }
         }
     };
 

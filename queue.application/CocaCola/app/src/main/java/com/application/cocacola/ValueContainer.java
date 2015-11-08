@@ -9,8 +9,10 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class ValueContainer extends Application{
 
@@ -38,6 +40,7 @@ public class ValueContainer extends Application{
 
     public boolean checkedQty;
     public boolean successfulOrder;
+    public boolean serverAvailability;
 
     ArrayList<Integer> inStockEmoji;
     ArrayList<Integer> inStockEmojiId;
@@ -68,6 +71,7 @@ public class ValueContainer extends Application{
 
         checkedQty = false;
         successfulOrder = false;
+        serverAvailability = false;
 
         inStockEmoji = null;
         inStockEmojiId = null;
@@ -101,71 +105,12 @@ public class ValueContainer extends Application{
 
     public void setSmileyOne(int smiley)
     {
-        /*if(smiley == 0)
-        {
-            smileyOne = 7;
-        }
-        else if(smiley == 1)
-        {
-            smileyOne = 8;
-        }
-        else if(smiley == 2)
-        {
-            smileyOne = 9;
-        }
-        else if(smiley == 3)
-        {
-            smileyOne = 10;
-        }
-        else if(smiley == 4)
-        {
-            smileyOne = 11;
-        }
-        else if(smiley == 5)
-        {
-            smileyOne = 12;
-        }*/
-
-        /*for(int i = 0; i < inStockEmoji.size(); i++)
-        {
-
-        }*/
-        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-        System.out.println("smilet:  "+ smiley + "    " + inStockEmojiId.get(smiley));
-
         smileyOneArrVal = inStockEmojiId.get(smiley);
         smileyOne = inStockEmojiId.get(smiley);
-
-       // smileyOneArrVal = smiley;
     }
 
     public void setSmileyTwo(int smiley)
     {
-        /*if(smiley == 0)
-        {
-            smileyTwo = 7;
-        }
-        else if(smiley == 1)
-        {
-            smileyTwo = 8;
-        }
-        else if(smiley == 2)
-        {
-            smileyTwo = 9;
-        }
-        else if(smiley == 3)
-        {
-            smileyTwo = 10;
-        }
-        else if(smiley == 4)
-        {
-            smileyTwo = 11;
-        }
-        else if(smiley == 5)
-        {
-            smileyTwo = 12;
-        }*/
-
         smileyTwoArrVal = inStockEmojiId.get(smiley);
         smileyTwo = inStockEmojiId.get(smiley);
     }
@@ -305,9 +250,28 @@ public class ValueContainer extends Application{
         successfulOrder = value;
     }
 
-    public boolean getSuccessful()
+    public boolean checkServerAvailability()
     {
-        return successfulOrder;
+        try
+        {
+            new ServerConnection().execute("CHECK");
+            TimeUnit.SECONDS.sleep(2);
+            return getServerAvailability();
+        }
+        catch(InterruptedException e)
+        {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    public void setServerAvailability(boolean val)
+    {
+        serverAvailability = val;
+    }
+    public boolean getServerAvailability()
+    {
+        return serverAvailability;
     }
 
 
@@ -344,6 +308,10 @@ public class ValueContainer extends Application{
                 {
                     sendPost(params[1]);
                 }
+                else if(params[0].equals("CHECK"))
+                {
+                    checkServer();
+                }
             }
             catch(Exception e)
             {
@@ -358,8 +326,8 @@ public class ValueContainer extends Application{
         public int sendGet(String id) throws Exception	{
 
             String paramaters = "?id=" + id;
-            //String url = "http://coke.peoplesoft.co.za/product" + paramaters;
-            String url = "http://192.168.0.2:8080/product" + paramaters;
+            String url = "http://coke.peoplesoft.co.za/product" + paramaters;
+           // String url = "http://192.168.0.2:8080/product" + paramaters;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -398,8 +366,8 @@ public class ValueContainer extends Application{
         // HTTP POST request
         public void sendPost(String order) throws Exception {
 
-            //String url = "http://coke.peoplesoft.co.za/order/create";
-            String url = "http://192.168.0.2:8080/order/create";
+            String url = "http://coke.peoplesoft.co.za/order/create";
+            //String url = "http://192.168.0.2:8080/order/create";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -408,7 +376,6 @@ public class ValueContainer extends Application{
             con.setRequestProperty("User-Agent", USER_AGENT);
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-            //String urlParameters = "teamName=teamOne&smileyOne=10&smileyTwo=7&stickerOne=1&stickerTwo=5";
             String urlParameters = order;
 
             // Send post request
@@ -429,8 +396,8 @@ public class ValueContainer extends Application{
                 setSuccessful(false);
             }
 
-            //System.out.println("\nSending 'POST' request to URL : " + url);
-            //System.out.println("Post parameters : " + urlParameters);
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
             System.out.println("Response Code : " + responseCode);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -442,10 +409,38 @@ public class ValueContainer extends Application{
             }
             in.close();
 
-
-
             //print result
-           // System.out.println(response.toString());
+            System.out.println(response.toString());
+        }
+
+        public boolean checkServer()
+        {
+            try
+            {
+                setServerAvailability(false);
+
+                Runtime runtime = Runtime.getRuntime();
+                Process proc = runtime.exec("ping -c 1 192.168.1.103"); //<- Try ping -c 1 www.serverURL.com
+                int mPingResult = proc.waitFor();
+                if (mPingResult == 0)
+                {
+                    System.out.println("True");
+                    setServerAvailability(true);
+                    return true;
+                }
+                else
+                {
+                    System.out.println("False");
+                    setServerAvailability(false);
+                    return false;
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Check Server exception: " + e);
+                setServerAvailability(false);
+                return false;
+            }
         }
     }
 

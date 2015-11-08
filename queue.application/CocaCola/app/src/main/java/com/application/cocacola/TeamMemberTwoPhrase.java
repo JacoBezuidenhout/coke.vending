@@ -151,12 +151,33 @@ public class TeamMemberTwoPhrase extends MainActivity {
         @Override
         public void onClick(View arg0) {
 
-            System.out.println(app.createOrder());
-            message("Order Submitted");
+            if (app.getStickerTwo() != -1)
+            {
+                if(app.checkServerAvailability())
+                {
+                    System.out.println("*********************************");
+                    System.out.println(app.getSmileyOne());
+                    System.out.println(app.getSmileyTwo());
+                    System.out.println(app.getStickerOne());
+                    System.out.println(app.getStickerTwo());
+                    System.out.println("*********************************");
 
-            Intent intent = new Intent(TeamMemberTwoPhrase.this, Done.class);
-            startActivity(intent);
-            finish();
+                    System.out.println(app.createOrder());
+                    message("Order Submitted");
+
+                    Intent intent = new Intent(TeamMemberTwoPhrase.this, Done.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    message("Server Not Available. Please Try Again");
+                }
+            }
+            else
+            {
+                message("Please Select A Phrase");
+            }
         }
     };
 

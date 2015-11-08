@@ -41,38 +41,11 @@ public class TeamMemberTwoViewEmoji extends MainActivity{
         @Override
         public void onClick(View arg0) {
 
-            /*if(mViewPager.getCurrentItem() == 0 && app.smileyOneQty < 1)
-            {
-                message("Current Item Out Of Stock");
-            }
-            else if(mViewPager.getCurrentItem() == 1 && app.smileyTwoQty < 1)
-            {
-                message("Current Item Out Of Stock");
-            }
-            else if(mViewPager.getCurrentItem() == 2 && app.smileyThreeQty < 1)
-            {
-                message("Current Item Out Of Stock");
-            }
-            else if(mViewPager.getCurrentItem() == 3 && app.smileyFourQty < 1)
-            {
-                message("Current Item Out Of Stock");
-            }
-            else if(mViewPager.getCurrentItem() == 4 && app.smileyFiveQty < 1)
-            {
-                message("Current Item Out Of Stock");
-            }
-            else if(mViewPager.getCurrentItem() == 5 && app.smileySixQty < 1)
-            {
-                message("Current Item Out Of Stock");
-            }
-            else
-            {*/
-                app.setSmileyTwo(mViewPager.getCurrentItem());
+            app.setSmileyTwo(mViewPager.getCurrentItem());
 
-                Intent intent = new Intent(TeamMemberTwoViewEmoji.this, TeamMemberTwoPhrase.class);
-                startActivity(intent);
-                finish();
-            //}
+            Intent intent = new Intent(TeamMemberTwoViewEmoji.this, TeamMemberTwoPhrase.class);
+            startActivity(intent);
+            finish();
         }
     };
 
