@@ -1,7 +1,6 @@
 body
 {
-  /*background-color:#d90202;*/
-  background-color:#000000;
+  background-color:#d90202;
 }
 
 @font-face
@@ -103,8 +102,8 @@ video {
 
   top:50px;
   /*right:500px;*/
-  left:30%;
-  width: 40%;
+  left:10%;
+  width:80%;
 }
 
 .circle {

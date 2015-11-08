@@ -48,7 +48,7 @@ id: 4 => Summer
 id: 5 => Forever
 id: 6 => Love -->
 <script>
-	io.sails.url = 'http://127.0.0.1:8080';
+	io.sails.url = 'http://localhost:8080';
 
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
@@ -196,7 +196,7 @@ id: 6 => Love -->
 	  }
 
 	  $(document).ready(function(){
-		var peer = {};
+            var peer = {};
 
 	    $("#leftLoad").hide();
 	    $("#rightLoad").hide();
@@ -218,30 +218,27 @@ id: 6 => Love -->
 			var video = document.querySelector('video');
 			video.src = window.URL.createObjectURL(stream);
 		
-			peer = new Peer('sender', {host: '127.0.0.1', port:9000, path: '/', key: 'peerjs'});
+			peer = new Peer('sender', {host: 'localhost', port:9000, path: '/', key: 'peerjs'});
 			
-			peer.on('open', function(conn) {
+			peer.on('open', function(id) {
 	  			changeTeamName("Not Connected...");
 				console.log('My peer ID is: ' + id);
 			});
 					
-			navigator.getUserMedia(vgaConstraints2, function(mediaStream) {
-				peer.on('call', function(call) {
-				  call.answer(mediaStream);
-				});
-			}, function(err) {
-			  console.log('Failed to get local stream' ,err);
-			});
-
 			peer.on('connection', function(conn) {
 				connGlobal = conn;
 
 					conn.on('data', function(data){
 						console.log(data);
-						// if (data == "hi!")
-						// {
-						// 	peer.call('rec', mediaStream);
-						// }
+						if (data == "hi!")
+						{
+	 						navigator.getUserMedia(vgaConstraints2, function(mediaStream) {
+						 		peer.call('rec', mediaStream);
+							}, function(err) {
+			  					console.log('Failed to get local stream' ,err);
+							});
+						}
+
 						if (data == "ready") ready();
 						if (data == "start") 
 						{
