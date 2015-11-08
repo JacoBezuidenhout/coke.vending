@@ -49,13 +49,41 @@ id: 5 => Forever
 id: 6 => Love -->
 <script>
 	io.sails.url = 'http://127.0.0.1:8080';
+
+	var ngui = require('nw.gui');
+	var nwin = ngui.Window.get();
+	nwin.enterFullscreen();
 	
+	var vgaConstraints2 = {
+	 "audio": false,
+	 "video": {
+	  "mandatory": {
+	   "maxWidth": 800,
+	   "maxHeight": 600
+	   // "minFrameRate": 30
+	  }
+	 }
+	}
+	var vgaConstraints = {
+	 "audio": false,
+	 "video": {
+	  "mandatory": {
+	   "minWidth": 1440,
+	   "minHeight": 810
+	   // "minFrameRate": 30
+	  }
+	 }
+	}
+
 	var productDesc = {"7":"emoji1","8":"emoji2","9":"emoji3","10":"emoji4","11":"emoji5","12":"emoji6","1":"Fun","2":"Together","3":"Holiday","4":"Summer","5":"Forever","6":"Love"};
 
 	var soundFiles = ["AhWhatBeautifulFaces.ogg","AwehWelcome.ogg","FacialRecognComplete.ogg","GetALittleCloser.ogg","GetReadyShareEmoji.ogg","ImNotFeelingYouLets.ogg","LetsTryThatOneMoreTime.ogg","MadeMeBlush.ogg","ThankYouForSharngYrFeelns.ogg","ThanksFunGoShareCoke.ogg","ThanksFunGoShareCoke2.ogg","ThatWasSoMuchFun.ogg","WellArentYou2GoodLkng.ogg","WhoaSoMany.ogg","You2WereSoMuchFun.ogg"];
 	
 	var soundFilesGetReady = ["AwehWelcome.ogg","GetReadyShareEmoji.ogg",];
-	var soundFilesSuccess = ["FacialRecognComplete.ogg","WhoaSoMany.ogg"];
+	var soundFilesSuccess = ["FacialRecognitionComplete.ogg"];
+
+	var soundFilesOhShit = ["WhoaSoMany.ogg"];
+
 	var soundFilesError = ["ImNotFeelingYouLets.ogg","LetsTryThatOneMoreTime.ogg"];
 	var soundFilesPictureStart = ["GetALittleCloser.ogg","WellArentYou2GoodLkng.ogg"];
 	var soundFilesPicture = ["AhWhatBeautifulFaces.ogg","MadeMeBlush.ogg","ThankYouForSharngYrFeelns.ogg","ThanksFunGoShareCoke.ogg","ThanksFunGoShareCoke2.ogg","ThatWasSoMuchFun.ogg","You2WereSoMuchFun.ogg"];
@@ -64,29 +92,12 @@ id: 6 => Love -->
 	var next = true;
 	var connGlobal = {};
 
-	var ngui = require('nw.gui');
-	var nwin = ngui.Window.get();
-	nwin.enterFullscreen();
-
 	var leftStatic = document.getElementById("leftStatic");
 	var rightStatic = document.getElementById("rightStatic");
 	var leftLoad = document.getElementById("leftLoad");
 	var rightLoad = document.getElementById("rightLoad");
 
 	var currentId = 'noId'; 
-	// setTimeout(function(){
-	// 	videoScreen();
-	// },2000);
-
-	// setTimeout(function(){
-	// 	takeImage();
-	// },4000);
-
- 	/*changeBackgroundImg("videobackground");
-	changeSmileyOne("emoji1");
-	changeSmileyTwo("emoji2");
-	changePhraseOne("Summer");
-	changePhraseTwo("Fun");*/
 
 	  function start(){
 	    $("#leftStatic").show();
@@ -104,20 +115,6 @@ id: 6 => Love -->
 	  function map(id) {
 	  	return productDesc[id];
 	  }
-
-	  function takeSnapshot() {
-		    var gui = require('nw.gui');
-		    var win = gui.Window.get();
-
-		    win.capturePage(function(buffer)
-		    {
-		        require('fs').writeFile('../../ownCloud/Photos/' + currentId + '.png', buffer, function (err) {
-		            if (err) throw err;
-		            console.log('It\'s saved!');
-		        });
-
-		    }, { format : 'png', datatype : 'buffer'} );
-		}
 			
 	  function loadNext(){
 	  	io.socket.get('/order?done=false&limit=1', function serverResponded (body, JWR) {
@@ -132,9 +129,9 @@ id: 6 => Love -->
   			else
   			{
   				changeBackgroundImg("main");
-  				changeTeamName("No Orders...");
+  				changeTeamName("Ready...");
   				if (connGlobal.send)
-  					connGlobal.send("No Orders...");
+  					connGlobal.send("Ready...");
   				setTimeout(function(){
   					loadNext();
   				},1000);
@@ -157,8 +154,8 @@ id: 6 => Love -->
 	  	takeImage(function(){
 	  		playSound(soundFilesPicture);
 	  		io.socket.get('/order/update/' + currentId + '?done=true', function serverResponded (body, JWR) {
-		  		currentId = 'noId'; 
 		  		setTimeout(function(){
+		  			currentId = 'noId'; 
 		  			loadNext();
 		  		},4000);
 	  		});
@@ -171,6 +168,11 @@ id: 6 => Love -->
 	  	$("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
 
+	  }	
+
+	  function ohShit()
+	  {
+	  	playSound(soundFilesOhShit);
 	  }
 
 	  function startR(time){
@@ -194,90 +196,82 @@ id: 6 => Love -->
 	  }
 
 	  $(document).ready(function(){
+		var peer = {};
+
 	    $("#leftLoad").hide();
 	    $("#rightLoad").hide();
 	    $("#leftStatic").hide();
 	    $("#rightStatic").hide();
+
 	    changeBackgroundImg("main");
-  		changeTeamName("Not Connected...");
+  		changeTeamName("Connecting...");
     	
     	TweenMax.to(leftStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
     	TweenMax.to(rightStatic, 1, {rotation:"360", transformOrigin:"200px 110px", repeat:-1, ease:Linear.easeNone});
 
     	TweenMax.to(leftLoad, 1, {rotation:"720", transformOrigin:"200px 180px", scale:1.2, repeat:-1, yoyo: true});
     	TweenMax.to(rightLoad, 1, {rotation:"720", transformOrigin:"200px 180px", scale:1.2, repeat:-1, yoyo: true});
+		
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+		navigator.getUserMedia(vgaConstraints, function(stream) {
 
-
-    	console.log("COOL");
-	   });
-
-
-	var initPeer = function(videoStream)
-	{
-		console.log("InitStarted");
-		var peer = new Peer('sender', {host: '127.0.0.1', port:9000, path: '/', key: 'peerjs'});
-		peer.on('open', function(conn) {
-			console.log("OPEN");
-		});
-
-		peer.on('connection', function(conn) {
-			connGlobal = conn;
-			console.log("Another Connected");
-			conn.on('data', function(data){
-				console.log(data);
-				if (data == "hi!")
-				{
-					peer.call('rec', videoStream);
-				}
-
-				if (data == "ready") ready();
-				if (data == "start") 
-				{
-					if (currentId != 'noId')	
-						start();
-				}
-				if (data == "takeImage") takePicture();
-				if (data == "done") done();
-				if (data[0] == "L") startL(parseInt(data[1]));
-				if (data[0] == "R") startR(parseInt(data[1]));
+			var video = document.querySelector('video');
+			video.src = window.URL.createObjectURL(stream);
+		
+			peer = new Peer('sender', {host: '127.0.0.1', port:9000, path: '/', key: 'peerjs'});
+			
+			peer.on('open', function(conn) {
+	  			changeTeamName("Not Connected...");
+				console.log('My peer ID is: ' + id);
 			});
+					
+			navigator.getUserMedia(vgaConstraints2, function(mediaStream) {
+				peer.on('call', function(call) {
+				  call.answer(mediaStream);
+				});
+			}, function(err) {
+			  console.log('Failed to get local stream' ,err);
+			});
+
+			peer.on('connection', function(conn) {
+				connGlobal = conn;
+
+					conn.on('data', function(data){
+						console.log(data);
+						// if (data == "hi!")
+						// {
+						// 	peer.call('rec', mediaStream);
+						// }
+						if (data == "ready") ready();
+						if (data == "start") 
+						{
+							if (currentId != 'noId')	
+								start();
+						}
+						if (data == "takeImage") takePicture();
+						if (data == "done") done();
+						if (data == "ohshit") ohShit();
+						if (data[0] == "L") startL(parseInt(data[1]));
+						if (data[0] == "R") startR(parseInt(data[1]));
+					});
+
+			});
+		
+			peer.on('error', function(err) { 
+
+				console.log("PEER",err);
+				setTimeout(function(){
+					peer = new Peer('sender', {host: '127.0.0.1', port:9000, path: '/', key: 'peerjs'});
+				},2000);
+
+			});
+
+		}, function(err) {
+		  changeTeamName("Webcam Error...");
+		  console.log('Failed to get local stream' ,err);
 		});
-	}
-
-	var vgaConstraints2 = {
-	 "audio": false,
-	 "video": {
-	  "mandatory": {
-	   "maxWidth": 800,
-	   "maxHeight": 600
-	   // "minFrameRate": 30
-	  }
-	 }
-	}
-	var vgaConstraints = {
-	 "audio": false,
-	 "video": {
-	  "mandatory": {
-	   "minWidth": 1440,
-	   "minHeight": 810
-	   // "minFrameRate": 30
-	  }
-	 }
-	}
-
-	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-	navigator.getUserMedia(vgaConstraints, function(stream) {
-		var video = document.querySelector('video');
-		video.src = window.URL.createObjectURL(stream);
-	}, function(err) {
-	  console.log('Failed to get local stream' ,err);
 	});
-	navigator.getUserMedia(vgaConstraints2, function(stream) {
-		videoStream = stream;
-		initPeer(stream);
-	}, function(err) {
-	  console.log('Failed to get local stream' ,err);
-	});
+
 
 	// Not showing vendor prefixes.
 	// navigator.webkitGetUserMedia(vgaConstraints, function(localMediaStream) {

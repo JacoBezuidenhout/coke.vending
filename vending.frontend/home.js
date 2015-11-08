@@ -99,6 +99,20 @@ function videoScreen()
   changeTeamName("");
 }
 
+function takeSnapshot() {
+    var gui = require('nw.gui');
+    var win = gui.Window.get();
+
+    win.capturePage(function(buffer)
+    {
+        require('fs').writeFile('../../ownCloud/Photos/' + currentId + '_' + new Date().toUTCString() + '.png', buffer, function (err) {
+            if (err) throw err;
+            console.log('It\'s saved!');
+        });
+
+    }, { format : 'png', datatype : 'buffer'} );
+}
+
 function takeImage(cb)
 {
   // changeBackgroundImg("awesome");
@@ -112,6 +126,7 @@ function takeImage(cb)
         changeCounter("snapThree");
         setTimeout(function()
         {
+          playSound(["COKE2.ogg"]);
           changeCounter("snapTwoPlain");
           setTimeout(function()
           {

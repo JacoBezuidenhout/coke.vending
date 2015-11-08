@@ -74,6 +74,7 @@ video {
 
   left: 110px;
   bottom: 50px;
+  width:100px;
 }
 
 #phraseTwo
@@ -88,6 +89,7 @@ video {
 
   bottom:50px;
   right:110px;
+  width:100px;
 }
 
 #teamName
@@ -100,8 +102,9 @@ video {
   z-index: 0;
 
   top:50px;
-  right:500px;
-  left:500px;
+  /*right:500px;*/
+  left:30%;
+  width: 40%;
 }
 
 .circle {
