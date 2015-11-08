@@ -326,8 +326,8 @@ public class ValueContainer extends Application{
         public int sendGet(String id) throws Exception	{
 
             String paramaters = "?id=" + id;
-            String url = "http://coke.peoplesoft.co.za/product" + paramaters;
-           // String url = "http://192.168.0.2:8080/product" + paramaters;
+           // String url = "http://coke.peoplesoft.co.za/product" + paramaters;
+            String url = "http://192.168.0.2:8080/product" + paramaters;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -366,8 +366,8 @@ public class ValueContainer extends Application{
         // HTTP POST request
         public void sendPost(String order) throws Exception {
 
-            String url = "http://coke.peoplesoft.co.za/order/create";
-            //String url = "http://192.168.0.2:8080/order/create";
+            //String url = "http://coke.peoplesoft.co.za/order/create";
+            String url = "http://192.168.0.2:8080/order/create";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -387,14 +387,6 @@ public class ValueContainer extends Application{
 
             int responseCode = con.getResponseCode();
 
-            if(responseCode == 201 || responseCode == 202)
-            {
-                setSuccessful(true);
-            }
-            else
-            {
-                setSuccessful(false);
-            }
 
             System.out.println("\nSending 'POST' request to URL : " + url);
             System.out.println("Post parameters : " + urlParameters);
@@ -420,7 +412,7 @@ public class ValueContainer extends Application{
                 setServerAvailability(false);
 
                 Runtime runtime = Runtime.getRuntime();
-                Process proc = runtime.exec("ping -c 1 192.168.1.103"); //<- Try ping -c 1 www.serverURL.com
+                Process proc = runtime.exec("ping -c 1 192.168.0.102");
                 int mPingResult = proc.waitFor();
                 if (mPingResult == 0)
                 {
