@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="peer.min.js"></script>
 	<script type="text/javascript" src="home.js"></script>
 	<script type="text/javascript" src="jquery.min.js"></script>
-	<script type="text/javascript" src="sails.io.js"></script>
+
 	<script type="text/javascript" src="gsap/plugins/CSSPlugin.min.js"></script>
 	<script type="text/javascript" src="gsap/easing/EasePack.min.js"></script>
 	<script type="text/javascript" src="gsap/TweenLite.min.js"></script>
@@ -48,7 +48,8 @@ id: 4 => Summer
 id: 5 => Forever
 id: 6 => Love -->
 <script>
-	io.sails.url = 'http://localhost:8080';
+	serverURL = 'http://localhost:8080';
+	var http = require('request');
 
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
@@ -117,7 +118,9 @@ id: 6 => Love -->
 	  }
 			
 	  function loadNext(){
-	  	io.socket.get('/order?done=false&limit=1', function serverResponded (body, JWR) {
+
+	  	http(serverURL + "/order?done=false&limit=1", function (error, response, body) {
+	  		body = JSON.parse(body);
 	  		console.log(body);
 	  		if (body.length)
 	  		{
@@ -153,7 +156,7 @@ id: 6 => Love -->
 	  	playSound(soundFilesPictureStart);
 	  	takeImage(function(){
 	  		playSound(soundFilesPicture);
-	  		io.socket.get('/order/update/' + currentId + '?done=true', function serverResponded (body, JWR) {
+	  		http(serverURL + '/order/update/' + currentId + '?done=true', function (error, response, body) {
 		  		setTimeout(function(){
 		  			currentId = 'noId'; 
 		  			loadNext();
@@ -196,7 +199,8 @@ id: 6 => Love -->
 	  }
 
 	  $(document).ready(function(){
-            var peer = {};
+        
+        var peer = {};
 
 	    $("#leftLoad").hide();
 	    $("#rightLoad").hide();
@@ -212,61 +216,80 @@ id: 6 => Love -->
     	TweenMax.to(leftLoad, 1, {rotation:"720", transformOrigin:"200px 180px", scale:1.2, repeat:-1, yoyo: true});
     	TweenMax.to(rightLoad, 1, {rotation:"720", transformOrigin:"200px 180px", scale:1.2, repeat:-1, yoyo: true});
 		
-		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-		navigator.getUserMedia(vgaConstraints, function(stream) {
+		var init = function(){
+			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+			navigator.getUserMedia(vgaConstraints, function(stream) {
 
-			var video = document.querySelector('video');
-			video.src = window.URL.createObjectURL(stream);
-		
-			peer = new Peer('sender', {host: 'localhost', port:9000, path: '/', key: 'peerjs'});
-			
-			peer.on('open', function(id) {
-	  			changeTeamName("Not Connected...");
-				console.log('My peer ID is: ' + id);
-			});
+				if (stream)
+				{
+					var video = document.querySelector('video');
+					video.src = window.URL.createObjectURL(stream);
+				
+					peer = new Peer('sender', {host: 'localhost', port:9000, path: '/', key: 'peerjs'});
 					
-			peer.on('connection', function(conn) {
-				connGlobal = conn;
-
-					conn.on('data', function(data){
-						console.log(data);
-						if (data == "hi!")
-						{
-	 						navigator.getUserMedia(vgaConstraints2, function(mediaStream) {
-						 		peer.call('rec', mediaStream);
-							}, function(err) {
-			  					console.log('Failed to get local stream' ,err);
-							});
-						}
-
-						if (data == "ready") ready();
-						if (data == "start") 
-						{
-							if (currentId != 'noId')	
-								start();
-						}
-						if (data == "takeImage") takePicture();
-						if (data == "done") done();
-						if (data == "ohshit") ohShit();
-						if (data[0] == "L") startL(parseInt(data[1]));
-						if (data[0] == "R") startR(parseInt(data[1]));
+					peer.on('open', function(id) {
+			  			changeTeamName("Tab not Connected...");
+						console.log('My peer ID is: ' + id);
 					});
+							
+					peer.on('connection', function(conn) {
+						connGlobal = conn;
 
+							conn.on('data', function(data){
+								console.log(data);
+								if (data == "hi!")
+								{
+			 						navigator.getUserMedia(vgaConstraints2, function(mediaStream) {
+								 		peer.call('rec', mediaStream);
+									}, function(err) {
+					  					console.log('Failed to get local stream' ,err);
+									});
+								}
+
+								if (data == "ready") ready();
+								if (data == "start") 
+								{
+									if (currentId != 'noId')	
+										start();
+								}
+								if (data == "takeImage") takePicture();
+								if (data == "done") done();
+								if (data == "ohshit") ohShit();
+								if (data[0] == "L") startL(parseInt(data[1]));
+								if (data[0] == "R") startR(parseInt(data[1]));
+							});
+
+					});
+				
+					peer.on('error', function(err) { 
+
+						console.log("PEER",err);
+						changeTeamName("Server Error...");
+						setTimeout(function(){
+							peer.reconnect();
+							changeTeamName("Connecting...");
+						},2000);
+
+					});
+				}
+				else
+				{
+				  setTimeout(function(){
+				  	init();
+				  },3000);
+				}
+
+			}, function(err) {
+			  changeTeamName("Webcam Error...");
+			  setTimeout(function(){
+			  	init();
+			  },3000);
+			  console.log('Failed to get local stream' ,err);
 			});
+		}	
 		
-			peer.on('error', function(err) { 
-
-				console.log("PEER",err);
-				setTimeout(function(){
-					peer = new Peer('sender', {host: '127.0.0.1', port:9000, path: '/', key: 'peerjs'});
-				},2000);
-
-			});
-
-		}, function(err) {
-		  changeTeamName("Webcam Error...");
-		  console.log('Failed to get local stream' ,err);
-		});
+		init();
+		
 	});
 
 

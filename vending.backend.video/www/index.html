@@ -18,9 +18,66 @@
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="peer.min.js"></script>
     <script type="text/javascript">
-      var peer = new Peer('rec', {host: '192.168.0.2', port: 9000, path: '/'});
-      var conn = peer.connect('sender'); 
+      // var peer = new Peer('rec', {host: '192.168.0.2', port: 9000, path: '/'});
+      var peer = new Peer('rec', {host: 'localhost', port: 9000, path: '/'});
+      var conn = {};
+      var onCall = false;
+
+      peer.on('error', function(err) { 
+        console.log(err);
+        document.getElementById("info").innerHTML = err;
+        setTimeout(function(){
+          peer.reconnect();
+          connectSender();
+        },2000);
+        onCall = false;
+      });
       
+      var connectSender = function()
+      {
+        if (!conn.open) conn = peer.connect('sender');
+
+        conn.on('open', function(){
+          conn.send('hi!');
+          conn.on('data', function(data){
+            document.getElementById("info").innerHTML = data;
+            if (data == "No Orders...")
+            {
+              $("#btnDone").hide();
+              $("#btnPicture").hide();
+              $("#btnStart").show();
+              $("#leftStatic").fadeOut(500);
+              $("#rightStatic").fadeOut(500);
+              $("#leftLoad").fadeOut(500);
+              $("#rightLoad").fadeOut(500);
+            }
+          });
+
+          conn.on('close', function() { 
+            console.log("CLOSE");
+            connectSender();
+          });
+
+          conn.on('error', function(err) { 
+            console.log("ERROR",err);
+            connectSender();
+          });
+
+        });
+      }      
+
+      peer.on('call', function(call) {
+        onCall = true;
+        console.log("CALLING");
+        call.answer();
+        call.on('stream', function(remoteStream) {
+          var video = document.querySelector('video');
+          video.src = window.URL.createObjectURL(remoteStream);
+          console.log("GOT STREAM");
+          conn.send('ready');
+        });
+      });
+
       function start(){
         conn.send('start');
         $("#btnStart").hide();
@@ -28,6 +85,10 @@
         $("#leftStatic").show();
         $("#rightStatic").show();
 
+      }
+
+      function ohShit(){
+        conn.send('ohshit');
       }
 
       function takePicture(){
@@ -77,42 +138,9 @@
 
         $("#btnDone").hide();
         $("#btnPicture").hide();
-
-        var onCall = false;
-
-        conn.on('open', function(){
-          conn.send('hi!');
-          conn.on('data', function(data){
-            document.getElementById("info").innerHTML = data;
-            if (data == "No Orders...")
-            {
-              $("#btnDone").hide();
-              $("#btnPicture").hide();
-              $("#btnStart").show();
-              $("#leftStatic").fadeOut(500);
-              $("#rightStatic").fadeOut(500);
-              $("#leftLoad").fadeOut(500);
-              $("#rightLoad").fadeOut(500);
-            }
-          });
-          setInterval(function(){
-            if (!onCall) conn.send('hi!');
-          },1000);
-
-          peer.on('call', function(call) {
-              onCall = true;
-              console.log("CALLING");
-              call.answer();
-              call.on('stream', function(remoteStream) {
-                var video = document.querySelector('video');
-                video.src = window.URL.createObjectURL(remoteStream);
-                console.log("GOT STREAM");
-                conn.send('ready');
-              });
-          });
-        });
+        connectSender();
       })
-
+      
     </script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -127,7 +155,9 @@
       The nav bar that will be updated as we navigate between views.
     -->
     <div class="bar bar-header bar-assertive">
-      <h1 class="title">Coke Vending Video</h1>
+      <!-- <h1 class="title">Coke Vending Video</h1> -->
+      <button style="position: absolute; top: 0; left: 55%; width:10%; height:100%; z-index:0;" onclick="ohShit()"><b style="color:red; font-size:20px">Oh NO!</b></button>
+      <button style="position: absolute; top: 0; left: 35%; width:10%; height:100%; z-index:0;" onclick="location.reload();"><b style="color:green; font-size:20px">Refresh</b></button>
     </div>
 
     <div style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index:0;">
