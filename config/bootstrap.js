@@ -19,11 +19,29 @@ module.exports.bootstrap = function(cb) {
  //        targetDir: process.cwd() + '/assets/docs/api'
 	// });
 	var PeerServer = require('peer').PeerServer;
-	var peerServer = PeerServer({port: 9000, path: '/'});
-  	peerServer.on('connection', function(id) { 
-  		console.log(id,"connected");
-  	});
-	
+  var exec = require('child_process').exec;
+  sails.on('lifted', function() {
+
+  	console.log("SAILS LIFTED");
+    var peerServer = PeerServer({port: 9000, path: '/'},function(server) {
+      console.log("peerServer Started");
+      var goToHD = exec('xrandr --output HDMI2 --primary --mode 1920x1080', function(err, stdout, stderr) {
+        if (err) console.log(err);
+          else console.log("HD Set");
+
+        server.on('connection', function(id) { 
+          console.log("connected");
+        });
+
+        setTimeout(function(){
+          var nw = exec('nw vending.frontend', function(err, stdout, stderr) {
+            if (err) throw err;
+              else console.log("Interface Closed");
+          });
+        },2000);
+      });
+    });
+  });
   	
-  	cb();
+  cb();
 };
