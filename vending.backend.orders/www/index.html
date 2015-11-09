@@ -47,9 +47,10 @@
     <div class="row">
       <div class="col" ng-controller="DashCtrl" style="padding-top:0px;margin:0px;">
             <div class="list card" ng-hide="orders.length">
-              <div class="item item-divider">No Orders Yet</div>
+              <div class="item item-divider" id="log">No Orders Yet</div>
               <div class="item item-body">
                 <div>
+                {{errors}}
                 </div>
               </div>
             </div>

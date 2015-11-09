@@ -11,6 +11,7 @@ angular.module('starter.controllers', [])
       {
         console.log('Sails responded with: ', body);
         $scope.orders = body.data;
+        $rootScope.errors = "";
       }
       else
       {
@@ -18,6 +19,7 @@ angular.module('starter.controllers', [])
       }
     },function(err){
       console.log(err);
+      $rootScope.errors = JSON.stringify(err);
     });
   }
   updateOrders();
