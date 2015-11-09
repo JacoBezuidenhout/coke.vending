@@ -8,8 +8,11 @@ import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -366,7 +369,7 @@ public class ValueContainer extends Application{
         // HTTP POST request
         public void sendPost(String order) throws Exception {
 
-            //String url = "http://coke.peoplesoft.co.za/order/create";
+           // String url = "http://coke.peoplesoft.co.za/order/create";
             String url = "http://192.168.0.2:8080/order/create";
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -405,7 +408,7 @@ public class ValueContainer extends Application{
             System.out.println(response.toString());
         }
 
-        public boolean checkServer()
+       /* public boolean checkServer()
         {
             try
             {
@@ -430,6 +433,41 @@ public class ValueContainer extends Application{
             catch(Exception e)
             {
                 System.out.println("Check Server exception: " + e);
+                setServerAvailability(false);
+                return false;
+            }
+        }*/
+
+        public boolean checkServer() throws Exception
+        {
+            setServerAvailability(false);
+
+            String paramaters = "?limit=1";
+           // String url = "http://coke.peoplesoft.co.za:80/product" + paramaters;
+            String url = "http://192.168.0.2:8080/product" + paramaters;
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+            // optional default is GET
+            con.setRequestMethod("GET");
+
+            //add request header
+            con.setRequestProperty("User-Agent", USER_AGENT);
+
+            int responseCode = con.getResponseCode();
+             System.out.println("\nSending 'GET' request to URL : " + url);
+             System.out.println("Response Code : " + responseCode);
+
+
+            if(responseCode == 200)
+            {
+                System.out.println("True");
+                setServerAvailability(true);
+                return true;
+            }
+            else
+            {
+                System.out.println("False");
                 setServerAvailability(false);
                 return false;
             }
