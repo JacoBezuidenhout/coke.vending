@@ -34,8 +34,8 @@ module.exports.bootstrap = function(cb) {
         });
 
         setTimeout(function(){
-          var nw = exec('nw vending.frontend', function(err, stdout, stderr) {
-            if (err) throw err;
+          var nw = exec('nw vending.frontend > /dev/zero', function(err, stdout, stderr) {
+            if (err) console.log(err);
               else console.log("Interface Closed");
           });
         },2000);
