@@ -105,7 +105,7 @@ function takeSnapshot() {
 
     win.capturePage(function(buffer)
     {
-        require('fs').writeFile('../../ownCloud/Photos/' + currentId + '_' + new Date().toUTCString() + '.png', buffer, function (err) {
+        require('fs').writeFile('/data/ownCloud/Photos/' + currentId + '_' + new Date().toUTCString() + '.png', buffer, function (err) {
             if (err) throw err;
             console.log('It\'s saved!');
         });
