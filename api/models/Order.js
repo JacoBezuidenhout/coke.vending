@@ -69,7 +69,7 @@ var report = function(obj)
           var oldDay = new Date(fields[0]).getUTCDate();
           var oldMonth = new Date(fields[0]).getUTCMonth();
           var oldOldYear = new Date(fields[0]).getFullYear();
-          var day = new Date().getUTCDate()+1;
+          var day = new Date().getUTCDate();
           var month = new Date().getUTCMonth()
           var year = new Date().getFullYear();
 

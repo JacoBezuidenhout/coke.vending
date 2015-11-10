@@ -156,7 +156,7 @@ id: 6 => Love -->
 	  	playSound(soundFilesPictureStart);
 	  	takeImage(function(){
 	  		playSound(soundFilesPicture);
-	  		http(serverURL + '/order/update/' + currentId + '?done=true', function (error, response, body) {
+	  		http(serverURL + '/order/destroy/' + currentId, function (error, response, body) {
 		  		setTimeout(function(){
 		  			currentId = 'noId'; 
 		  			loadNext();
