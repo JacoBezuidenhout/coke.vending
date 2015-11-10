@@ -41,7 +41,7 @@
           conn.send('hi!');
           conn.on('data', function(data){
             document.getElementById("info").innerHTML = data;
-            if (data == "No Orders...")
+            if (data == "Ready...")
             {
               $("#btnDone").hide();
               $("#btnPicture").hide();
