@@ -1,6 +1,6 @@
 #!/bin/bash
 sleep 5
-((cd ~/coke.vending && sails lift)&)
+((cd ~/coke.vending && sails lift >> /dev/null)&)
 # ((xrandr --output HDMI2 --primary --mode 1920x1080)&)
 # sleep 20
 # ((cd ~/coke.vending/vending.frontend && nw)&)

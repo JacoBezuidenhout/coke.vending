@@ -43,12 +43,12 @@ var reportAppend = function(obj)
 {
   var d = new Date().toISOString();
   var line = [d,0,0,0,0,0,0,0,0,0,0,0,0];
-  line[obj.smileyOne] = 1;
-  line[obj.smileyTwo] = 1;
-  line[obj.stickerOne] = 1;
-  line[obj.stickerTwo] = 1;
+  line[obj.smileyOne] = 2;
+  line[obj.smileyTwo] = 2;
+  line[obj.stickerOne] = 2;
+  line[obj.stickerTwo] = 2;
   // line.push(obj.teamName);      
-  fs.appendFileSync(reportPath, line.join() + "\n");
+  fs.appendFileSync(reportPath, "\n" + line.join());
 }
 
 var report = function(obj)
