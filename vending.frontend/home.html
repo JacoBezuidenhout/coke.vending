@@ -158,6 +158,7 @@ id: 6 => Love -->
 	    $("#leftLoad").fadeOut(500);
 	    $("#rightLoad").fadeOut(500);
 	    changeTeamName("");
+	    clearScreen();
 	    connGlobal.send("Skipping...");
 		changeBackgroundImg("done");
 		http(serverURL + '/order/destroy/' + currentId, function (error, response, body) {
