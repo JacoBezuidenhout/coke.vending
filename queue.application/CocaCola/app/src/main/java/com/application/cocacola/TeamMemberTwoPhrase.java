@@ -153,6 +153,7 @@ public class TeamMemberTwoPhrase extends MainActivity {
 
             if (app.getStickerTwo() != -1)
             {
+                submitButton.setEnabled(false);
                 if(app.checkServerAvailability())
                 {
                     System.out.println("*********************************");
@@ -172,6 +173,7 @@ public class TeamMemberTwoPhrase extends MainActivity {
                 else
                 {
                     message("Server Not Available. Please Try Again");
+                    submitButton.setEnabled(true);
                 }
             }
             else
