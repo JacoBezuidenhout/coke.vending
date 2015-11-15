@@ -1,9 +1,9 @@
-
+  var debug = false;
 /*function changeImage() {
 
   var el = document.getElementById("vidDiv")
   el.style.backgroundImage = "url(.//assets/images/videobackground.png)";
-  console.log("done");
+  if (debug) console.log("done");
 }*/
 
 
@@ -12,12 +12,12 @@ function changeBackgroundImg(imgName)
   if(imgName != "")
   {
     document.getElementById("vidDivImg").src=".//assets/images/"+imgName+".png";
-    console.log("Background image changed");
+    if (debug) console.log("Background image changed");
   }
   else
   {
     document.getElementById("vidDivImg").src="";
-    console.log("Background image changed");
+    if (debug) console.log("Background image changed");
   }
 }
 
@@ -27,12 +27,12 @@ function changeCounter(imgName)
   {
     $("#vidDivCounter").show();
     document.getElementById("vidDivCounter").src=".//assets/images/"+imgName+".png";
-    console.log("Background image changed");
+    if (debug) console.log("Background image changed");
   }
   else
   {
     $("#vidDivCounter").hide();
-    console.log("Background image changed");
+    if (debug) console.log("Background image changed");
   }
 }
 
@@ -41,12 +41,12 @@ function changeSmileyOne(imgName)
   if(imgName != "")
   {
   document.getElementById("smileyOne").src=".//assets/images/"+imgName+".png";
-  console.log("Smiley one changed");
+  if (debug) console.log("Smiley one changed");
   }
   else
   {
     document.getElementById("smileyOne").src=".//assets/images/clear.png";
-    console.log("Background image changed");
+    if (debug) console.log("Background image changed");
   }
 }
 
@@ -55,31 +55,31 @@ function changeSmileyTwo(imgName)
   if(imgName != "")
   {
     document.getElementById("smileyTwo").src=".//assets/images/"+imgName+".png";
-    console.log("Smiley two changed");
+    if (debug) console.log("Smiley two changed");
   }
   else
   {
     document.getElementById("smileyTwo").src=".//assets/images/clear.png";
-    console.log("Background image changed");
+    if (debug) console.log("Background image changed");
   }
 }
 
 function changePhraseOne(phrase)
 {
   document.getElementById("phraseOne").innerHTML = phrase;
-  console.log("Phrase one changed");
+  if (debug) console.log("Phrase one changed");
 }
 
 function changePhraseTwo(phrase)
 {
   document.getElementById("phraseTwo").innerHTML = phrase;
-  console.log("Phrase two changed");
+  if (debug) console.log("Phrase two changed");
 }
 
 function changeTeamName(phrase)
 {
   document.getElementById("teamName").innerHTML = phrase;
-  console.log("Team name changed");
+  if (debug) console.log("Team name changed");
 }
 
 
@@ -107,7 +107,7 @@ function takeSnapshot() {
     {
         require('fs').writeFile('/data/ownCloud/Photos/' + currentId + '_' + new Date().toUTCString() + '.png', buffer, function (err) {
             if (err) throw err;
-            console.log('It\'s saved!');
+            if (debug) console.log('It\'s saved!');
         });
 
     }, { format : 'png', datatype : 'buffer'} );
@@ -139,7 +139,7 @@ function takeImage(cb)
                 changeCounter("snapOne");
                 setTimeout(function()
                 {
-                  console.log("Photo was taken");
+                  if (debug) console.log("Photo was taken");
                   changeCounter("");
                   setTimeout(function(){
                     takeSnapshot();
@@ -174,5 +174,5 @@ function playSound(soundFileArr)
   var soundFile = soundFileArr[Math.floor(Math.random()*soundFileArr.length)];
   var audio = new Audio(".//assets/audio/" + soundFile); 
   audio.play();
-  console.log("Played sound");
+  if (debug) console.log("Played sound");
 }

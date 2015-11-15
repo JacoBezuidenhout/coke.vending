@@ -35,6 +35,11 @@ module.exports.routes = {
   // '/': {
   //   view: 'homepage'
   // }
+  '/csv' : "PhotoController.csv",
+  '/data' : "PhotoController.data",
+  '/summary' : "PhotoController.summary",
+  '/photos' : "PhotoController.photos"
+
 
   /***************************************************************************
   *                                                                          *

@@ -11,10 +11,15 @@
 		@done => show if order is done : boolean -> defaultsTo: false
 */
 
+var debug = false;
 var vendingId = "2";
 var fs = require('fs');
-var fileName = "/data/ownCloud/Documents/data.csv";
-var fileName2 = "/data/ownCloud/Documents/report.csv";
+var dataPath = "/data/ownCloud/Documents/data.csv";
+var reportPath = "/data/ownCloud/Documents/report.csv";
+
+// var dataPath = "data.csv";
+// var reportPath = "report.csv";
+
 var productDesc = {"7":"emoji1","8":"emoji2","9":"emoji3","10":"emoji4","11":"emoji5","12":"emoji6","1":"Fun","2":"Together","3":"Holiday","4":"Summer","5":"Forever","6":"Love"};
 
 var getProductName = function(prod)
@@ -22,13 +27,14 @@ var getProductName = function(prod)
   return productDesc[prod.id];
 }
 
-var header = ["date_vendingNum"];
+var header = ["date"];
 for (var i = 1; i <= 12; i++) {
   header.push(productDesc[i]);
 };
+
 header.push("teamName");
 
-var headerReport = ["date_vendingNum"];
+var headerReport = ["date"];
 for (var i = 1; i <= 12; i++) {
   headerReport.push(productDesc[i]);
 };
@@ -42,23 +48,23 @@ var reportAppend = function(obj)
   line[obj.stickerOne] = 1;
   line[obj.stickerTwo] = 1;
   // line.push(obj.teamName);      
-  fs.appendFileSync(fileName2, line.join() + "\n");
+  fs.appendFileSync(reportPath, line.join() + "\n");
 }
 
 var report = function(obj)
 {
-  fs.access(fileName2, fs.F_OK, function (err) {
+  fs.access(reportPath, fs.F_OK, function (err) {
     if (err)
     {
-      fs.writeFile(fileName2, headerReport.join()+"\n", function (err) {
-        if (err) console.log(err);
+      fs.writeFile(reportPath, headerReport.join()+"\n", function (err) {
+        if (err) if (debug) console.log(err);
         report(obj);
       });
     }
     else
     {
-      fs.readFile(fileName2, 'utf-8', function(err, data) {
-        if (err) console.log(err);
+      fs.readFile(reportPath, 'utf-8', function(err, data) {
+        if (err) if (debug) console.log(err);
         var lines = data.trim().split('\n');
         
         if (lines.length > 1)
@@ -80,20 +86,20 @@ var report = function(obj)
           else
           { 
             var line = fields;
-            line[obj.smileyOne] = parseInt(line[obj.smileyOne]) + 1;
-            line[obj.smileyTwo] = parseInt(line[obj.smileyOne]) + 1;
-            line[obj.stickerOne] = parseInt(line[obj.smileyOne]) + 1;
-            line[obj.stickerTwo] = parseInt(line[obj.smileyOne]) + 1;
+            line[obj.smileyOne] = parseInt(line[obj.smileyOne]) + 2;
+            line[obj.smileyTwo] = parseInt(line[obj.smileyOne]) + 2;
+            line[obj.stickerOne] = parseInt(line[obj.smileyOne]) + 2;
+            line[obj.stickerTwo] = parseInt(line[obj.smileyOne]) + 2;
             
             lines.pop();
             lines.push(line.join());
 
-            fs.writeFile(fileName2, lines.join("\n"), function (err) {
-              if (err) throw err;
-              console.log('It\'s saved!');
+            fs.writeFile(reportPath, lines.join("\n"), function (err) {
+              if (err) console.log(err);
+              if (debug) console.log('It\'s saved!');
             });
 
-            console.log(lines);
+            if (debug) console.log(lines);
 
             // line.push(obj.teamName);
           }
@@ -110,11 +116,11 @@ var report = function(obj)
 
 var store = function(obj)
 {
-  fs.access(fileName, fs.F_OK, function (err) {
+  fs.access(dataPath, fs.F_OK, function (err) {
     if (err)
     {
-      fs.writeFile(fileName, header.join()+"\n", function (err) {
-        if (err) console.log(err);
+      fs.writeFile(dataPath, header.join()+"\n", function (err) {
+        if (err) if (debug) console.log(err);
         store(obj);
       });
     }
@@ -122,12 +128,12 @@ var store = function(obj)
     {
       var d = new Date().toISOString();
       var line = [d,0,0,0,0,0,0,0,0,0,0,0,0];
-      line[obj.smileyOne] = 1;
-      line[obj.smileyTwo] = 1;
-      line[obj.stickerOne] = 1;
-      line[obj.stickerTwo] = 1;
+      line[obj.smileyOne] = 2;
+      line[obj.smileyTwo] = 2;
+      line[obj.stickerOne] = 2;
+      line[obj.stickerTwo] = 2;
       line.push(obj.teamName);
-      fs.appendFileSync(fileName, line.join() + "\n");
+      fs.appendFileSync(dataPath, line.join() + "\n");
     }
   });
 }
@@ -148,16 +154,16 @@ module.exports = {
     Product
     .find({id:[obj.smileyOne,obj.smileyTwo,obj.stickerOne,obj.stickerTwo]})
     .exec(function(e,r){
-      console.log(e,r);
+      if (debug) console.log(e,r);
       for (var i = 0; i < r.length; i++) {
-        r[i].qty--;
+        r[i].qty -= 2;
         r[i].save();
       };
       report(obj);
       store(obj);
       next();
     },function(err){
-      console.log("ERR",err);
+      if (debug) console.log("ERR",err);
   	  next();
     });
   }

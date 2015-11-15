@@ -18,8 +18,8 @@
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="peer.min.js"></script>
     <script type="text/javascript">
-      var peer = new Peer('rec', {host: '192.168.0.2', port: 9000, path: '/'});
-      // var peer = new Peer('rec', {host: 'localhost', port: 9000, path: '/'});
+      // var peer = new Peer('rec', {host: '192.168.0.2', port: 9000, path: '/'});
+      var peer = new Peer('rec', {host: 'localhost', port: 9000, path: '/'});
       var conn = {};
       var onCall = false;
 
@@ -81,26 +81,45 @@
       function start(){
         conn.send('start');
         $("#btnStart").hide();
-        $("#btnDone").show();
         $("#leftStatic").show();
         $("#rightStatic").show();
+        setTimeout(function(){
+          $("#btnDone").show();
+        },1000);        
 
       }
 
+      function skip(){
+        conn.send('skip');
+          $(".btnTop").fadeOut(200);
+          setTimeout(function(){
+            $(".btnTop").fadeIn(500);
+          },1000);  
+      }
       function ohShit(){
         conn.send('ohshit');
+          $(".btnTop").fadeOut(200);
+          setTimeout(function(){
+            $(".btnTop").fadeIn(500);
+          },1000);  
       }
 
       function takePicture(){
         conn.send('takeImage');
         $("#btnPicture").hide();
-        $("#btnStart").show();
+        setTimeout(function(){
+          $("#btnStart").show();
+        },5000);  
       }
 
       function done(){
         conn.send('done');
         $("#btnDone").hide();
-        $("#btnPicture").show();
+        
+        setTimeout(function(){
+          $("#btnPicture").show();
+        },1000);  
+
         $("#leftStatic").fadeOut(500);
         $("#rightStatic").fadeOut(500);
         $("#leftLoad").fadeOut(500);
@@ -113,6 +132,10 @@
           $("#leftLoad").fadeIn(500);
         else
         {
+          $(".btnCancel").fadeOut(200);
+          setTimeout(function(){
+            $(".btnCancel").fadeIn(500);
+          },1000);  
           $("#leftLoad").fadeOut(500);
           $("#rightLoad").fadeOut(500);
         }
@@ -124,6 +147,10 @@
           $("#rightLoad").fadeIn(500);
         else
         {
+          $(".btnCancel").fadeOut(200);
+          setTimeout(function(){
+            $(".btnCancel").fadeIn(500);
+          },1000);  
           $("#leftLoad").fadeOut(500);
           $("#rightLoad").fadeOut(500);
         }
@@ -156,8 +183,9 @@
     -->
     <div class="bar bar-header bar-assertive">
       <!-- <h1 class="title">Coke Vending Video</h1> -->
-      <button style="position: absolute; top: 0; left: 55%; width:10%; height:100%; z-index:0;" onclick="ohShit()"><b style="color:red; font-size:20px">Oh NO!</b></button>
-      <button style="position: absolute; top: 0; left: 35%; width:10%; height:100%; z-index:0;" onclick="location.reload();"><b style="color:green; font-size:20px">Refresh</b></button>
+      <button class="btnTop" style="position: absolute; top: 0; left: 25%; width:10%; height:80px; z-index:0;" onclick="ohShit()"><b style="color:red; font-size:20px">Oh NO!</b></button>
+      <button class="btnTop" style="position: absolute; top: 0; left: 45%; width:10%; height:80px; z-index:0;" onclick="location.reload();"><b style="color:green; font-size:20px">Refresh</b></button>
+      <button class="btnTop" style="position: absolute; top: 0; right: 25%; width:10%; height:80px; z-index:0;" onclick="skip();"><b style="color:orange; font-size:20px">Skip</b></button>
     </div>
 
     <div style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index:0;">
@@ -165,27 +193,27 @@
     </div>
 
     <div style="position: absolute; bottom: 0; left: 0; width:100%; height:100%; z-index:2;">
-      <button style="position: absolute;bottom:10px;left:2%; width:120px;height:100px;" onclick="startL(0)"><b>CANCEL</b></button>
+      <button class="btnCancel" style="position: absolute;bottom:10px;left:2%; width:120px;height:100px;" onclick="startL(0)"><b>CANCEL</b></button>
       <button style="position: absolute;top:50px;left:2%; width:120px;height:100px;" onclick="startL(1)"><b>START</b></button>
 
-      <h1 id="info" style="position: absolute;top:50px;left:35%;width:30%;height:100px;color:#d90202;text-align:center;"></h1>
+      <h1 id="info" style="position: absolute;top:100px;left:35%;width:30%;height:100px;color:#d90202;text-align:center;"></h1>
 
       <button id="btnStart" style="position: absolute;bottom:10px;left:35%; width:30%;height:80px;" onclick="start()"><b>START INTERACTION</b></button>
       <button id="btnPicture" style="position: absolute;bottom:10px;left:35%; width:30%;height:80px;" onclick="takePicture()"><b>TAKE PICTURE</b></button>
       <button id="btnDone" style="position: absolute;bottom:10px;left:35%; width:30%;height:80px;" onclick="done()"><b>RECOGNIZE DONE</b></button>
 
-      <button style="position: absolute;bottom:10px;right:2%; width:120px;height:100px;" onclick="startR(0)"><b>CANCEL</b></button>
+      <button class="btnCancel" style="position: absolute;bottom:10px;right:2%; width:120px;height:100px;" onclick="startR(0)"><b>CANCEL</b></button>
       <button style="position: absolute;top:50px;right:2%; width:120px;height:100px;" onclick="startR(1)"><b>START</b></button>
 
     </div>
     <!-- <ion-nav-view></ion-nav-view> -->
     <div style="position: absolute; top: 40px; left: 0; width:100%; height:100%; z-index:1;">
-      <div style="position: absolute;bottom:80px;right:25%; width:200px;height:200px;" id="rightLoad"><div class="circle"></div></div>
-      <div style="position: absolute;bottom:20px;right:25%; width:200px;height:200px;" id="rightStatic"><div class="circle1"></div></div>
+      <div style="position: absolute;bottom:100px;right:25%; width:200px;height:200px;" id="rightLoad"><div class="circle"></div></div>
+      <div style="position: absolute;bottom:40px;right:25%; width:200px;height:200px;" id="rightStatic"><div class="circle1"></div></div>
     </div>
     <div style="position: absolute; top: 40px; left: 0; width:100%; height:100%; z-index:1;">
-      <div style="position: absolute;bottom:80px;left:25%; width:200px;height:200px;" id="leftLoad"><div class="circle"></div></div>
-      <div style="position: absolute;bottom:20px;left:25%; width:200px;height:200px;" id="leftStatic"><div class="circle1"></div></div>
+      <div style="position: absolute;bottom:100px;left:25%; width:200px;height:200px;" id="leftLoad"><div class="circle"></div></div>
+      <div style="position: absolute;bottom:40px;left:25%; width:200px;height:200px;" id="leftStatic"><div class="circle1"></div></div>
     </div>
 
   </body>

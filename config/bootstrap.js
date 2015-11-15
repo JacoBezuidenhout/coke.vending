@@ -18,27 +18,28 @@ module.exports.bootstrap = function(cb) {
  //        template: process.cwd() + '/node_modules/sails-apidocs/views/template.jade',
  //        targetDir: process.cwd() + '/assets/docs/api'
 	// });
+  var debug = false;
 	var PeerServer = require('peer').PeerServer;
   var exec = require('child_process').exec;
   sails.on('lifted', function() {
 
-  	console.log("SAILS LIFTED");
+  	if (debug) console.log("SAILS LIFTED");
     var peerServer = PeerServer({port: 9000, path: '/'},function(server) {
-      console.log("peerServer Started");
-      var goToHD = exec('xrandr --output HDMI2 --primary --mode 1920x1080', function(err, stdout, stderr) {
-        if (err) console.log(err);
-          else console.log("HD Set");
+      if (debug) console.log("peerServer Started");
+      var goToHD = exec('xrandr --output HDMI2 --primary --mode 1920x1080 >> /dev/null', function(err, stdout, stderr) {
+        if (err) if (debug) console.log(err);
+          else if (debug) console.log("HD Set");
 
         server.on('connection', function(id) { 
-          console.log("connected");
+          if (debug) console.log("connected");
         });
 
         setTimeout(function(){
-          var nw = exec('nw vending.frontend > /dev/zero', function(err, stdout, stderr) {
-            if (err) console.log(err);
-              else console.log("Interface Closed");
+          var nw = exec('nw vending.frontend >> /dev/null', function(err, stdout, stderr) {
+            if (err) if (debug) console.log(err);
+              else if (debug) console.log("Interface Closed");
           });
-        },2000);
+        },1000);
       });
     });
   });

@@ -1,10 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<meta http-equiv="refresh" content="0; url=/docs/api/index.html" />
+	<title>Coke Vending Admin Page</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
 </head>
-<body>
+    <body ng-app="Vending.Admin">
+
+    <div ng-controller="adminCtl as a" layout="row">
+		<div flex="66">
+			<md-card>
+			 <md-card-content>
+			 	<h2 class="title">Summary</h2>
+			 	<div layout="row" ng-repeat="r in dataset">
+		 			<div style="text-align:center" flex="20">{{r[0]}}</div>
+		 			<div style="text-align:center" flex>{{r[1]}}</div>
+		 			<div style="text-align:center" flex>{{r[2]}}</div>
+		 			<div style="text-align:center" flex>{{r[3]}}</div>
+		 			<div style="text-align:center" flex>{{r[4]}}</div>
+		 			<div style="text-align:center" flex>{{r[5]}}</div>
+		 			<div style="text-align:center" flex>{{r[6]}}</div>
+		 			<div style="text-align:center" flex>{{r[7]}}</div>
+		 			<div style="text-align:center" flex>{{r[8]}}</div>
+		 			<div style="text-align:center" flex>{{r[9]}}</div>
+		 			<div style="text-align:center" flex>{{r[10]}}</div>
+		 			<div style="text-align:center" flex>{{r[11]}}</div>
+		 			<div style="text-align:center" flex>{{r[12]}}</div>
+		 			<div style="text-align:center" flex>{{r[13]}}</div>
+		 			<div style="text-align:center" flex>{{r[14]}}</div>
+			 	</div>
+			 	<div layout="row">
+		 			<div style="text-align:center" flex="20"><strong>{{totals[0]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[1]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[2]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[3]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[4]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[5]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[6]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[7]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[8]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[9]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[10]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[11]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[12]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[13]}}</strong></div>
+		 			<div style="text-align:center" flex><strong>{{totals[14]}}</strong></div>
+			 	</div>
+			 </md-card-content>
+			</md-card>			
+		</div>
+		<div flex>
+			<md-card>
+			 <md-card-content>
+			 	<h2 class="title">Status</h2>
+				<md-list>
+				  <md-list-item class="md-2-line" ng-repeat="item in items">
+				    <!-- <md-checkbox ng-model="item.done"></md-checkbox> -->
+				    <div class="md-list-item-text">
+				      <h3>{{item.title}}</h3>
+				      <p>{{item.status}}</p>
+				    </div>
+				  </md-list-item>
+				</md-list>
+			 </md-card-content>
+			  <md-card-footer>
+			   <h2 class="title">Actions</h2>
+			   <p>Do NOT! download photos when activation in progress.</p>
+			   <div layout="row">
+				   <div flex><a href="/csv">Download CSV</a></div>
+				   <div flex><a href="/data">Download Data</a></div>
+				   <div flex><a href="/photos">Download Photos</a></div>
+			   </div>
+			 </md-card-footer>
+			</md-card>
+		</div>
+    </div>
+
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script>
+        // Include app dependency on ngMaterial
+
+        angular.module( 'Vending.Admin', [ 'ngMaterial' ] )
+            .controller("adminCtl", function($scope,$http){
+            	var productDesc = {"7":"emoji1","8":"emoji2","9":"emoji3","10":"emoji4","11":"emoji5","12":"emoji6","1":"Fun","2":"Together","3":"Holiday","4":"Summer","5":"Forever","6":"Love"};
+            	$scope.getProductDesc = function(id)
+            	{
+            		return productDesc[id];
+            	}
+            	$scope.items = [{title:"Server",status:true},{title:"Storage",status:true},{title:"Disk Access",status:true}];
+            	
+            	$http.get('/summary')
+            	.then(function(res){
+            		var totals = ["Totals",0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            		var totalCans = 0;
+            		var totalStickers = 0;
+            		
+            		res.data.dataset[0].push("Cans");
+            		res.data.dataset[0].push("Stickers");
+            		
+            		for (var i = 1; i < res.data.dataset.length; i++) {
+            			for (var j = 1; j < res.data.dataset[i].length; j++) {
+            				if (j <=6 ) totalStickers += parseInt(res.data.dataset[i][j]);
+            					else totalCans += parseInt(res.data.dataset[i][j]);
+            			};
+            			res.data.dataset[i].push(totalStickers);
+            			res.data.dataset[i].push(totalCans);
+            			for (var j = 1; j < res.data.dataset[i].length; j++) {
+            				totals[j] += parseInt(res.data.dataset[i][j]);
+            			};
+            		};
+            		$scope.dataset = res.data.dataset;
+            		$scope.totals = totals;
+            	},function(err){});
+            });
+
+    </script>
+
+
 
 </body>
 </html>

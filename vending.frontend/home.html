@@ -50,7 +50,7 @@ id: 6 => Love -->
 <script>
 	serverURL = 'http://localhost:8080';
 	var http = require('request');
-
+		var debug = false;
 	var ngui = require('nw.gui');
 	var nwin = ngui.Window.get();
 	nwin.enterFullscreen();
@@ -121,7 +121,7 @@ id: 6 => Love -->
 
 	  	http(serverURL + "/order?done=false&limit=1", function (error, response, body) {
 	  		body = JSON.parse(body);
-	  		console.log(body);
+	  		if (debug) console.log(body);
 	  		if (body.length)
 	  		{
 	  			currentId = body[0].id;
@@ -150,6 +150,22 @@ id: 6 => Love -->
 
 	    changeBackgroundImg("awesome");
 	    playSound(soundFilesSuccess);
+	  }
+	  
+	  function skip(){
+	    $("#leftStatic").fadeOut(500);
+	    $("#rightStatic").fadeOut(500);
+	    $("#leftLoad").fadeOut(500);
+	    $("#rightLoad").fadeOut(500);
+	    changeTeamName("");
+	    connGlobal.send("Skipping...");
+		changeBackgroundImg("done");
+		http(serverURL + '/order/destroy/' + currentId, function (error, response, body) {
+		  		setTimeout(function(){
+		  			currentId = 'noId'; 
+		  			loadNext();
+		  		},1000);
+	  	});
 	  }
 
 	  function takePicture(){
@@ -224,25 +240,25 @@ id: 6 => Love -->
 				{
 					var video = document.querySelector('video');
 					video.src = window.URL.createObjectURL(stream);
-				
+					
 					peer = new Peer('sender', {host: 'localhost', port:9000, path: '/', key: 'peerjs'});
 					
 					peer.on('open', function(id) {
 			  			changeTeamName("Tab not Connected...");
-						console.log('My peer ID is: ' + id);
+						if (debug) console.log('My peer ID is: ' + id);
 					});
 							
 					peer.on('connection', function(conn) {
 						connGlobal = conn;
 
 							conn.on('data', function(data){
-								console.log(data);
+								if (debug) console.log(data);
 								if (data == "hi!")
 								{
 			 						navigator.getUserMedia(vgaConstraints2, function(mediaStream) {
 								 		peer.call('rec', mediaStream);
 									}, function(err) {
-					  					console.log('Failed to get local stream' ,err);
+					  					if (debug) console.log('Failed to get local stream' ,err);
 									});
 								}
 
@@ -254,6 +270,7 @@ id: 6 => Love -->
 								}
 								if (data == "takeImage") takePicture();
 								if (data == "done") done();
+								if (data == "skip") skip();
 								if (data == "ohshit") ohShit();
 								if (data[0] == "L") startL(parseInt(data[1]));
 								if (data[0] == "R") startR(parseInt(data[1]));
@@ -263,7 +280,7 @@ id: 6 => Love -->
 				
 					peer.on('error', function(err) { 
 
-						console.log("PEER",err);
+						if (debug) console.log("PEER",err);
 						changeTeamName("Server Error...");
 						setTimeout(function(){
 							peer.reconnect();
@@ -284,7 +301,7 @@ id: 6 => Love -->
 			  setTimeout(function(){
 			  	init();
 			  },3000);
-			  console.log('Failed to get local stream' ,err);
+			  if (debug) console.log('Failed to get local stream' ,err);
 			});
 		}	
 		
@@ -295,7 +312,7 @@ id: 6 => Love -->
 
 	// Not showing vendor prefixes.
 	// navigator.webkitGetUserMedia(vgaConstraints, function(localMediaStream) {
-	// 	console.log(video.src);
+	// 	if (debug) console.log(video.src);
 	// 	video.onloadedmetadata = function(e) {
 	// 		//
 	// 	};
