@@ -56,7 +56,7 @@ var report = function(obj)
   fs.access(reportPath, fs.F_OK, function (err) {
     if (err)
     {
-      fs.writeFile(reportPath, headerReport.join()+"\n", function (err) {
+      fs.writeFile(reportPath, headerReport.join(), function (err) {
         if (err) if (debug) console.log(err);
         report(obj);
       });
@@ -87,9 +87,9 @@ var report = function(obj)
           { 
             var line = fields;
             line[obj.smileyOne] = parseInt(line[obj.smileyOne]) + 2;
-            line[obj.smileyTwo] = parseInt(line[obj.smileyOne]) + 2;
-            line[obj.stickerOne] = parseInt(line[obj.smileyOne]) + 2;
-            line[obj.stickerTwo] = parseInt(line[obj.smileyOne]) + 2;
+            line[obj.smileyTwo] = parseInt(line[obj.smileyTwo]) + 2;
+            line[obj.stickerOne] = parseInt(line[obj.stickerOne]) + 2;
+            line[obj.stickerTwo] = parseInt(line[obj.stickerTwo]) + 2;
             
             lines.pop();
             lines.push(line.join());
