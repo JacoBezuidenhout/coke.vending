@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/second_phrase_screen"
+    tools:context=".TeamMemberTwoPhrase">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/submitButton"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="50dp"
+        android:background="@drawable/navbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fun"
+        android:id="@+id/radioFun"
+        android:background="@drawable/radiobutton"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:button="@null"
+        android:checked="false"
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        android:layout_above="@+id/submitButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="100dp" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Together"
+        android:id="@+id/radioTogether"
+        android:checked="false"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:button="@null"
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        android:background="@drawable/radiobutton"
+        android:layout_alignTop="@+id/radioFun"
+        android:layout_centerHorizontal="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Holiday"
+        android:id="@+id/radioHoliday"
+        android:checked="false"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:button="@null"
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        android:background="@drawable/radiobutton"
+        android:layout_alignTop="@+id/radioTogether"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Summer"
+        android:id="@+id/radioSummer"
+        android:checked="false"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:button="@null"
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        android:background="@drawable/radiobutton"
+        android:layout_above="@+id/submitButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forever"
+        android:id="@+id/radioForever"
+        android:checked="false"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:button="@null"
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        android:background="@drawable/radiobutton"
+        android:layout_alignTop="@+id/radioSummer"
+        android:layout_alignLeft="@+id/radioTogether"
+        android:layout_alignStart="@+id/radioTogether" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Love"
+        android:id="@+id/radioLove"
+        android:checked="false"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:visibility="visible"
+        android:button="@null"
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        android:background="@drawable/radiobutton"
+        android:layout_alignBottom="@+id/radioForever"
+        android:layout_alignRight="@+id/submitButton"
+        android:layout_alignEnd="@+id/submitButton" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewTwo"
+        android:nestedScrollingEnabled="false"
+        android:adjustViewBounds="false"
+        android:maxHeight="232dp"
+        android:maxWidth="232dp"
+        android:minHeight="232dp"
+        android:minWidth="232dp"
+        android:layout_above="@+id/textViewRadio"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textViewRadio"
+        android:textSize="30dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
