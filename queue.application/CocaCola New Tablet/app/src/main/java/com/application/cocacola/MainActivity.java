@@ -1,10 +1,12 @@
 package com.application.cocacola;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +22,18 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button nextButton;
-    ValueContainer app;
-    Typeface yourfont;
-    TextView textViewTeam;
+    public Button nextButton;
+    public ValueContainer app;
+    public Typeface yourfont;
+    public TextView textViewTeam;
 
     public boolean quanUpdated;
 
     public ArrayList<Integer> inStockEmoji;
     public ArrayList<Integer> inStockEmojiId;
+
+    public boolean deviceIsAllowed = false;
+    public String deviceID;
 
     public int[] mResources = {
             R.drawable.emoji1,
@@ -39,11 +44,26 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.emoji6
     };
 
+    public String[] allowedDevices = {
+            "359355051034911",
+            "359093051767582"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        deviceID = getDeviceID();
+
+        for(int i = 0; i < allowedDevices.length; i++)
+        {
+            if(allowedDevices[i].equals(deviceID))
+            {
+                deviceIsAllowed = true;
+            }
+        }
 
         yourfont = Typeface.createFromAsset(getAssets(), "fonts/coke.otf");
 
@@ -58,17 +78,24 @@ public class MainActivity extends AppCompatActivity {
 
         quanUpdated = false;
 
-        if(app.getcheckedQty() == false) {
+        if(!deviceIsAllowed)
+        {
+            message("Device Not Authorized");
+            nextButton.setEnabled(false);
+            textViewTeam.setFocusable(false);
+        }
+        else
+        {
 
-            if(app.checkServerAvailability())
-            {
-                checkQuantities();
-                app.setcheckedQty(true);
-                quanUpdated = true;
-            }
-            else
-            {
-                message("Server Not Available. Please Try Again");
+            if (app.getcheckedQty() == false) {
+
+                if (app.checkServerAvailability()) {
+                    checkQuantities();
+                    app.setcheckedQty(true);
+                    quanUpdated = true;
+                } else {
+                    message("Server Not Available. Please Try Again");
+                }
             }
         }
     }
@@ -105,8 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, TeamMemberOneViewEmoji.class);
                     startActivity(intent);
                 }
-                else
-                {
+                else {
                     message("Please Enter A Team Name");
                 }
             }
@@ -202,5 +228,11 @@ public class MainActivity extends AppCompatActivity {
 
         app.setInStockEmoji(inStockEmoji);
         app.setInStockEmojiId(inStockEmojiId);
+    }
+
+    public String getDeviceID()
+    {
+        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
     }
 }

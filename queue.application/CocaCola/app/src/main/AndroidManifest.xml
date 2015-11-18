@@ -3,6 +3,7 @@
     package="com.application.cocacola" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application android:name="com.application.cocacola.ValueContainer"
         android:allowBackup="true"
