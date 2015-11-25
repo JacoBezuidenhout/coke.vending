@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<Integer> inStockEmoji;
     public ArrayList<Integer> inStockEmojiId;
 
-    public boolean deviceIsAllowed = false;
+    public boolean deviceIsAllowed = true;
     public String deviceID;
 
     public int[] mResources = {
@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
         deviceID = getDeviceID();
 
-        for(int i = 0; i < allowedDevices.length; i++)
+      /*  for(int i = 0; i < allowedDevices.length; i++)
         {
             if(allowedDevices[i].equals(deviceID))
             {
                 deviceIsAllowed = true;
             }
-        }
+        }*/
 
         yourfont = Typeface.createFromAsset(getAssets(), "fonts/coke.otf");
 
