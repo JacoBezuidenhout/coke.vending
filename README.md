@@ -1,3 +1,3 @@
 # coke
 
-a [Sails](http://sailsjs.org) application
+vending machine code used for coke activations - #shareacokeza
